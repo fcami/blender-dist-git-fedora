@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.34
-Release:        0.fdr.3
+Release:        0.fdr.4
 Summary:        3D modeling, animation, rendering and post-production.
 
 Group: 	        Applications/Multimedia
@@ -11,9 +11,7 @@ Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:	blender.png
 Source4: 	blender.desktop
-Source5:        gnome-mime-application-x-blender.png
-Source6:	x-blender.desktop
-Source7:        blender.xml
+Source5:        blender.xml
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -61,9 +59,7 @@ install -p -D -m0644 release/scripts/*.py ${RPM_BUILD_ROOT}%{_datadir}/blender/s
 install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/import-3ds-0.7.py
 install -p -D -m0644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/export-3ds-0.71.py
 install -p -D -m0644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
-install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/gnome-mime-application-x-blender.png
-install -p -D -m0644 %{SOURCE6} ${RPM_BUILD_ROOT}%{_datadir}/mimelnk/application/x-blender.desktop
-install -p -D -m0644 %{SOURCE7} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications   	\
   --add-category X-Fedora                               \
@@ -76,12 +72,12 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %post
 update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
-update-desktop-database %{_datadir}/applications
+update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %postun
 update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
-update-desktop-database %{_datadir}/applications
+update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %files
@@ -91,11 +87,14 @@ update-desktop-database %{_datadir}/applications
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
 %{_datadir}/blender/
-%{_datadir}/mimelnk/application/*
 %{_datadir}/mime/packages/blender.xml
 
 
 %changelog
+* Thu Nov 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.34-0.fdr.4
+- Redirect output in post/postun, to avoid failure.
+- Dropped other unnecessary files from old mime system.
+
 * Thu Nov 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.34-0.fdr.3
 - Mime-type corrections for FC3.
 - Dropped redundent BR XFree86-devel.
