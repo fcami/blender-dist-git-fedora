@@ -1,16 +1,24 @@
 Name:           blender
-Version:        2.31
-Release:        0.fdr.3.a.1
+Version:        2.34
+Release:        0.fdr.2.2
 Epoch:          0
 Summary:        3D modeling, animation, rendering and post-production.
 
-Group: 		Applications/Multimedia
+Group: 	        Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:	http://download.blender.org/source/blender-2.31a.tar.bz2
-Source1:	blender.png
-Source2: 	blender.desktop
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source0:        http://download.blender.org/source/blender-2.34.tar.bz2
+Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
+Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
+Source3:	blender.png
+Source4: 	blender.desktop
+Source5:	blender.mime
+Source6:        blender.keys
+Source7:        gnome-mime-application-x-blender.png
+Source8:	x-blender.desktop
+Source9:        blender.applications
+Source10:       blender.xml
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	zlib-devel 
 BuildRequires:  libjpeg-devel 
@@ -24,9 +32,12 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	libogg-devel
 BuildRequires:	esound-devel
 BuildRequires:  openal-devel
+BuildRequires:  scons
 BuildRequires:	libtool
 BuildRequires:	gettext
 BuildRequires:  desktop-file-utils
+Requires(post): shared-mime-info
+Requires(postun): shared-mime-info
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -38,50 +49,85 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
 %prep
-%setup -q -n blender-2.31a
+%setup -q
 
 
 
 %build
-aclocal
-autoheader
-automake --gnu --add-missing --foreign
-autoconf
-
-%configure              \
---disable-shared        \
---enable-openal         \
---disable-rpath
-make %{?_smp_mflags}
+sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
+scons
 
 
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-make install DESTDIR=${RPM_BUILD_ROOT}
-
+install -D -m0755 blender ${RPM_BUILD_ROOT}/%{_bindir}/blender
+mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
+install -p -D -m0644 release/scripts/*.py ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
+install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/import-3ds-0.7.py
+install -p -D -m0644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/export-3ds-0.71.py
 install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
+install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime-info/blender.mime
+install -p -D -m0644 %{SOURCE6} ${RPM_BUILD_ROOT}%{_datadir}/mime-info/blender.keys
+install -p -D -m0644 %{SOURCE7} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/gnome-mime-application-x-blender.png
+install -p -D -m0644 %{SOURCE8} ${RPM_BUILD_ROOT}%{_datadir}/mimelnk/application/x-blender.desktop
+install -p -D -m0644 %{SOURCE9} ${RPM_BUILD_ROOT}%{_datadir}/application-registry/blender.applications
+install -p -D -m0644 %{SOURCE10} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications   	\
   --add-category X-Fedora                               \
-  %{SOURCE2}
+  %{SOURCE4}
 
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
 
+%post
+update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+
+
+%postun
+update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING README release_* doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
+%doc COPYING README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/*
 %{_datadir}/applications/fedora-blender.desktop
-%{_datadir}/pixmaps/%{name}.png
-
+%{_datadir}/pixmaps/*.png
+%{_datadir}/blender/
+%{_datadir}/mime-info/*
+%{_datadir}/mimelnk/application/*
+%{_datadir}/application-registry/blender.applications
+%{_datadir}/mime/packages/blender.xml
 
 
 %changelog
+* Thu Aug 05 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.34-0.fdr.2
+- blender.applications file.
+- blender.xml file.
+- post/postun update-mime-database.
+
+* Thu Aug 05 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.34-0.fdr.1
+- Updated to 2.34.
+
+* Thu Aug 05 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.33-0.fdr.2.a
+- Include 3ds import/export scripts.
+- Added mime info.
+- Added mime icon (from yattacier theme).
+
+* Wed Aug 04 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.33-0.fdr.1.a
+- 2.33a.
+- Now building with scons.
+
+* Tue Feb 10 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.32-0.fdr.2
+- Now including scripts.
+
+* Thu Feb 05 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.32-0.fdr.1
+- Updated to 2.32.
+
 * Sun Jan 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.31-0.fdr.3.a
 - --enable-openal.
 - --disable-rpath.
