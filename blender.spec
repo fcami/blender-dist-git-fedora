@@ -1,7 +1,6 @@
 Name:           blender
 Version:        2.34
-Release:        0.fdr.2.2
-Epoch:          0
+Release:        0.fdr.3
 Summary:        3D modeling, animation, rendering and post-production.
 
 Group: 	        Applications/Multimedia
@@ -12,31 +11,29 @@ Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:	blender.png
 Source4: 	blender.desktop
-Source5:	blender.mime
-Source6:        blender.keys
-Source7:        gnome-mime-application-x-blender.png
-Source8:	x-blender.desktop
-Source9:        blender.applications
-Source10:       blender.xml
+Source5:        gnome-mime-application-x-blender.png
+Source6:	x-blender.desktop
+Source7:        blender.xml
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:	zlib-devel 
-BuildRequires:  libjpeg-devel 
-BuildRequires:  libpng-devel 
-BuildRequires:  freeglut-devel 
-BuildRequires:  python-devel
-BuildRequires:  XFree86-devel
-BuildRequires:  openssl-devel
-BuildRequires:	SDL-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	libogg-devel
-BuildRequires:	esound-devel
-BuildRequires:  openal-devel
-BuildRequires:  scons
-BuildRequires:	libtool
-BuildRequires:	gettext
 BuildRequires:  desktop-file-utils
+BuildRequires:	esound-devel
+BuildRequires:  freeglut-devel 
+BuildRequires:	gettext
+BuildRequires:  libjpeg-devel 
+BuildRequires:	libogg-devel
+BuildRequires:  libpng-devel 
+BuildRequires:	libtool
+BuildRequires:	libvorbis-devel
+BuildRequires:  openal-devel
+BuildRequires:  openssl-devel
+BuildRequires:  python-devel
+BuildRequires:  scons
+BuildRequires:	SDL-devel
+BuildRequires:	zlib-devel 
+Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
+Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
 %description
@@ -47,16 +44,13 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
-
 %prep
 %setup -q
-
 
 
 %build
 sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
 scons
-
 
 
 %install
@@ -66,13 +60,10 @@ mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
 install -p -D -m0644 release/scripts/*.py ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
 install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/import-3ds-0.7.py
 install -p -D -m0644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/export-3ds-0.71.py
-install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
-install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime-info/blender.mime
-install -p -D -m0644 %{SOURCE6} ${RPM_BUILD_ROOT}%{_datadir}/mime-info/blender.keys
-install -p -D -m0644 %{SOURCE7} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/gnome-mime-application-x-blender.png
-install -p -D -m0644 %{SOURCE8} ${RPM_BUILD_ROOT}%{_datadir}/mimelnk/application/x-blender.desktop
-install -p -D -m0644 %{SOURCE9} ${RPM_BUILD_ROOT}%{_datadir}/application-registry/blender.applications
-install -p -D -m0644 %{SOURCE10} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+install -p -D -m0644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
+install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/gnome-mime-application-x-blender.png
+install -p -D -m0644 %{SOURCE6} ${RPM_BUILD_ROOT}%{_datadir}/mimelnk/application/x-blender.desktop
+install -p -D -m0644 %{SOURCE7} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications   	\
   --add-category X-Fedora                               \
@@ -85,10 +76,12 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %post
 update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+update-desktop-database %{_datadir}/applications
 
 
 %postun
 update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+update-desktop-database %{_datadir}/applications
 
 
 %files
@@ -98,13 +91,15 @@ update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
 %{_datadir}/blender/
-%{_datadir}/mime-info/*
 %{_datadir}/mimelnk/application/*
-%{_datadir}/application-registry/blender.applications
 %{_datadir}/mime/packages/blender.xml
 
 
 %changelog
+* Thu Nov 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.34-0.fdr.3
+- Mime-type corrections for FC3.
+- Dropped redundent BR XFree86-devel.
+
 * Thu Aug 05 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.34-0.fdr.2
 - blender.applications file.
 - blender.xml file.
