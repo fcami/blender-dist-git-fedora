@@ -1,12 +1,12 @@
 Name:           blender
-Version:        2.34
-Release:        0.fdr.4
+Version:        2.35
+Release:        1
 Summary:        3D modeling, animation, rendering and post-production.
 
 Group: 	        Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:        http://download.blender.org/source/blender-2.34.tar.bz2
+Source0:        http://download.blender.org/source/blender-2.35.tar.bz2
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:	blender.png
@@ -91,9 +91,8 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
-* Thu Nov 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.34-0.fdr.4
-- Redirect output in post/postun, to avoid failure.
-- Dropped other unnecessary files from old mime system.
+* Mon Nov 15 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.35-1
+- 2.35.
 
 * Thu Nov 11 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.34-0.fdr.3
 - Mime-type corrections for FC3.
