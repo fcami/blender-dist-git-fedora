@@ -1,6 +1,7 @@
 Name:           blender
 Version:        2.35
-Release:        1
+Release:        2
+
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
@@ -91,6 +92,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Fri Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
+- rebuilt
+
 * Mon Nov 15 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.35-1
 - 2.35.
 
