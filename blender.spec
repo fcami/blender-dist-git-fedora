@@ -1,26 +1,26 @@
 Name:           blender
 Version:        2.35
 Release:        1
-Summary:        3D modeling, animation, rendering and post-production.
+Summary:        3D modeling, animation, rendering and post-production
 
-Group: 	        Applications/Multimedia
+Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
 Source0:        http://download.blender.org/source/blender-2.35.tar.bz2
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
-Source3:	blender.png
-Source4: 	blender.desktop
+Source3:        blender.png
+Source4:        blender.desktop
 Source5:        blender.xml
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
-BuildRequires:	esound-devel
-BuildRequires:  freeglut-devel 
-BuildRequires:	gettext
-BuildRequires:  libjpeg-devel 
-BuildRequires:	libogg-devel
-BuildRequires:  libpng-devel 
+BuildRequires:  esound-devel
+BuildRequires:  freeglut-devel
+BuildRequires:  gettext
+BuildRequires:  libjpeg-devel
+BuildRequires:  libogg-devel
+BuildRequires:  libpng-devel
 BuildRequires:	libtool
 BuildRequires:	libvorbis-devel
 BuildRequires:  openal-devel
@@ -28,7 +28,7 @@ BuildRequires:  openssl-devel
 BuildRequires:  python-devel
 BuildRequires:  scons
 BuildRequires:	SDL-devel
-BuildRequires:	zlib-devel 
+BuildRequires:	zlib-devel
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -71,12 +71,12 @@ rm -rf ${RPM_BUILD_ROOT}
 
 
 %post
-update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
 update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %postun
-update-mime-database %{_datadir}/mime > /dev/null 2>&1 || : 
+update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
 update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
@@ -135,7 +135,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 - enable-international.
 
 * Tue Nov 18 2003 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.30-0.fdr.1
-- Updated to 2.30. 
+- Updated to 2.30.
 
 * Fri Oct 10 2003 Phillip Compton <pcompton[AT]proteinmedia.com> 0:2.28-0.fdr.5.c
 - Updated to 2.28c.
