@@ -21,14 +21,14 @@ BuildRequires:  gettext
 BuildRequires:  libjpeg-devel
 BuildRequires:  libogg-devel
 BuildRequires:  libpng-devel
-BuildRequires:	libtool
-BuildRequires:	libvorbis-devel
+BuildRequires:  libtool
+BuildRequires:  libvorbis-devel
 BuildRequires:  openal-devel
 BuildRequires:  openssl-devel
 BuildRequires:  python-devel
 BuildRequires:  scons
-BuildRequires:	SDL-devel
-BuildRequires:	zlib-devel
+BuildRequires:  SDL-devel
+BuildRequires:  zlib-devel
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -61,7 +61,7 @@ install -p -D -m0644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/exp
 install -p -D -m0644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
 install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 desktop-file-install --vendor fedora                    \
-  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications   	\
+  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
   --add-category X-Fedora                               \
   %{SOURCE4}
 
