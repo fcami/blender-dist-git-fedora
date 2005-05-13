@@ -1,13 +1,13 @@
 Name:           blender
-Version:        2.35
-Release:        2
+Version:        2.36
+Release:        1
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:        http://download.blender.org/source/blender-2.35.tar.bz2
+Source0:        http://download.blender.org/source/blender-2.36.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
@@ -44,7 +44,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}
 
 
 %build
@@ -92,6 +92,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Fri May 13 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-1
+- Update to 2.36.
+- Rebuild with new gcc4.
+
 * Fri Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
 - rebuilt
 
