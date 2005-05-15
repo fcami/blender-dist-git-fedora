@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.36
-Release:        1
+Release:        2
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -13,6 +13,7 @@ Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
+Patch0:		blender-2.36-gcc4.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -45,7 +46,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %prep
 %setup -q -n %{name}
-
+%patch0 -p1 -b .gcc4
 
 %build
 sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
@@ -92,6 +93,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Sat May 14 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-2
+- Fix a gcc4 error.
+  
 * Fri May 13 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-1
 - Update to 2.36.
 - Rebuild with new gcc4.
