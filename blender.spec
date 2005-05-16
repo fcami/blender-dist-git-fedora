@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.36
-Release:        2
+Release:        3
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -93,6 +93,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Mon May 16 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-3
+- Bump and rebuild now that scons is available on all platforms.
+  
 * Sat May 14 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-2
 - Fix a gcc4 error.
   
