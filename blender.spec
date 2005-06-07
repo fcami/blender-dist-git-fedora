@@ -1,5 +1,5 @@
 Name:           blender
-Version:        2.36
+Version:        2.37
 Release:        3
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -7,13 +7,13 @@ Summary:        3D modeling, animation, rendering and post-production
 Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:        http://download.blender.org/source/blender-2.36.tar.gz
+Source0:        http://download.blender.org/source/blender-2.37.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
-Patch0:		blender-2.36-gcc4.patch
+Patch0:		blender-2.37-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -46,7 +46,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -b .gcc4
+%patch0 -p1 -b .x86_64
 
 %build
 sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
@@ -93,6 +93,16 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Mon Jun 6 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-3
+- Bump release for development.
+  
+* Sun Jun 5 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-2
+- Patch to fix compilation errors on x86_64.
+  
+* Sun Jun 5 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-1
+- Update to 2.37.
+- Drop gcc4 patch.
+  
 * Mon May 16 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-3
 - Bump and rebuild now that scons is available on all platforms.
   
