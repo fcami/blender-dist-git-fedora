@@ -13,7 +13,7 @@ Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
-Patch0:		blender-2.37-x86_64.patch
+Patch0:         blender-2.37-x86_64.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -95,20 +95,20 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %changelog
 * Mon Jun 6 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-3
 - Bump release for development.
-  
+
 * Sun Jun 5 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-2
 - Patch to fix compilation errors on x86_64.
-  
+
 * Sun Jun 5 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-1
 - Update to 2.37.
 - Drop gcc4 patch.
-  
+
 * Mon May 16 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-3
 - Bump and rebuild now that scons is available on all platforms.
-  
+
 * Sat May 14 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-2
 - Fix a gcc4 error.
-  
+
 * Fri May 13 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.36-1
 - Update to 2.36.
 - Rebuild with new gcc4.
