@@ -1,13 +1,13 @@
 Name:           blender
-Version:        2.37
-Release:        3
+Version:        2.40
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:        http://download.blender.org/source/blender-2.37.tar.gz
+Source0:        http://download.blender.org/source/blender-%{version}.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
@@ -45,8 +45,8 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1 -b .x86_64
+%setup -q 
+# %patch0 -p1 -b .x86_64
 
 %build
 sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
@@ -93,6 +93,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Wed Jan 18 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.40-1
+- New upstream release.
+
 * Mon Jun 6 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-3
 - Bump release for development.
 
