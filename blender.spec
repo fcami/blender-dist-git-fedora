@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.40
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,6 +31,12 @@ BuildRequires:  python-devel
 BuildRequires:  scons
 BuildRequires:  SDL-devel
 BuildRequires:  zlib-devel
+BuildRequires:  libtiff-devel
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  mesa-libGLU-devel
+buildRequires:  freetype-devel
+
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -93,8 +99,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
-* Wed Jan 18 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.40-1
+* Wed Jan 18 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.40-2
 - New upstream release.
+- adapting to mudular X.
+- add libtiff-devel as BuildRequires.
 
 * Mon Jun 6 2005 Toshio Kuratomi <toshio-tiki-lounge.com> 2.37-3
 - Bump release for development.
