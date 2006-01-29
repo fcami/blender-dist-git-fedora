@@ -1,6 +1,6 @@
 Name:           blender
-Version:        2.40
-Release:        2%{?dist}
+Version:        2.41
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -51,7 +51,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
 %prep
-%setup -q 
+%setup -q -n blender
 # %patch0 -p1 -b .x86_64
 
 %build
@@ -99,6 +99,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Sun Jan 30 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-1
+- Update to new upstream release.
+
 * Wed Jan 18 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.40-2
 - New upstream release.
 - adapting to mudular X.
