@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.41
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -13,7 +13,10 @@ Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
-Patch0:         blender-2.37-x86_64.patch
+
+# Patch0:         blender-2.37-x86_64.patch
+Patch1:		blender-2.41-alut.patch
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -25,7 +28,7 @@ BuildRequires:  libogg-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libtool
 BuildRequires:  libvorbis-devel
-BuildRequires:  openal-devel
+BuildRequires:  freealut-devel
 BuildRequires:  openssl-devel
 BuildRequires:  python-devel
 BuildRequires:  scons
@@ -53,6 +56,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q -n blender
 # %patch0 -p1 -b .x86_64
+%patch1 -p1 
 
 %build
 sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
@@ -99,6 +103,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Mon Feb  6 2006 Jochen Schmitt <Jochen herr-schmitt.de> 2.41-2
+- Add freealut as dependancy.
+
 * Sun Jan 30 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-1
 - Update to new upstream release.
 
