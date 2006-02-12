@@ -1,6 +1,6 @@
 Name:           blender
 Version:        2.41
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -103,6 +103,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
 %changelog
+* Sun Feb 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-3
+- Rebuild for FC5
+
 * Mon Feb  6 2006 Jochen Schmitt <Jochen herr-schmitt.de> 2.41-2
 - Add freealut as dependancy.
 
