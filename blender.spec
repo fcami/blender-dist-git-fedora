@@ -1,6 +1,9 @@
+%define blenderlib %{_datadir}/blender
+%define plugins %{_libdir}/blender/plugins
+
 Name:           blender
-Version:        2.41
-Release:        3%{?dist}
+Version:        2.42
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -13,9 +16,10 @@ Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
+Source6:        blender-wrapper
+Source7:	blender-2.42.config
 
-# Patch0:         blender-2.37-x86_64.patch
-Patch1:		blender-2.41-alut.patch
+Patch1:         blender-2.42-scons.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -54,24 +58,62 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 
 %prep
-%setup -q -n blender
-# %patch0 -p1 -b .x86_64
+%setup -q -n blender2.42
 %patch1 -p1 
 
 %build
-sed -i "s/use_openal =.*/use_openal = 'true'/g;" SConstruct
-scons
+cp %{SOURCE7} user-config.py
+scons %{?_smp_mflags} BF_QUIET=0 CCFLAGS="$RPM_OPT_FLAGS"
 
+install -d release/plugins/include
+install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
+
+chmod +x release/plugins/bmake
+
+make -C release/plugins/
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-install -D -m0755 blender ${RPM_BUILD_ROOT}/%{_bindir}/blender
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
-install -p -D -m0644 release/scripts/*.py ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/
-install -p -D -m0644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/import-3ds-0.7.py
-install -p -D -m0644 %{SOURCE2} ${RPM_BUILD_ROOT}%{_datadir}/blender/scripts/export-3ds-0.71.py
-install -p -D -m0644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
-install -p -D -m0644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+
+install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}/%{_bindir}/blender.bin
+
+install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
+
+# install -D -m 755 blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
+
+#
+#  Install miscellanous files to /usr/lib/blender
+#
+
+mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
+
+cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
+cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
+cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{blenderlib}
+
+install -p -D -m 644 release/scripts/*.py ${RPM_BUILD_ROOT}/%{blenderlib}
+
+install -m 644 release/VERSION ${RPM_BUILD_ROOT}/%{blenderlib}
+install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}/%{blenderlib}
+install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}/%{blenderlib}
+
+install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/import-3ds-0.7.py
+install -p -D -m 644 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/export-3ds-0.71.py
+
+install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
+
+install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+
+#
+# Install plugins
+#
+
+install -d ${RPM_BUILD_ROOT}/%{plugins}/sequence
+install -d ${RPM_BUILD_ROOT}/%{plugins}/texture
+
+install -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}/%{plugins}/sequence
+install -m 655 release/plugins/texture/*.so ${RPM_BUILD_ROOT}/%{plugins}/texture
+
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
   --add-category X-Fedora                               \
@@ -98,13 +140,17 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/*
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
-%{_datadir}/blender/
+%{blenderlib}/
+%ghost %{blenderlib}/*.pyo
+%{plugins}/
 %{_datadir}/mime/packages/blender.xml
 
-
 %changelog
+* Sun Jul 16 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-1
+- New upstream release.
+
 * Sun Feb 19 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-3
-- Rebuild for FC5
+- Rebuild for FC-5.
 
 * Mon Feb  6 2006 Jochen Schmitt <Jochen herr-schmitt.de> 2.41-2
 - Add freealut as dependancy.
