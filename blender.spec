@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release:        1%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -39,10 +39,12 @@ BuildRequires:  scons
 BuildRequires:  SDL-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libtiff-devel
+BuildRequires:  libXi-devel
 BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
+BuildRequires:  OpenEXR-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -146,6 +148,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon Jul 17 2006 Jochen Schmitt <jochen herr-schmitt de> 2.42-3
+- Fix some BR stuff.
+
 * Sun Jul 16 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-1
 - New upstream release.
 
