@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -58,14 +58,18 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
-
 %prep
 %setup -q -n blender2.42
-%patch1 -p1 
+%patch1 -p1 -b .org
 
 %build
 cp %{SOURCE7} user-config.py
-scons %{?_smp_mflags} BF_QUIET=0 CCFLAGS="$RPM_OPT_FLAGS"
+
+#
+# Don't use $RPM_OPT_FLAGS (see #199418)
+#
+
+scons %{?_smp_mflags} BF_QUIET=0
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -91,7 +95,7 @@ mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
 
 cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
 cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
-cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{blenderlib}
+cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
 
 install -p -D -m 644 release/scripts/*.py ${RPM_BUILD_ROOT}/%{blenderlib}
 
@@ -121,6 +125,7 @@ desktop-file-install --vendor fedora                    \
   --add-category X-Fedora                               \
   %{SOURCE4}
 
+%find_lang %name
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -136,18 +141,35 @@ update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
 update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 
-%files
+%files -f %name.lang
 %defattr(-,root,root,-)
 %doc COPYING README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/*
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
-%{blenderlib}/
+%dir %{blenderlib}
+%{blenderlib}/.*
+%{blenderlib}/VERSION
+%{blenderlib}/bpydata/
+%{blenderlib}/*.py
+%{blenderlib}/*.pyc
 %ghost %{blenderlib}/*.pyo
+%{blenderlib}/scripts/*[^o]
+%ghost %{blenderlib}/scripts/*.pyo
+%{blenderlib}/scripts/bpydata/*[^o]
+%ghost %{blenderlib}/scripts/bpydata/*.pyo
+%{blenderlib}/scripts/bpymodules/*.py
+%{blenderlib}/scripts/bpymodules/*.pyc
+%ghost %{blenderlib}/scripts/bpymodules/*.pyo
+%{blenderlib}/scripts/bpymodules/colladaImEx/*[^o]
+%ghost %{blenderlib}/scripts/bpymodules/colladaImEx/*.pyo
 %{plugins}/
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Jul 20 2006 Jochen Schmitt <jochen herr-schmitt de> 2.42-4
+- Fix UI Problem (#199418)
+
 * Mon Jul 17 2006 Jochen Schmitt <jochen herr-schmitt de> 2.42-3
 - Fix some BR stuff.
 
