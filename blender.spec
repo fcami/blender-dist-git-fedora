@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -167,6 +167,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Jul 26 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-5
+- Fix symlink in blender-wrapper to locale
+
 * Thu Jul 20 2006 Jochen Schmitt <jochen herr-schmitt de> 2.42-4
 - Fix UI Problem (#199418)
 
