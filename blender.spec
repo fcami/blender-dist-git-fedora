@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -147,26 +147,14 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/*
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
-%dir %{blenderlib}
-%{blenderlib}/.*
-%{blenderlib}/VERSION
-%{blenderlib}/bpydata/
-%{blenderlib}/*.py
-%{blenderlib}/*.pyc
-%ghost %{blenderlib}/*.pyo
-%{blenderlib}/scripts/*[^o]
-%ghost %{blenderlib}/scripts/*.pyo
-%{blenderlib}/scripts/bpydata/*[^o]
-%ghost %{blenderlib}/scripts/bpydata/*.pyo
-%{blenderlib}/scripts/bpymodules/*.py
-%{blenderlib}/scripts/bpymodules/*.pyc
-%ghost %{blenderlib}/scripts/bpymodules/*.pyo
-%{blenderlib}/scripts/bpymodules/colladaImEx/*[^o]
-%ghost %{blenderlib}/scripts/bpymodules/colladaImEx/*.pyo
+%{blenderlib}/
 %{plugins}/
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Aug 10 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-7
+- Remove %%ghost for pyo files for fullfilling new packaging guidelines
+
 * Thu Aug 10 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-6
 - Rebuilt to solve broken deps
 
