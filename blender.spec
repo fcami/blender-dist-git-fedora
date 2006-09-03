@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release: 	8%{?dist}
+Release: 	9%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,7 +26,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  desktop-file-utils
 BuildRequires:  esound-devel
 BuildRequires:  freeglut-devel
-BuildRequires:  gettext
+BuildRequires:  gettext-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libogg-devel
 BuildRequires:  libpng-devel
@@ -152,7 +152,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Sun Sep  3 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-8
+* Sun Sep  3 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-9
 - Rebuild for FC-6
 
 * Thu Aug 10 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-7
