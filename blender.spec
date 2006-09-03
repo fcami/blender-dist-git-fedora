@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42
-Release: 	7%{?dist}
+Release: 	8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -152,6 +152,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Sep  3 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-8
+- Rebuild for FC-6
+
 * Thu Aug 10 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-7
 - Remove %%ghost for pyo files for fullfilling new packaging guidelines
 
