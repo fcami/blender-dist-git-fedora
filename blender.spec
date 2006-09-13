@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -154,7 +154,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Wed Sep 13 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-1
+* Wed Sep 13 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-2
 - Update to new upstream release
 
 * Tue Sep 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-10
