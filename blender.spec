@@ -2,8 +2,8 @@
 %define plugins %{_libdir}/blender/plugins
 
 Name:           blender
-Version:        2.42
-Release: 	10%{?dist}
+Version:        2.42a
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -59,8 +59,8 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %prep
-%setup -q -n blender2.42
-%patch1 -p1 -b .org
+%setup -q 
+%patch1 -p1
 
 %build
 cp %{SOURCE7} user-config.py
@@ -69,7 +69,7 @@ cp %{SOURCE7} user-config.py
 # Don't use $RPM_OPT_FLAGS (see #199418)
 #
 
-scons %{?_smp_mflags} BF_QUIET=0
+scons %{?_smp_mflags} blenderplayer BF_QUIET=0
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -82,6 +82,8 @@ make -C release/plugins/
 rm -rf ${RPM_BUILD_ROOT}
 
 install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}/%{_bindir}/blender.bin
+
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
 
 install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
 
@@ -152,6 +154,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Sep 13 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-1
+- Update to new upstream release
+
 * Tue Sep 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42-10
 - Rebuild to solve broken deps
 
