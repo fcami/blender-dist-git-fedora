@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -97,6 +97,12 @@ mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
 
 cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
 cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
+
+pushd bin/.blender/locale
+mv pt_br pt_BR
+mv zh_cn uh_CN
+popd
+
 cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
 
 install -p -D -m 644 release/scripts/*.py ${RPM_BUILD_ROOT}/%{blenderlib}
@@ -154,6 +160,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Oct 11 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-3
+- Correct invalid locale paths (#210209)
+
 * Wed Sep 13 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-2
 - Update to new upstream release
 
