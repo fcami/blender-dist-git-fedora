@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -156,10 +156,13 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
 %{blenderlib}/
-%{plugins}/
+%{_libdir}/blender/
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon Oct 16 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-4
+- /usr/lib/blender should own by the package
+
 * Wed Oct 11 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-3
 - Correct invalid locale paths (#210209)
 
