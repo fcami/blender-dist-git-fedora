@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -160,6 +160,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Oct 31 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-5
+- Rebuilt to fix broken deps
+
 * Mon Oct 16 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-4
 - /usr/lib/blender should own by the package
 
