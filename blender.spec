@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -160,6 +160,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon Dec 11 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-7
+- New build to solve broken deps
+
 * Wed Nov 29 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-6
 - Rebuild to solve broken deps
 
