@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	9%{?dist}
+Release: 	10%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -45,6 +45,8 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
+
+ExcludeArch: x86_64
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -160,6 +162,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-10
+- Exclude x86_64 arch (#219329)
+
 * Mon Dec 11 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-9
 - New build to solve broken deps
 
