@@ -1,0 +1,26 @@
+--- source/gameengine/Expressions/ListValue.cpp~	2006-12-12 09:49:00.000000000 -0800
++++ source/gameengine/Expressions/ListValue.cpp	2006-12-12 09:50:57.000000000 -0800
+@@ -23,12 +23,12 @@
+ #include <config.h>
+ #endif
+ 
+-int listvalue_bufferlen(PyObject* list)
++Py_ssize_t listvalue_bufferlen(PyObject* list)
+ {
+ 	return ( ((CListValue*)list)->GetCount());
+ }
+ 
+-PyObject* listvalue_buffer_item(PyObject* list,int index)
++PyObject* listvalue_buffer_item(PyObject* list,Py_ssize_t index)
+ {
+ 	if (index >= 0 && index < ((CListValue*) list)->GetCount())
+ 	{
+@@ -68,7 +68,7 @@
+ 
+ 
+ /* just slice it into a python list... */
+-PyObject* listvalue_buffer_slice(PyObject* list,int ilow, int ihigh)
++PyObject* listvalue_buffer_slice(PyObject* list,Py_ssize_t ilow, Py_ssize_t ihigh)
+ {
+ 	int i, j;
+ 	PyListObject *newlist;

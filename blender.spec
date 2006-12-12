@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	11%{?dist}
+Release: 	12%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -20,7 +20,7 @@ Source6:        blender-wrapper
 Source7:	blender-2.42.config
 
 Patch1:         blender-2.42-scons.patch
-Patch2:		blender-2.42a-x65.patch
+Patch2:		blender-2.42a-x64.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -162,6 +162,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-12
+- Fix typo
+
 * Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-11
 - Try x64-patch for complle with python-2.5
 
