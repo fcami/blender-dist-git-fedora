@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	10%{?dist}
+Release: 	11%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -20,6 +20,7 @@ Source6:        blender-wrapper
 Source7:	blender-2.42.config
 
 Patch1:         blender-2.42-scons.patch
+Patch2:		blender-2.42a-x65.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -46,8 +47,6 @@ BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 
-ExcludeArch: x86_64
-
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -63,6 +62,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp %{SOURCE7} user-config.py
@@ -162,6 +162,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-11
+- Try x64-patch for complle with python-2.5
+
 * Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-10
 - Exclude x86_64 arch (#219329)
 
