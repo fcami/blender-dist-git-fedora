@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	13%{?dist}
+Release: 	14%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -62,7 +62,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1
-%patch2 -p1
+%patch2 -p0
 
 %build
 cp %{SOURCE7} user-config.py
@@ -162,7 +162,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Thu Dec 14 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-13
+* Thu Dec 14 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-14
 - Rebuild
 
 * Tue Dec 12 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-12
