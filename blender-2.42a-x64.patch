@@ -1,5 +1,5 @@
 --- blender-2.42a/source/gameengine/Expressions/ListValue.cpp.org	2004-06-07 13:03:11.000000000 +0200
-+++ blender-2.42a/source/gameengine/Expressions/ListValue.cpp	2006-12-14 19:35:46.000000000 +0100
++++ blender-2.42a/source/gameengine/Expressions/ListValue.cpp	2006-12-14 20:45:37.000000000 +0100
 @@ -23,12 +23,12 @@
  #include <config.h>
  #endif
@@ -24,8 +24,12 @@
  {
  	int i, j;
  	PyListObject *newlist;
-@@ -166,8 +166,8 @@
- 	(inquiry)listvalue_bufferlen,//(inquiry)buffer_length, /*sq_length*/
+@@ -163,11 +163,11 @@
+ 
+ 
+ static PySequenceMethods listvalue_as_sequence = {
+-	(inquiry)listvalue_bufferlen,//(inquiry)buffer_length, /*sq_length*/
++	(lenfunc)listvalue_bufferlen,//(inquiry)buffer_length, /*sq_length*/
  	(binaryfunc)listvalue_buffer_concat, /*sq_concat*/
  	0,//(intargfunc)buffer_repeat, /*sq_repeat*/
 -	(intargfunc)listvalue_buffer_item, /*sq_item*/
@@ -34,4 +38,13 @@
 +	(ssizessizeargfunc)listvalue_buffer_slice, /*sq_slice*/
  	0,//(intobjargproc)buffer_ass_item, /*sq_ass_item*/
  	0,//(intintobjargproc)buffer_ass_slice, /*sq_ass_slice*/
+ };
+@@ -176,7 +176,7 @@
+ 
+ /* Is this one used ? */
+ static PyMappingMethods instance_as_mapping = {
+-	(inquiry)listvalue_bufferlen, /*mp_length*/
++	(lenfunc)listvalue_bufferlen, /*mp_length*/
+ 	(binaryfunc)listvalue_mapping_subscript, /*mp_subscript*/
+ 	0,//(objobjargproc)instance_ass_subscript, /*mp_ass_subscript*/
  };
