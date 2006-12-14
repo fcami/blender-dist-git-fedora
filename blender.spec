@@ -62,7 +62,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1
-%patch2 -p0
+%patch2 -p1 -b .org
 
 %build
 cp %{SOURCE7} user-config.py
