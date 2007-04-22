@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	18%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -20,7 +20,6 @@ Source6:        blender-wrapper
 Source7:	blender-2.42.config
 
 Patch1:         blender-2.42-scons.patch
-Patch2:		blender-2.42a-x64.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -52,6 +51,8 @@ Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
+ExcludeArch:	x86_64
+
 %description
 Blender is the essential software solution you need for 3D, from modeling,
 animation, rendering and post-production to interactive creation and playback.
@@ -62,7 +63,6 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1
-%patch2 -p1 -b .org
 
 %build
 cp %{SOURCE7} user-config.py
@@ -162,6 +162,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Apr 22 2007 Jochen Schmitt <Jochen herr-schmitt de> - 2.42a-5
+- Romove package from the x86_64 arc (#237423)
+
 * Mon Jan  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-18
 - Rebult
 
