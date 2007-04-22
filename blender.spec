@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	5%{?dist}
+Release: 	19%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -162,8 +162,8 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Sun Apr 22 2007 Jochen Schmitt <Jochen herr-schmitt de> - 2.42a-5
-- Romove package from the x86_64 arc (#237423)
+* Sun Apr 22 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-19
+- Romove package from the x86_64 arch (#237423)
 
 * Mon Jan  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-18
 - Rebult
