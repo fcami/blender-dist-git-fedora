@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	20%{?dist}
+Release: 	21%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -120,6 +120,8 @@ install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 
+rm ${RPM_BUILD_ROOT}/%{blenderlib}/scripts/kmz_ImportWithMesh.*
+
 #
 # Install plugins
 #
@@ -162,6 +164,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon May  7 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-21
+- Fix security issue (#239338)
+
 * Sun Apr 22 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-20
 - Romove package from the x86_64 arch (#237423)
 
