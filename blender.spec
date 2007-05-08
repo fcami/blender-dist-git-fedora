@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	22%{?dist}
+Release: 	23%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -51,7 +51,7 @@ Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
-ExcludeArch:	x86_64, ppc64
+ExcludeArch:	x86_64 ppc64
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -164,7 +164,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Tue May  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-22
+* Tue May  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-23
 - Exclude ppc64 arch
 
 * Mon May  7 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-21
