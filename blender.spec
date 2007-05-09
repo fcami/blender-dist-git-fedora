@@ -3,14 +3,20 @@
 
 Name:           blender
 Version:        2.42a
-Release: 	23%{?dist}
+Release: 	24%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPL
 URL:            http://www.blender.org
-Source0:        http://download.blender.org/source/blender-%{version}.tar.gz
+# During a Legel issue (#239476) the package contains a cusromized
+# source package created as fellow.
+# wget http://download.blender.org/source/blender-%{version}.tar.gz
+# tar -zxv blender-%{version}.tar.gz
+# rm -rf blender-%{version}/extern/ffmpeg
+# tar -zcf blender-%{version}.tar.gz blender-%{version}/
+Source0:	blender-%{version}.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
@@ -164,6 +170,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed May  9 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-24
+- Remove ffmpeg lib during a legal issue (#239476)
+
 * Tue May  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-23
 - Exclude ppc64 arch
 
