@@ -1,9 +1,10 @@
 %define blenderlib %{_datadir}/blender
 %define plugins %{_libdir}/blender/plugins
+%define pyver %(%{__python} -c "import sys ; print sys.version[:3]")
 
 Name:           blender
-Version:        2.42a
-Release: 	24%{?dist}
+Version:        2.44
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -15,15 +16,15 @@ URL:            http://www.blender.org
 # wget http://download.blender.org/source/blender-%{version}.tar.gz
 # tar -zxv blender-%{version}.tar.gz
 # rm -rf blender-%{version}/extern/ffmpeg
-# tar -zcf blender-%{version}.tar.gz blender-%{version}/
-Source0:	blender-%{version}.tar.gz
+# tar -zcf blender-%{version}-noffmpeg.tar.gz blender-%{version}/
+Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
 Source6:        blender-wrapper
-Source7:	blender-2.42.config
+Source7:	blender-2.44.config
 
 Patch1:         blender-2.42-scons.patch
 
@@ -52,12 +53,12 @@ BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 
+Requires: python-abi = %{pyver}
+
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
-
-ExcludeArch:	x86_64 ppc64
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -69,9 +70,10 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1
+sed -e 's|@LIB@|%{_libdir}|g' -e 's/@PYVER@/%{pyver}/g' \
+	 <%{SOURCE7} >user-config.py
 
 %build
-cp %{SOURCE7} user-config.py
 
 #
 # Don't use $RPM_OPT_FLAGS (see #199418)
@@ -126,8 +128,6 @@ install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 
-rm ${RPM_BUILD_ROOT}/%{blenderlib}/scripts/kmz_ImportWithMesh.*
-
 #
 # Install plugins
 #
@@ -170,6 +170,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue May 15 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-1
+- New upstream release
+
 * Wed May  9 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.42a-24
 - Remove ffmpeg lib during a legal issue (#239476)
 
