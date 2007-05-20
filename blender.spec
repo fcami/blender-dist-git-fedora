@@ -4,7 +4,7 @@
 
 Name:           blender
 Version:        2.44
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -170,6 +170,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun May 20 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-2
+- Increase release number
+
 * Tue May 15 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-1
 - New upstream release
 
