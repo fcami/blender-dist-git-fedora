@@ -1,0 +1,11 @@
+--- blender-2.44/SConstruct.orig	2007-05-07 18:09:40.000000000 +0200
++++ blender-2.44/SConstruct	2007-05-20 22:52:13.000000000 +0200
+@@ -237,7 +242,7 @@
+ 
+         def CheckFreeAlut(context,env):
+             context.Message( B.bc.OKGREEN + "Linux platform detected:\n  checking for FreeAlut... " + B.bc.ENDC )
+-            env['LIBS'] = 'alut'
++            env['LIBS'] = ['alut', 'openal']
+             result = context.TryLink(mylib_test_source_file, '.c')
+             context.Result(result)
+             return result
