@@ -4,7 +4,7 @@
 
 Name:           blender
 Version:        2.44
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,7 +26,7 @@ Source5:        blender.xml
 Source6:        blender-wrapper
 Source7:	blender-2.44.config
 
-Patch1:         blender-2.42-scons.patch
+Patch1:         blender-2.44-scons.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -69,7 +69,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %prep
 %setup -q 
-%patch1 -p1
+%patch1 -p1 -b .org
 sed -e 's|@LIB@|%{_libdir}|g' -e 's/@PYVER@/%{pyver}/g' \
 	 <%{SOURCE7} >user-config.py
 
@@ -170,6 +170,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon May 21 2007 Jochen Schmitt <Jochen herr-schmitt de> - 2.44-3
+- Use of $$RPM_OPT_FLAGS to compile blender
+
 * Sun May 20 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-2
 - Increase release number
 
