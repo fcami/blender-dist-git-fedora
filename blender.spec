@@ -4,12 +4,12 @@
 
 Name:           blender
 Version:        2.44
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
-License:        GPL
+License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
@@ -170,7 +170,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Mon May 21 2007 Jochen Schmitt <Jochen herr-schmitt de> - 2.44-4
+* Wed Aug  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-5
+- Changing license tag
+
+* Mon May 21 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-4
 - Use of $$RPM_OPT_FLAGS to compile blender
 
 * Sun May 20 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-2
