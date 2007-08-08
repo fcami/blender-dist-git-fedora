@@ -4,7 +4,7 @@
 
 Name:           blender
 Version:        2.44
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -52,6 +52,7 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
+BuildRequires:  python
 
 Requires: python-abi = %{pyver}
 
@@ -170,8 +171,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Wed Aug  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-5
+* Wed Aug  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-6
 - Changing license tag
+- Add python as an BR
 
 * Mon May 21 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-4
 - Use of $$RPM_OPT_FLAGS to compile blender
