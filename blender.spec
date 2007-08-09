@@ -4,7 +4,7 @@
 
 Name:           blender
 Version:        2.44
-Release: 	7%{?dist}
+Release: 	8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,6 +27,7 @@ Source6:        blender-wrapper
 Source7:	blender-2.44.config
 
 Patch1:         blender-2.44-scons.patch
+Patch2:		blender-2.44-bid.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -68,6 +69,8 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %prep
 %setup -q 
 %patch1 -p1 -b .org
+%patch2 -p1 -b .bid
+
 sed -e 's|@LIB@|%{_libdir}|g' -e 's/@PYVER@/%{pyver}/g' \
 	 <%{SOURCE7} >user-config.py
 
@@ -168,7 +171,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Thu Aug  9 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-7
+* Thu Aug  9 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-8
 - Fix koji-python issue
 
 * Wed Aug  8 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-6
