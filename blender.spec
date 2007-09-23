@@ -1,10 +1,9 @@
 %define blenderlib %{_datadir}/blender
 %define plugins %{_libdir}/blender/plugins
-%define pyver %(%{__python} -c "import sys ; print sys.version[:3]")
 
 Name:           blender
 Version:        2.45
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -71,7 +70,9 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
-sed -e 's|@LIB@|%{_libdir}|g' -e 's/@PYVER@/%{pyver}/g' \
+PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
+
+sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE7} >user-config.py
 
 %build
@@ -171,6 +172,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Sep 23 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-2
+- Change method how to determinate python version
+
 * Thu Sep 20 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-1
 - New upstream release
 
