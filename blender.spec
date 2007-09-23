@@ -3,8 +3,8 @@
 %define pyver %(%{__python} -c "import sys ; print sys.version[:3]")
 
 Name:           blender
-Version:        2.44
-Release: 	8%{?dist}
+Version:        2.45
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -112,6 +112,7 @@ cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
 pushd bin/.blender/locale
 mv pt_br pt_BR
 mv zh_cn uh_CN
+rm -rf $(find -name '.svn' -print)
 popd
 
 cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
@@ -149,7 +150,6 @@ desktop-file-install --vendor fedora                    \
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
-
 %post
 update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
 update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
@@ -171,6 +171,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Sep 20 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-1
+- New upstream release
+
 * Thu Aug  9 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.44-8
 - Fix koji-python issue
 
