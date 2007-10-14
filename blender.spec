@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -172,6 +172,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Oct 14 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-3
+- Rebuild
+
 * Sun Sep 23 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-2
 - Change method how to determinate python version
 
