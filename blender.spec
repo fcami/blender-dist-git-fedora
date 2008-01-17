@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,6 +27,7 @@ Source7:	blender-2.44.config
 
 Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
+Patch3:		blender-2.45-gcc43.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -69,6 +70,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %setup -q 
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
+%patch3 -p1 -b .gcc43
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -172,6 +174,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Jan 17 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-5
+- Fix gcc-4.3 related issues
+
 * Tue Oct 16 2007 Jochen Schmitt <Jochen herr-schmitt de> 2.45-4
 - Rebuild again for OpenEXR
 

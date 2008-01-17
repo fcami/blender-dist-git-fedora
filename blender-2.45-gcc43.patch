@@ -1,0 +1,87 @@
+diff -up blender-2.45/source/blender/yafray/intern/yafray_Render.cpp.gcc43 blender-2.45/source/blender/yafray/intern/yafray_Render.cpp
+--- blender-2.45/source/blender/yafray/intern/yafray_Render.cpp.gcc43	2007-09-18 06:58:44.000000000 +0200
++++ blender-2.45/source/blender/yafray/intern/yafray_Render.cpp	2008-01-17 20:49:05.000000000 +0100
+@@ -8,6 +8,8 @@
+ 
+ #include <math.h>
+ 
++#include <cstring>
++
+ using namespace std;
+ 
+ void yafrayRender_t::clearAll()
+diff -up blender-2.45/source/blender/yafray/intern/export_File.cpp.gcc43 blender-2.45/source/blender/yafray/intern/export_File.cpp
+--- blender-2.45/source/blender/yafray/intern/export_File.cpp.gcc43	2007-09-18 06:58:44.000000000 +0200
++++ blender-2.45/source/blender/yafray/intern/export_File.cpp	2008-01-17 20:49:05.000000000 +0100
+@@ -2,6 +2,8 @@
+ 
+ #include <math.h>
+ 
++#include <cstring>
++
+ using namespace std;
+ 
+ static string command_path = "";
+diff -up blender-2.45/source/blender/yafray/intern/export_Plugin.cpp.gcc43 blender-2.45/source/blender/yafray/intern/export_Plugin.cpp
+--- blender-2.45/source/blender/yafray/intern/export_Plugin.cpp.gcc43	2007-09-18 06:58:44.000000000 +0200
++++ blender-2.45/source/blender/yafray/intern/export_Plugin.cpp	2008-01-17 20:49:05.000000000 +0100
+@@ -1,6 +1,9 @@
+ #include "export_Plugin.h"
+ 
+ #include <math.h>
++
++#include <cstring>
++
+ using namespace std;
+ 
+ 
+diff -up blender-2.45/source/gameengine/GamePlayer/common/GPC_KeyboardDevice.cpp.gcc43 blender-2.45/source/gameengine/GamePlayer/common/GPC_KeyboardDevice.cpp
+--- blender-2.45/source/gameengine/GamePlayer/common/GPC_KeyboardDevice.cpp.gcc43	2008-01-17 20:56:36.000000000 +0100
++++ blender-2.45/source/gameengine/GamePlayer/common/GPC_KeyboardDevice.cpp	2008-01-17 20:57:03.000000000 +0100
+@@ -32,6 +32,8 @@
+ 
+ #include "GPC_KeyboardDevice.h"
+ 
++#include <cstdlib>
++
+ /** 
+  * NextFrame toggles currentTable with previousTable,
+  * and copies relevant event information from previous to current table
+diff -up blender-2.45/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h.gcc43 blender-2.45/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h
+--- blender-2.45/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h.gcc43	2007-09-18 06:58:17.000000000 +0200
++++ blender-2.45/source/gameengine/Rasterizer/RAS_OpenGLRasterizer/RAS_GLExtensionManager.h	2008-01-17 20:49:05.000000000 +0100
+@@ -56,7 +56,7 @@
+ #  undef GL_ARB_vertex_program
+ #endif
+ 
+-#include "glext.h"
++// #include "glext.h"
+ 
+ #include "EXT_separate_specular_color.h"
+ #include "ARB_multitexture.h"
+diff -up blender-2.45/intern/string/STR_String.h.gcc43 blender-2.45/intern/string/STR_String.h
+--- blender-2.45/intern/string/STR_String.h.gcc43	2007-09-18 06:58:01.000000000 +0200
++++ blender-2.45/intern/string/STR_String.h	2008-01-17 20:49:05.000000000 +0100
+@@ -47,6 +47,10 @@
+ 
+ #include <vector>
+ #include <limits.h>
++
++#include <cstring>
++#include <cstdlib>
++
+ using namespace std;
+ 
+ 
+diff -up blender-2.45/intern/ghost/intern/GHOST_WindowX11.cpp.gcc43 blender-2.45/intern/ghost/intern/GHOST_WindowX11.cpp
+--- blender-2.45/intern/ghost/intern/GHOST_WindowX11.cpp.gcc43	2007-09-18 06:57:51.000000000 +0200
++++ blender-2.45/intern/ghost/intern/GHOST_WindowX11.cpp	2008-01-17 20:49:05.000000000 +0100
+@@ -42,6 +42,8 @@
+ #include <strings.h>
+ #endif
+ 
++#include <cstring>
++#include <cstdio>
+ 
+ // For obscure full screen mode stuuf
+ // lifted verbatim from blut.
