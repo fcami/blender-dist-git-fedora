@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -174,6 +174,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sat Jan 26 2008 Alex Lancaster <alexlan[AT]fedoraproject org> - 2.45-6
+- Rebuild for new gettext
+
 * Thu Jan 17 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-5
 - Fix gcc-4.3 related issues
 
