@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	7%{?dist}
+Release: 	8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -28,6 +28,7 @@ Source7:	blender-2.44.config
 Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.45-gcc43.patch
+Patch4:         blender-2.45-yafray.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -71,6 +72,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 %patch3 -p1 -b .gcc43
+%patch4 -p1
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -174,6 +176,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Feb 28 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.45-8
+- Fix yafray load bug (#451571)
+
 * Sun Feb 10 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-7
 - Rebuild for gcc-4.3
 
