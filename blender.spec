@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	8%{?dist}
+Release: 	9%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -72,7 +72,10 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 %patch3 -p1 -b .gcc43
+
+%if "%{?_lib}" == "lib64"
 %patch4 -p1
+%endif
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -176,13 +179,16 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Thu Feb 28 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.45-8
+* Tue Mar  4 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-9
+- Apply yafray patch only on 64-bit systems
+
+* Thu Feb 28 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-8
 - Fix yafray load bug (#451571)
 
 * Sun Feb 10 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-7
 - Rebuild for gcc-4.3
 
-* Sat Jan 26 2008 Alex Lancaster <alexlan[AT]fedoraproject org> - 2.45-6
+* Sat Jan 26 2008 Alex Lancaster <alexlan[AT]fedoraproject org> 2.45-6
 - Rebuild for new gettext
 
 * Thu Jan 17 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-5
