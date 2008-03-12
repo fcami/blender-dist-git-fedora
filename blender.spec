@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	9%{?dist}
+Release: 	10%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -66,6 +66,9 @@ animation, rendering and post-production to interactive creation and playback.
 
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
+
+This version doesn't contains ffmpeg support, so that any features may be not
+available.
 
 %prep
 %setup -q 
@@ -179,6 +182,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Mar 12 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-10
+- Clarification of restrictions caused by legal issues
+
 * Tue Mar  4 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-9
 - Apply yafray patch only on 64-bit systems
 
