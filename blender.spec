@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	10%{?dist}
+Release: 	11%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -29,6 +29,8 @@ Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.45-gcc43.patch
 Patch4:         blender-2.45-yafray.patch
+
+Patch100:	blender-2.45-cve-2008-1102.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -76,9 +78,12 @@ available.
 %patch2 -p1 -b .bid
 %patch3 -p1 -b .gcc43
 
+
 %if "%{?_lib}" == "lib64"
 %patch4 -p1
 %endif
+
+%patch100 -p1 -b .cve
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -182,6 +187,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Apr 24 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-11
+- Fix CVS-2008-1102 (#443937)
+
 * Wed Mar 12 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-10
 - Clarification of restrictions caused by legal issues
 
