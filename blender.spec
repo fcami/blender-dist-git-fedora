@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	11%{?dist}
+Release: 	12%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -29,6 +29,7 @@ Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.45-gcc43.patch
 Patch4:         blender-2.45-yafray.patch
+Patch5:		blender-2.45-sc.patch
 
 Patch100:	blender-2.45-cve-2008-1102.patch
 
@@ -77,6 +78,7 @@ available.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 %patch3 -p1 -b .gcc43
+%patch5 -p1 -b .scons
 
 
 %if "%{?_lib}" == "lib64"
@@ -187,6 +189,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Apr 24 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-12
+- Fix odd scons compatibility issue
+
 * Thu Apr 24 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-11
 - Fix CVS-2008-1102 (#443937)
 
