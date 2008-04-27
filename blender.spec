@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.45
-Release: 	12%{?dist}
+Release: 	13%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -189,6 +189,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Apr 27 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-13
+- More generic patch for scons issue
+
 * Thu Apr 24 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-12
 - Fix odd scons compatibility issue
 
