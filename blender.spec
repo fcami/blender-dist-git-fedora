@@ -2,8 +2,8 @@
 %define plugins %{_libdir}/blender/plugins
 
 Name:           blender
-Version:        2.45
-Release: 	13%{?dist}
+Version:        2.46
+Release: 	0.3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,11 +12,10 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# wget http://download.blender.org/source/blender-%{version}.tar.gz
-# tar -zxv blender-%{version}.tar.gz
-# rm -rf blender-%{version}/extern/ffmpeg
-# tar -zcf blender-%{version}-noffmpeg.tar.gz blender-%{version}/
-Source0:	blender-%{version}-noffmpeg.tar.gz
+# svn checkout -r 14623 https://svn.blender.org/svnroot/bf-blender/trunk/blender
+# rm -rf blender/extern/ffmpeg
+# tar -zcf blender-2.46rc3-noffmpeg.tar.gz blender/
+Source0:	blender-%{version}rc3-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
@@ -27,11 +26,6 @@ Source7:	blender-2.44.config
 
 Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
-Patch3:		blender-2.45-gcc43.patch
-Patch4:         blender-2.45-yafray.patch
-Patch5:		blender-2.45-sc.patch
-
-Patch100:	blender-2.45-cve-2008-1102.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -74,18 +68,10 @@ This version doesn't contains ffmpeg support, so that any features may be not
 available.
 
 %prep
-%setup -q 
+%setup -q -n blender
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
-%patch3 -p1 -b .gcc43
-%patch5 -p1 -b .scons
 
-
-%if "%{?_lib}" == "lib64"
-%patch4 -p1
-%endif
-
-%patch100 -p1 -b .cve
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -128,8 +114,7 @@ cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
 cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
 
 pushd bin/.blender/locale
-mv pt_br pt_BR
-mv zh_cn uh_CN
+
 rm -rf $(find -name '.svn' -print)
 popd
 
@@ -189,6 +174,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue May  6 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-0.3
+- Release Canditate for 2.46
+
 * Sun Apr 27 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.45-13
 - More generic patch for scons issue
 
