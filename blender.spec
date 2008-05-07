@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.46
-Release: 	0.3%{?dist}
+Release: 	0.3.1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,6 +26,8 @@ Source7:	blender-2.44.config
 
 Patch1:         blender-2.44-scons.patch
 Patch2:		blender-2.44-bid.patch
+
+Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -72,6 +74,7 @@ available.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
+%patch100 -p1 -b .cve
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -174,6 +177,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed May  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-0.3.1
+- Some fixes for CVE-2008-1003
+
 * Tue May  6 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-0.3
 - Release Canditate for 2.46
 
