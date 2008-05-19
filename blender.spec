@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.46
-Release: 	0.3.1%{?dist}
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,10 +12,13 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# svn checkout -r 14623 https://svn.blender.org/svnroot/bf-blender/trunk/blender
+# wget https://download.blender.org/source/blender-46.tar.gz
+# tar -zxvf blender-46.tar.gz
+# cd blender-2.46/extern
 # rm -rf blender/extern/ffmpeg
-# tar -zcf blender-2.46rc3-noffmpeg.tar.gz blender/
-Source0:	blender-%{version}rc3-noffmpeg.tar.gz
+# cd ../..
+# tar -zcf blender-2.46-noffmpeg.tar.gz blender/
+Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
 Source3:        blender.png
@@ -70,7 +73,7 @@ This version doesn't contains ffmpeg support, so that any features may be not
 available.
 
 %prep
-%setup -q -n blender
+%setup -q 
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
@@ -177,6 +180,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon May 19 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.46-1
+- New upstream release
+
 * Wed May  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-0.3.1
 - Some fixes for CVE-2008-1003
 
