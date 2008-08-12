@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	0.1%{?dist}
+Release: 	0.2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -179,10 +179,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Tue Aug 12 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.47-0.1
+* Tue Aug 12 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-0.2
 - New upstream release (blender-2.47rc)
 
-* Mon May 19 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.46-1
+* Mon May 19 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-1
 - New upstream release
 
 * Wed May  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.46-0.3.1
