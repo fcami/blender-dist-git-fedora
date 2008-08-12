@@ -2,8 +2,8 @@
 %define plugins %{_libdir}/blender/plugins
 
 Name:           blender
-Version:        2.46
-Release: 	1%{?dist}
+Version:        2.47
+Release: 	0.1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,12 +12,11 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# wget https://download.blender.org/source/blender-46.tar.gz
-# tar -zxvf blender-46.tar.gz
-# cd blender-2.46/extern
+# svn co https://svn.blender.org/svnroot/bf-blender/branches/blender-2.47
+# cd blender-2.47/extern
 # rm -rf blender/extern/ffmpeg
 # cd ../..
-# tar -zcf blender-2.46-noffmpeg.tar.gz blender/
+# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2.47/
 Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
@@ -180,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Aug 12 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.47-0.1
+- New upstream release (blender-2.47rc)
+
 * Mon May 19 2008 Jochen Schmitt <Jochen herr-schmitt de> - 2.46-1
 - New upstream release
 
