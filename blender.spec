@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	0.2%{?dist}
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,11 +12,11 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# svn co https://svn.blender.org/svnroot/bf-blender/branches/blender-2.47
-# cd blender-2.47/extern
+# svn co https://svn.blender.org/svnroot/bf-blender/tags/blender-2-47-release
+# cd blender-2-47-release/extern
 # rm -rf blender/extern/ffmpeg
 # cd ../..
-# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2.47/
+# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2-47-release/
 Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
@@ -72,7 +72,7 @@ This version doesn't contains ffmpeg support, so that any features may be not
 available.
 
 %prep
-%setup -q 
+%setup -q -n blender-2-47-release
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
@@ -179,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Aug 14 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-1
+- New upstream release
+
 * Tue Aug 12 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-0.2
 - New upstream release (blender-2.47rc)
 
