@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,11 +12,11 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# svn co https://svn.blender.org/svnroot/bf-blender/tags/blender-2-47-release
-# cd blender-2-47-release/extern
-# rm -rf blender/extern/ffmpeg
+# wget http://download.blender.org/sorce/blender-2.47.tar.gz
+# cd blender-2-47/extern
+# rm -rf ffmpeg libmp3lame
 # cd ../..
-# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2-47-release/
+# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2-47/
 Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
