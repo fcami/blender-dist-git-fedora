@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -72,7 +72,7 @@ This version doesn't contains ffmpeg support, so that any features may be not
 available.
 
 %prep
-%setup -q -n blender-2-47-release
+%setup -q 
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
@@ -179,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Sep  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-3
+- Fix prerelease SPEC file
+
 * Thu Aug 14 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-1
 - New upstream release
 
