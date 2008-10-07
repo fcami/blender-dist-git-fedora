@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -115,8 +115,6 @@ install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
 
 mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
 
-cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
-
 pushd bin/.blender/locale
 
 rm -rf $(find -name '.svn' -print)
@@ -125,7 +123,8 @@ popd
 cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
 
 install -d ${RPM_BUILD_ROOT}/%{blenderlib}/scripts
-install -p -m 644 release/scripts/*.p* ${RPM_BUILD_ROOT}/%{blenderlib}/scripts/
+
+cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}/%{blenderlib}/scripts
 
 install -m 644 release/VERSION ${RPM_BUILD_ROOT}/%{blenderlib}
 install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}/%{blenderlib}
@@ -179,6 +178,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Oct  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-5
+- Reorganisation directory structure to fix sysinfo.py issue
+
 * Tue Oct  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-4
 - Avoid duplicate python script (#465810)
 
