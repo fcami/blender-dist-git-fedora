@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -116,7 +116,6 @@ install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
 mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
 
 cp -a release/scripts/bpydata ${RPM_BUILD_ROOT}/%{blenderlib}
-cp -a release/scripts ${RPM_BUILD_ROOT}/%{blenderlib}
 
 pushd bin/.blender/locale
 
@@ -125,14 +124,15 @@ popd
 
 cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
 
-install -p -D -m 644 release/scripts/*.py ${RPM_BUILD_ROOT}/%{blenderlib}
+install -d ${RPM_BUILD_ROOT}/%{blenderlib}/scripts
+install -p -m 644 release/scripts/*.p* ${RPM_BUILD_ROOT}/%{blenderlib}/scripts/
 
 install -m 644 release/VERSION ${RPM_BUILD_ROOT}/%{blenderlib}
 install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}/%{blenderlib}
 install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}/%{blenderlib}
 
-install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/import-3ds-0.7.py
-install -p -D -m 644 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/export-3ds-0.71.py
+install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/import-3ds-0.7.py
+install -p -D -m 644 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/export-3ds-0.71.py
 
 install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
 
@@ -179,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Oct  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-4
+- Avoid duplicate python script (#465810)
+
 * Sun Sep  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-3
 - Fix prerelease SPEC file
 
