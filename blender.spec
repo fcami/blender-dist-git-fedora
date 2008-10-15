@@ -2,8 +2,8 @@
 %define plugins %{_libdir}/blender/plugins
 
 Name:           blender
-Version:        2.47
-Release: 	6%{?dist}
+Version:        2.48
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -12,11 +12,11 @@ License:        GPLv2
 URL:            http://www.blender.org
 # During a Legel issue (#239476) the package contains a cusromized
 # source package created as fellow.
-# wget http://download.blender.org/sorce/blender-2.47.tar.gz
+# wget http://download.blender.org/source/blender-2.48.tar.gz
 # cd blender-2-47/extern
 # rm -rf ffmpeg libmp3lame
 # cd ../..
-# tar -zcf blender-2.47-noffmpeg.tar.gz blender-2-47/
+# tar -zcf blender-2.48-noffmpeg.tar.gz blender-2-48/
 Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
@@ -179,7 +179,8 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Wed Oct 15 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-6
+* Wed Oct 15 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48-1
+- New upstream release
 - Build agains system glew library (#466755)
 
 * Tue Oct  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-5
