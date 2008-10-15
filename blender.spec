@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.47
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -24,9 +24,9 @@ Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
 Source6:        blender-wrapper
-Source7:	blender-2.44.config
+Source7:	blender-2.47.config
 
-Patch1:         blender-2.44-scons.patch
+Patch1:         blender-2.47-scons.patch
 Patch2:		blender-2.44-bid.patch
 
 Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -55,6 +55,7 @@ BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
+BuildRequires:  glew-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -178,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Oct 15 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-6
+- Build agains system glew library (#466755)
+
 * Tue Oct  7 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.47-5
 - Reorganisation directory structure to fix sysinfo.py issue
 
