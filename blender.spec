@@ -2,7 +2,7 @@
 %define plugins %{_libdir}/blender/plugins
 
 Name:           blender
-Version:        2.48
+Version:        2.48a
 Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -179,6 +179,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Oct 26 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-1
+- New upstream release
+
 * Wed Oct 15 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48-1
 - New upstream release
 - Build agains system glew library (#466755)
