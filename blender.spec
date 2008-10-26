@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -153,6 +153,12 @@ desktop-file-install --vendor fedora                    \
   --add-category X-Fedora                               \
   %{SOURCE4}
 
+#
+# Create empty %%{_libdir}/blender/scripts to claim ownership
+#
+
+install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
+
 %find_lang %name
 
 %clean
@@ -179,6 +185,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Oct 26 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-3
+- Create %%{_libdir}/blender/scripts/ to claim ownership
+
 * Sun Oct 26 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-1
 - New upstream release
 
