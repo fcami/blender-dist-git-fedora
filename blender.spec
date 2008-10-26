@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
