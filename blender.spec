@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -30,6 +30,7 @@ Patch1:         blender-2.47-scons.patch
 Patch2:		blender-2.44-bid.patch
 
 Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
+Patch101:	blender-2.48a-cve-2008-4863.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -77,7 +78,8 @@ available.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
-%patch100 -p1 -b .cve
+%patch100 -p1
+%patch101 -p1
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -185,6 +187,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon Nov  3 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-4
+- Fix security issue (#469655, CVE-2008-4863)
+
 * Sun Oct 26 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-3
 - Create %%{_libdir}/blender/scripts/ to claim ownership
 
