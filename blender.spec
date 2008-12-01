@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -187,6 +187,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Nov 30 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 2.48a-5
+- Rebuild for Python 2.6
+
 * Mon Nov  3 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-4
 - Fix security issue (#469655, CVE-2008-4863)
 
