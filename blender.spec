@@ -3,15 +3,15 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
-# During a Legel issue (#239476) the package contains a cusromized
-# source package created as fellow.
+# This is a customized source package without ffmpeg, which is
+# patent encumbered (#239476)
 # wget http://download.blender.org/source/blender-2.48.tar.gz
 # cd blender-2-47/extern
 # rm -rf ffmpeg libmp3lame
@@ -70,8 +70,7 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
-This version doesn't contains ffmpeg support, so that any features may be not
-available.
+This version doesn't contains ffmpeg support.
 
 %prep
 %setup -q 
@@ -87,12 +86,7 @@ sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE7} >user-config.py
 
 %build
-
-#
-# Don't use $RPM_OPT_FLAGS (see #199418)
-#
-
-scons %{?_smp_mflags} blenderplayer BF_QUIET=0
+scons %{?_smp_mflags} blenderplayer BF_QUIET=0 {CFLAGS,CXXFLAGS}='%{optflags}'
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -152,7 +146,6 @@ install -m 655 release/plugins/texture/*.so ${RPM_BUILD_ROOT}/%{plugins}/texture
 
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
-  --add-category X-Fedora                               \
   %{SOURCE4}
 
 #
@@ -187,6 +180,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> - 2.48a-6
+- Use proper compiler flags (see #199418)
+- Minor grammar & language fixes and tidy-ups
+
 * Sun Nov 30 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 2.48a-5
 - Rebuild for Python 2.6
 
