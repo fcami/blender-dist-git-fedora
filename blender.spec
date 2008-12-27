@@ -3,7 +3,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -86,7 +86,7 @@ sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE7} >user-config.py
 
 %build
-scons %{?_smp_mflags} blenderplayer BF_QUIET=0 CCFLAGS='%{optflags}'
+scons %{?_smp_mflags} blenderplayer BF_QUIET=0
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -180,6 +180,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> - 2.48a-7
+- Fix optflags use, this time for real
+
 * Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> - 2.48a-6
 - Use proper compiler flags (see #199418)
 - Minor grammar & language fixes and tidy-ups

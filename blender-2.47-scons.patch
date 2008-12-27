@@ -1,6 +1,22 @@
+diff -up blender-2.48a/config/linux2-config.py.org blender-2.48a/config/linux2-config.py
+--- blender-2.48a/config/linux2-config.py.org	2008-12-27 13:17:57.000000000 +0100
++++ blender-2.48a/config/linux2-config.py	2008-12-27 13:17:59.000000000 +0100
+@@ -179,6 +179,12 @@ CCFLAGS = ['-pipe','-fPIC','-funsigned-c
+ 
+ CPPFLAGS = ['-DXP_UNIX']
+ CXXFLAGS = ['-pipe','-fPIC','-funsigned-char','-fno-strict-aliasing']
++
++import os
++RPM_OPT_FLAGS = os.environ['RPM_OPT_FLAGS'].split()
++CCFLAGS += RPM_OPT_FLAGS
++CXXFLAGS += RPM_OPT_FLAGS
++
+ REL_CFLAGS = ['-O2']
+ REL_CCFLAGS = ['-O2']
+ ##BF_DEPEND = True
 diff -up blender-2.48a/extern/SConscript.org blender-2.48a/extern/SConscript
 --- blender-2.48a/extern/SConscript.org	2008-10-22 18:38:21.000000000 +0200
-+++ blender-2.48a/extern/SConscript	2008-12-27 10:01:18.000000000 +0100
++++ blender-2.48a/extern/SConscript	2008-12-27 13:16:31.000000000 +0100
 @@ -2,8 +2,6 @@
  
  Import('env')
@@ -12,17 +28,8 @@ diff -up blender-2.48a/extern/SConscript.org blender-2.48a/extern/SConscript
              'solid/SConscript'])
 diff -up blender-2.48a/SConstruct.org blender-2.48a/SConstruct
 --- blender-2.48a/SConstruct.org	2008-10-22 18:38:43.000000000 +0200
-+++ blender-2.48a/SConstruct	2008-12-27 10:02:54.000000000 +0100
-@@ -172,6 +172,8 @@ opts.Update(env)
- if not env['BF_FANCY']:
-     B.bc.disable()
- 
-+env['CCFLAGS'] = env['CCFLAGS'].split()
-+
- # disable elbeem (fluidsim) compilation?
- if env['BF_NO_ELBEEM'] == 1:
-     env['CPPFLAGS'].append('-DDISABLE_ELBEEM')
-@@ -217,7 +219,7 @@ if env['OURPLATFORM'] == 'linux2' :
++++ blender-2.48a/SConstruct	2008-12-27 13:16:31.000000000 +0100
+@@ -217,7 +217,7 @@ if env['OURPLATFORM'] == 'linux2' :
  
          def CheckFreeAlut(context,env):
              context.Message( B.bc.OKGREEN + "Linux platform detected:\n  checking for FreeAlut... " + B.bc.ENDC )
