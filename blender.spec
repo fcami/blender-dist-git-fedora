@@ -86,7 +86,7 @@ sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE7} >user-config.py
 
 %build
-scons %{?_smp_mflags} blenderplayer BF_QUIET=0 {CFLAGS,CXXFLAGS}='%{optflags}'
+scons %{?_smp_mflags} blenderplayer BF_QUIET=0 CCFLAGS='%{optflags}'
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include

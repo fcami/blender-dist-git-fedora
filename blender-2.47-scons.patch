@@ -1,6 +1,6 @@
-diff -up blender-2.47/extern/SConscript.org blender-2.47/extern/SConscript
---- blender-2.47/extern/SConscript.org	2008-10-14 22:13:44.000000000 +0200
-+++ blender-2.47/extern/SConscript	2008-10-14 22:13:57.000000000 +0200
+diff -up blender-2.48a/extern/SConscript.org blender-2.48a/extern/SConscript
+--- blender-2.48a/extern/SConscript.org	2008-10-22 18:38:21.000000000 +0200
++++ blender-2.48a/extern/SConscript	2008-12-27 10:01:18.000000000 +0100
 @@ -2,8 +2,6 @@
  
  Import('env')
@@ -10,10 +10,19 @@ diff -up blender-2.47/extern/SConscript.org blender-2.47/extern/SConscript
  if env['WITH_BF_GAMEENGINE']:
      SConscript(['qhull/SConscript',
              'solid/SConscript'])
-diff -up blender-2.47/SConstruct.org blender-2.47/SConstruct
---- blender-2.47/SConstruct.org	2008-05-01 16:22:21.000000000 +0200
-+++ blender-2.47/SConstruct	2008-10-14 22:13:27.000000000 +0200
-@@ -216,7 +216,7 @@ if env['OURPLATFORM'] == 'linux2' :
+diff -up blender-2.48a/SConstruct.org blender-2.48a/SConstruct
+--- blender-2.48a/SConstruct.org	2008-10-22 18:38:43.000000000 +0200
++++ blender-2.48a/SConstruct	2008-12-27 10:02:54.000000000 +0100
+@@ -172,6 +172,8 @@ opts.Update(env)
+ if not env['BF_FANCY']:
+     B.bc.disable()
+ 
++env['CCFLAGS'] = env['CCFLAGS'].split()
++
+ # disable elbeem (fluidsim) compilation?
+ if env['BF_NO_ELBEEM'] == 1:
+     env['CPPFLAGS'].append('-DDISABLE_ELBEEM')
+@@ -217,7 +219,7 @@ if env['OURPLATFORM'] == 'linux2' :
  
          def CheckFreeAlut(context,env):
              context.Message( B.bc.OKGREEN + "Linux platform detected:\n  checking for FreeAlut... " + B.bc.ENDC )
