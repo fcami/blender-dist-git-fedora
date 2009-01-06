@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	8%{?dist}
+Release: 	9%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -79,7 +79,6 @@ This version doesn't contains ffmpeg support.
 
 %package fonts
 Summary:	Fonts for the blender package
-BuildArch:	noarch
 Requires:	fontpackages-filesystem
 Group:		User Interface/X
 License:	Bitstream Veta Fonts
@@ -209,7 +208,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_fontdir}/
 
 %changelog
-* Tue Jan  6 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-8
+* Tue Jan  6 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-9
 - Create fonts sub-package (#477370)
 
 * Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> 2.48a-7
