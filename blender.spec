@@ -1,9 +1,11 @@
 %define blenderlib %{_datadir}/blender
 %define plugins %{_libdir}/blender/plugins
 
+%define fontname blender
+
 Name:           blender
 Version:        2.48a
-Release: 	7%{?dist}
+Release: 	8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -57,11 +59,14 @@ BuildRequires:  mesa-libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
+BuildRequires:	fontpackages-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
+
+Requires:	  blender-fonts = %{version}-%{release}
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -71,6 +76,16 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 This version doesn't contains ffmpeg support.
+
+%package fonts
+Summary:	Fonts for the blender package
+BuildArch:	noarch
+Requires:	fontpackages-filesystem
+Group:		User Interface/X
+License:	Bitstream Veta Fonts
+
+%description fonts
+This package contains a font which will be used be blender
 
 %prep
 %setup -q 
@@ -154,6 +169,15 @@ desktop-file-install --vendor fedora                    \
 
 install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
 
+#
+# Install fonts
+#
+install -m 0755 -d ${RPM_BUILD_ROOT}/%{_fontdir}
+install -m 0644 -p release/datafiles/bfont.ttf ${RPM_BUILD_ROOT}/%{_fontdir}
+rm ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf
+(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/bfont.ttf ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf)
+mv release/datafiles/LICENSE-bfont.ttf.txt release/datafiles/LICENSE
+
 %find_lang %name
 
 %clean
@@ -179,15 +203,23 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_libdir}/blender/
 %{_datadir}/mime/packages/blender.xml
 
+%files fonts
+%defattr(-,root,root,-)
+%doc release/datafiles/LICENSE
+%{_fontdir}/
+
 %changelog
-* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> - 2.48a-7
+* Tue Jan  6 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-8
+- Create fonts sub-package (#477370)
+
+* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> 2.48a-7
 - Fix optflags use, this time for real
 
-* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> - 2.48a-6
+* Sat Dec 27 2008 Lubomir Rintel <lkundrak@v3.sk> 2.48a-6
 - Use proper compiler flags (see #199418)
 - Minor grammar & language fixes and tidy-ups
 
-* Sun Nov 30 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 2.48a-5
+* Sun Nov 30 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> 2.48a-5
 - Rebuild for Python 2.6
 
 * Mon Nov  3 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-4
