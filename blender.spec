@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	9%{?dist}
+Release: 	10%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -67,6 +67,10 @@ Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
 Requires:	  blender-fonts = %{version}-%{release}
+Requires:	  dejavu-fonts-sans
+
+Provides:	  blender-fonts = %{version}-%{release}
+Obsoletes:	  blender-fonts <= 2.48a-9
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -76,15 +80,6 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 This version doesn't contains ffmpeg support.
-
-%package fonts
-Summary:	Fonts for the blender package
-Requires:	fontpackages-filesystem
-Group:		User Interface/X
-License:	Bitstream Veta Fonts
-
-%description fonts
-This package contains a font which will be used be blender
 
 %prep
 %setup -q 
@@ -169,13 +164,10 @@ desktop-file-install --vendor fedora                    \
 install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
 
 #
-# Install fonts
+# Create link to DejaVu-Sans
 #
-install -m 0755 -d ${RPM_BUILD_ROOT}/%{_fontdir}
-install -m 0644 -p release/datafiles/bfont.ttf ${RPM_BUILD_ROOT}/%{_fontdir}
 rm ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf
-(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/bfont.ttf ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf)
-mv release/datafiles/LICENSE-bfont.ttf.txt release/datafiles/LICENSE
+(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/dejavu/DejaVuSans.tt ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf)
 
 %find_lang %name
 
@@ -202,12 +194,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_libdir}/blender/
 %{_datadir}/mime/packages/blender.xml
 
-%files fonts
-%defattr(-,root,root,-)
-%doc release/datafiles/LICENSE
-%{_fontdir}/
-
 %changelog
+* Sun Jan 11 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-10
+- Create symlink to DajaVu-Sans
+
 * Tue Jan  6 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-9
 - Create fonts sub-package (#477370)
 
