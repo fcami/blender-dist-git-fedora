@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	10%{?dist}
+Release: 	11%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -195,6 +195,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Thu Jan 15 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-11
+- Rebuild for new openssl package
+
 * Sun Jan 11 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-10
 - Create symlink to DajaVu-Sans
 
