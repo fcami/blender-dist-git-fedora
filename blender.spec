@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	11%{?dist}
+Release: 	12%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -67,7 +67,7 @@ Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
 Requires:	  blender-fonts = %{version}-%{release}
-Requires:	  dejavu-fonts-sans
+Requires:	  dejavu-sans-fonts
 
 Provides:	  blender-fonts = %{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
@@ -195,6 +195,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Sun Jan 18 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-12
+- Change Req. for font package because fonts naming was changed (#480444)
+
 * Thu Jan 15 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-11
 - Rebuild for new openssl package
 
@@ -216,7 +219,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 
 * Mon Nov  3 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-4
 - Fix security issue (#469655, CVE-2008-4863)
-
+[5~
 * Sun Oct 26 2008 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-3
 - Create %%{_libdir}/blender/scripts/ to claim ownership
 
