@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	12%{?dist}
+Release: 	13%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -195,6 +195,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Jan 21 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-13
+- Do some fixes on blender-wrapeer
+
 * Sun Jan 18 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-12
 - Change Req. for font package because fonts naming was changed (#480444)
 

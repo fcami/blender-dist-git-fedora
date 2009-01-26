@@ -17,8 +17,18 @@ if [ ! -d ~/.blender ]; then
     install -d ~/.blender/plugins/texture
 
     install -d ~/.blender/scripts
-    ln -sf /usr/share/blender/scripts/bpydata ~/blender/scripts/bpydata
-    ln -sf /usr/share/blender/scripts/bpymodules ~/blender/scripts/pbymodules
+
+    if [ -L ~/.blender/scripts/bpydata ]; then
+	rm ~/.blender/scripts/bpydata
+    fi
+
+    if [ -d ~/.blender/scripts/bpydata ]; then
+	mkdir -p ~/blender/scripts/bpydata
+	mkdir -p ~/blender/scripts/bpydata/config
+	cp -R /usr/share/blender/scripts/bpydata/* ~/.blender/scripts/bpydata/
+    fi
+
+    ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/pbymodules
     ln -sf /usr/share/blender/scripts/* ~/.blender/scripts/
 fi
 
@@ -26,7 +36,7 @@ fi
 # Fully update the plugins every time blender is launched.
 #
 
-rm -r ~/.blender/scripts/*.p*
+# rm -r ~/.blender/scripts/*.p*
 
 for s in /usr/share/blender/scripts/*.p* ; do
     s=`basename $s`
