@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	13%{?dist}
+Release: 	14%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -67,7 +67,14 @@ Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
 Requires:	  blender-fonts = %{version}-%{release}
+
+%if 0%{?fedora} > 10
 Requires:	  dejavu-sans-fonts
+%endif
+
+%if 0%{?fedora} <= 10
+Requires:	  dejavu-fonts
+%endif
 
 Provides:	  blender-fonts = %{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
@@ -195,6 +202,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Tue Feb 17 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-14
+- Fix broken wrapper script
+
 * Wed Jan 21 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-13
 - Do some fixes on blender-wrapeer
 

@@ -46,17 +46,17 @@ for s in /usr/share/blender/scripts/*.p* ; do
 done
 
 if [ -d /usr/lib64/blender/scripts ] ; then
-    for s in /usr/lib64/blender/* ; do
+    for s in /usr/lib64/blender/scripts/* ; do
 	s=`basename $s`
 	if [ ! -e ~/.blender/scripts/$s -a -x /usr/lib64/blender/scripts/$s ] ; then
-	    ln -sf /usr/lib64/blender/$s ~/.blender/scripts/
+	    ln -sf /usr/lib64/blender/scripts/$s ~/.blender/scripts/
 	fi
     done
 elif [ -d /usr/lib/blender/scripts ] ; then
-    for s in /usr/lib/blender/* ; do
+    for s in /usr/lib/blender/scripts/* ; do
 	s=`basename $s`
 	if [ ! -e ~/.blender/scripts/$s -a -x /usr/lib/blender/scripts/$s ] ; then
-	    ln -sf /usr/lib/blender/$s ~/.blender/scripts/
+	    ln -sf /usr/lib/blender/scripts/$s ~/.blender/scripts/
 	fi
     done
 fi
