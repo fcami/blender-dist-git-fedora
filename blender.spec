@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	14%{?dist}
+Release: 	15%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -202,6 +202,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.48a-15
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Tue Feb 17 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-14
 - Fix broken wrapper script
 
