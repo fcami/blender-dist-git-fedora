@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	15%{?dist}
+Release: 	16%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -87,6 +87,15 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 This version doesn't contains ffmpeg support.
+
+%package -n blenderplayer
+Summary:       Standalone blener player
+Group:	       Applications/Multimedia
+License:       GPLv2
+%description -n blenderplayer
+This package contains a stand alone release of the blender player.
+You will need this package to play games which are based on the
+Blender Geaming Engine.
 
 %prep
 %setup -q 
@@ -194,14 +203,23 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %files -f %name.lang
 %defattr(-,root,root,-)
 %doc COPYING README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
-%{_bindir}/*
+%{_bindir}/blender
+%{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/pixmaps/*.png
 %{blenderlib}/
 %{_libdir}/blender/
 %{_datadir}/mime/packages/blender.xml
 
+%files -n blenderplayer
+%doc COPYING
+%defattr(-,root,root,-)
+%{_bindir}/blenderplayer
+
 %changelog
+* Wed Mar 11 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.48a-16
+- Put blenderplayer into a separate subpackage (#489685) 
+
 * Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.48a-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
