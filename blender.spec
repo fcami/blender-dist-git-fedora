@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	17%{?dist}
+Release: 	18%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -90,7 +90,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 This version doesn't contains ffmpeg support.
 
 %package -n blenderplayer
-Summary:       Standalone blener player
+Summary:       Standalone blender player
 Group:	       Applications/Multimedia
 License:       GPLv2
 %description -n blenderplayer
@@ -227,6 +227,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Tue Mar 31 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-18
+- Fix typo
+
 * Tue Mar 31 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-17
 - Create drop-in for non-free blender release
 
