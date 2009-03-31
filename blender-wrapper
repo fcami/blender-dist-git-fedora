@@ -6,6 +6,12 @@
 # In case user's home directory doesn't contain ~/.blender, copy it
 # from /usr/share/blender
 
+if [ -x /usr/bin/blender-nonfree.bin ]; then
+    blend="blender-nonfree"
+else
+    blend="blender"
+fi
+
 if [ ! -d ~/.blender ]; then
     install -d ~/.blender
     ln -sf /usr/share/locale ~/.blender/locale
@@ -30,13 +36,17 @@ if [ ! -d ~/.blender ]; then
 
     ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/pbymodules
     ln -sf /usr/share/blender/scripts/* ~/.blender/scripts/
+
+    if [ -d /usr/lib64/$blend/plugins ]; then
+	ln -sf /usr/lib64/$blend/plugins/sequence ~/.blender/plugins/sequence
+	ln -sf /usr/lib64/$blend/plugins/texture ~/.blender/plugin/textrure
+    fi
 fi
+
 
 #
 # Fully update the plugins every time blender is launched.
 #
-
-# rm -r ~/.blender/scripts/*.p*
 
 for s in /usr/share/blender/scripts/*.p* ; do
     s=`basename $s`
@@ -61,5 +71,14 @@ elif [ -d /usr/lib/blender/scripts ] ; then
     done
 fi
 
-/usr/bin/blender.bin $@
+
+if [ -d /usr/lib64/$blend/plugins ]; then
+    ln -sf /usr/lib64/$blend/plugins/sequence ~/.blender/plugins/sequence
+    ln -sf /usr/lib64/$blend/plugins/texture ~/.blender/plugins/texture
+elif [ -d /usr/lib/$blend/plugins ]; then
+    ln -sf /usr/lib/$blend/plugins/sequence ~/.blender/plugins/sequence
+    ln -sf /usr/lib/$blend/plugins/texture ~/.blender/plugins/texture    
+fi
+
+/usr/bin/${blend}.bin $@
 

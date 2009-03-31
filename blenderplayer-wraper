@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -x /usr/bin/blenderplayer-nonfree ]; then
+   /usr/bin/blenderplayer-nonfree.bin $@
+else
+   /usr/bin/blenderplayer.bin $@
+fi

@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	16%{?dist}
+Release: 	17%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,7 +26,8 @@ Source3:        blender.png
 Source4:        blender.desktop
 Source5:        blender.xml
 Source6:        blender-wrapper
-Source7:	blender-2.47.config
+Source7:	blenderplayer-wraper
+Source8:	blender-2.47.config
 
 Patch1:         blender-2.47-scons.patch
 Patch2:		blender-2.44-bid.patch
@@ -108,7 +109,10 @@ Blender Geaming Engine.
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
 sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
-	 <%{SOURCE7} >user-config.py
+	 <%{SOURCE8} >user-config.py
+
+iconv -f iso-8859-1 -t utf-8 doc/bf-members.txt -o doc/bf-members.txt.utf8
+mv doc/bf-members.txt.utf8 doc/bf-members.txt
 
 %build
 scons %{?_smp_mflags} blenderplayer BF_QUIET=0
@@ -124,12 +128,12 @@ make -C release/plugins/
 rm -rf ${RPM_BUILD_ROOT}
 
 install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}/%{_bindir}/blender.bin
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer.bin
 
 install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
 
 install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
-
-# install -D -m 755 blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
+install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -138,7 +142,6 @@ install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
 mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
 
 pushd bin/.blender/locale
-
 rm -rf $(find -name '.svn' -print)
 popd
 
@@ -152,8 +155,14 @@ install -m 644 release/VERSION ${RPM_BUILD_ROOT}/%{blenderlib}
 install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}/%{blenderlib}
 install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}/%{blenderlib}
 
-install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/import-3ds-0.7.py
-install -p -D -m 644 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/export-3ds-0.71.py
+install -p -D -m 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/import-3ds-0.7.py
+install -p -D -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/export-3ds-0.71.py
+
+pushd ${RPM_BUILD_ROOT}%{blenderlib}/scripts
+find . -exec sed -i -e 's/\r$//g' {} \;
+chmod -R 0755 *
+popd
+
 
 install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
 
@@ -166,8 +175,8 @@ install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blend
 install -d ${RPM_BUILD_ROOT}/%{plugins}/sequence
 install -d ${RPM_BUILD_ROOT}/%{plugins}/texture
 
-install -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}/%{plugins}/sequence
-install -m 655 release/plugins/texture/*.so ${RPM_BUILD_ROOT}/%{plugins}/texture
+install -s -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}/%{plugins}/sequence
+install -s -m 644 release/plugins/texture/*.so ${RPM_BUILD_ROOT}/%{plugins}/texture
 
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
@@ -215,9 +224,13 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %doc COPYING
 %defattr(-,root,root,-)
 %{_bindir}/blenderplayer
+%{_bindir}/blenderplayer.bin
 
 %changelog
-* Wed Mar 11 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.48a-16
+* Tue Mar 31 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-17
+- Create drop-in for non-free blender release
+
+* Wed Mar 11 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-16
 - Put blenderplayer into a separate subpackage (#489685) 
 
 * Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.48a-15
