@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -x /usr/bin/blenderplayer-nonfree ]; then
-   /usr/bin/blenderplayer-nonfree.bin $@
+if [ -x /usr/bin/blenderplayer-freeworld ]; then
+   /usr/bin/blenderplayer-freeword.bin $@
 else
    /usr/bin/blenderplayer.bin $@
 fi

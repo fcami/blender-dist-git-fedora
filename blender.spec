@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	18%{?dist}
+Release: 	19%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -227,6 +227,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Apr  1 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.48a-19
+- Change nonfree to freeworld
+
 * Tue Mar 31 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-18
 - Fix typo
 

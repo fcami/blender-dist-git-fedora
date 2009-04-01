@@ -6,8 +6,8 @@
 # In case user's home directory doesn't contain ~/.blender, copy it
 # from /usr/share/blender
 
-if [ -x /usr/bin/blender-nonfree.bin ]; then
-    blend="blender-nonfree"
+if [ -x /usr/bin/blender-freeworld.bin ]; then
+    blend="blender-freeworld"
 else
     blend="blender"
 fi
