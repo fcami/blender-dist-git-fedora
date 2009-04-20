@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	20%{?dist}
+Release: 	21%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -55,8 +55,8 @@ BuildRequires:  zlib-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  libXi-devel
 BuildRequires:  xorg-x11-proto-devel
-BuildRequires:  mesa-libGL-devel
-BuildRequires:  mesa-libGLU-devel
+BuildRequires:  libGL-devel
+BuildRequires:  libGLU-devel
 buildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
@@ -227,6 +227,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Apr 20 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-21
+- Chamge BR mesa-libGL* into libGL* 
+
 * Mon Apr 20 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-20
 - Remove x264 from source tar ball
 - Some cosmetic changes
