@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	19%{?dist}
+Release: 	20%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -16,7 +16,7 @@ URL:            http://www.blender.org
 # patent encumbered (#239476)
 # wget http://download.blender.org/source/blender-2.48.tar.gz
 # cd blender-2-47/extern
-# rm -rf ffmpeg libmp3lame
+# rm -rf ffmpeg libmp3lame x264
 # cd ../..
 # tar -zcf blender-2.48-noffmpeg.tar.gz blender-2-48/
 Source0:	blender-%{version}-noffmpeg.tar.gz
@@ -127,13 +127,13 @@ make -C release/plugins/
 %install
 rm -rf ${RPM_BUILD_ROOT}
 
-install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}/%{_bindir}/blender.bin
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer.bin
+install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender.bin
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
 
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
-install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}/%{_bindir}/blender
-install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}/%{_bindir}/blenderplayer
+install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}%{_bindir}/blender
+install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -145,15 +145,15 @@ pushd bin/.blender/locale
 rm -rf $(find -name '.svn' -print)
 popd
 
-cp -a bin/.blender/locale ${RPM_BUILD_ROOT}/%{_datadir}
+cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
 
-install -d ${RPM_BUILD_ROOT}/%{blenderlib}/scripts
+install -d ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
-cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}/%{blenderlib}/scripts
+cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
-install -m 644 release/VERSION ${RPM_BUILD_ROOT}/%{blenderlib}
-install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}/%{blenderlib}
-install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}/%{blenderlib}
+install -m 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
+install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
+install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}%{blenderlib}
 
 install -p -D -m 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/import-3ds-0.7.py
 install -p -D -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/export-3ds-0.71.py
@@ -172,11 +172,11 @@ install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blend
 # Install plugins
 #
 
-install -d ${RPM_BUILD_ROOT}/%{plugins}/sequence
-install -d ${RPM_BUILD_ROOT}/%{plugins}/texture
+install -d ${RPM_BUILD_ROOT}%{plugins}/sequence
+install -d ${RPM_BUILD_ROOT}%{plugins}/texture
 
-install -s -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}/%{plugins}/sequence
-install -s -m 644 release/plugins/texture/*.so ${RPM_BUILD_ROOT}/%{plugins}/texture
+install -s -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{plugins}/sequence
+install -s -m 644 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{plugins}/texture
 
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
@@ -191,8 +191,8 @@ install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
 #
 # Create link to DejaVu-Sans
 #
-rm ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf
-(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/dejavu/DejaVuSans.tt ${RPM_BUILD_ROOT}/%{_datadir}/blender/.bfont.ttf)
+rm ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf
+(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/dejavu/DejaVuSans.tt ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf)
 
 %find_lang %name
 
@@ -227,7 +227,11 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
-* Wed Apr  1 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.48a-19
+* Mon Apr 20 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-20
+- Remove x264 from source tar ball
+- Some cosmetic changes
+
+* Wed Apr  1 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-19
 - Change nonfree to freeworld
 
 * Tue Mar 31 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-18
