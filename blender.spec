@@ -1,7 +1,7 @@
-%define blenderlib %{_datadir}/blender
-%define plugins %{_libdir}/blender/plugins
+%global blenderlib %{_datadir}/blender
+%global plugins %{_libdir}/blender/plugins
 
-%define fontname blender
+%global fontname blender
 
 Name:           blender
 Version:        2.48a
