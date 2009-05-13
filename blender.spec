@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.48a
-Release: 	21%{?dist}
+Release: 	22%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -227,6 +227,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed May 13 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-22
+- Copy bpydata/config/* into ~/.blender/.../bpydata/config in blender-wrapper script
+
 * Mon Apr 20 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-21
 - Chamge BR mesa-libGL* into libGL* 
 

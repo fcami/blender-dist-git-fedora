@@ -31,7 +31,6 @@ if [ ! -d ~/.blender ]; then
     if [ -d ~/.blender/scripts/bpydata ]; then
 	mkdir -p ~/blender/scripts/bpydata
 	mkdir -p ~/blender/scripts/bpydata/config
-	cp -R /usr/share/blender/scripts/bpydata/* ~/.blender/scripts/bpydata/
     fi
 
     ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/pbymodules
@@ -47,6 +46,14 @@ fi
 #
 # Fully update the plugins every time blender is launched.
 #
+
+for s in /usr/share/blender/scripts/bpydata/config/* ; do
+    s=`basename $s`
+    if [ ! -e ~/.blender/scripts/bpydata/config/$s ] ; then
+	cp /usr/share/blender/scripts/bpydata/config/$s \
+           ~/.blender/scripts/pbydata/config/$s
+    fi
+done
 
 for s in /usr/share/blender/scripts/*.p* ; do
     s=`basename $s`
