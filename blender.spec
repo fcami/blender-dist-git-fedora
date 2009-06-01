@@ -4,8 +4,8 @@
 %global fontname blender
 
 Name:           blender
-Version:        2.48a
-Release: 	22%{?dist}
+Version:        2.49
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -14,11 +14,11 @@ License:        GPLv2
 URL:            http://www.blender.org
 # This is a customized source package without ffmpeg, which is
 # patent encumbered (#239476)
-# wget http://download.blender.org/source/blender-2.48.tar.gz
+# wget http://download.blender.org/source/blender-2.49.tar.gz
 # cd blender-2-47/extern
 # rm -rf ffmpeg libmp3lame x264
 # cd ../..
-# tar -zcf blender-2.48-noffmpeg.tar.gz blender-2-48/
+# tar -zcf blender-2.49-noffmpeg.tar.gz blender-2-49/
 Source0:	blender-%{version}-noffmpeg.tar.gz
 Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
 Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
@@ -27,9 +27,9 @@ Source4:        blender.desktop
 Source5:        blender.xml
 Source6:        blender-wrapper
 Source7:	blenderplayer-wraper
-Source8:	blender-2.47.config
+Source8:	blender-2.49.config
 
-Patch1:         blender-2.47-scons.patch
+Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 
 Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -227,6 +227,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Jun  1 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-1
+- New upstream release
+
 * Wed May 13 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.48a-22
 - Copy bpydata/config/* into ~/.blender/.../bpydata/config in blender-wrapper script
 
