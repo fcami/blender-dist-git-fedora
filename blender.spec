@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -62,6 +62,12 @@ BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
 BuildRequires:	fontpackages-devel
 
+BuildRequires:	fftw-devel
+BuildRequires:	ftgl-devel
+BuildRequires:	ode-devel
+BuildRequires:	openjpeg-devel
+
+
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -105,6 +111,14 @@ Blender Geaming Engine.
 
 %patch100 -p1
 %patch101 -p1
+
+rm -rf extern/fftw
+rm -rf extern/ftgl
+rm -rf extern/glew
+rm -rf extern/libopenjpeg
+rm -rf extern/libredcode
+rm -rf extern/ode
+rm -rf extern/xvidcore
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -227,6 +241,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Tue Jun  2 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-2
+- Try to build agains more system libraries as possible
+
 * Mon Jun  1 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-1
 - New upstream release
 
