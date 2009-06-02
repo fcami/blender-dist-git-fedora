@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -32,6 +32,7 @@ Source8:	blender-2.49.config
 Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 
+# Both patches are forwarded to upstream via email
 Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
 Patch101:	blender-2.48a-cve-2008-4863.patch
 
@@ -63,10 +64,10 @@ BuildRequires:  glew-devel
 BuildRequires:	fontpackages-devel
 
 BuildRequires:	fftw-devel
-BuildRequires:	ftgl-devel
+#BuildRequires:	ftgl-devel
 BuildRequires:	ode-devel
 BuildRequires:	openjpeg-devel
-
+#BuildRequires:  qhull-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -112,11 +113,11 @@ Blender Geaming Engine.
 %patch100 -p1
 %patch101 -p1
 
+#rm -rf extern/bFTGL
 rm -rf extern/fftw
-rm -rf extern/ftgl
 rm -rf extern/glew
 rm -rf extern/libopenjpeg
-rm -rf extern/libredcode
+#rm -rf extern/qhull
 rm -rf extern/ode
 rm -rf extern/xvidcore
 
@@ -241,7 +242,7 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
-* Tue Jun  2 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-2
+* Tue Jun  2 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-3
 - Try to build agains more system libraries as possible
 
 * Mon Jun  1 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-1
