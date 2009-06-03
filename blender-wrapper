@@ -6,7 +6,11 @@
 # In case user's home directory doesn't contain ~/.blender, copy it
 # from /usr/share/blender
 
-blend="blender"
+if [ -x /usr/bin/blender-freeworld.bin ]; then
+    blend="blender-freeworld"
+else
+    blend="blender"
+fi
 
 if [ ! -d ~/.blender ]; then
     install -d ~/.blender
@@ -32,9 +36,9 @@ if [ ! -d ~/.blender ]; then
     ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/pbymodules
     ln -sf /usr/share/blender/scripts/* ~/.blender/scripts/
 
-    if [ -d /usr/lib64/$blend/plugins ]; then
-	ln -sf /usr/lib64/$blend/plugins/sequence ~/.blender/plugins/sequence
-	ln -sf /usr/lib64/$blend/plugins/texture ~/.blender/plugin/texture
+    if [ -d /usr/lib64/blender/plugins ]; then
+	ln -sf /usr/lib64/blender/plugins/sequence ~/.blender/plugins/sequence
+	ln -sf /usr/lib64/blender/plugins/texture ~/.blender/plugins/texture
     fi
 fi
 
@@ -75,12 +79,12 @@ elif [ -d /usr/lib/blender/scripts ] ; then
 fi
 
 
-if [ -d /usr/lib64/$blend/plugins ]; then
-    ln -sf /usr/lib64/$blend/plugins/sequence ~/.blender/plugins/sequence
-    ln -sf /usr/lib64/$blend/plugins/texture ~/.blender/plugins/texture
-elif [ -d /usr/lib/$blend/plugins ]; then
-    ln -sf /usr/lib/$blend/plugins/sequence ~/.blender/plugins/sequence
-    ln -sf /usr/lib/$blend/plugins/texture ~/.blender/plugins/texture    
+if [ -d /usr/lib64/blender/plugins ]; then
+    ln -sf /usr/lib64/blender/plugins/sequence ~/.blender/plugins/sequence
+    ln -sf /usr/lib64/blender/plugins/texture ~/.blender/plugins/texture
+elif [ -d /usr/lib/blender/plugins ]; then
+    ln -sf /usr/lib/blender/plugins/sequence ~/.blender/plugins/sequence
+    ln -sf /usr/lib/blender/plugins/texture ~/.blender/plugins/texture    
 fi
 
 /usr/bin/${blend}.bin $@

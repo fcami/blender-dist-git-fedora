@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -242,6 +242,9 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Jun  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-4
+- Rework on the blender wrapper script
+
 * Tue Jun  2 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-3
 - Try to build agains more system libraries as possible
 
