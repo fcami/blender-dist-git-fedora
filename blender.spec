@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -207,7 +207,7 @@ install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
 # Create link to DejaVu-Sans
 #
 rm ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf
-(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontdir}/dejavu/DejaVuSans.tt ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf)
+(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf)
 
 %find_lang %name
 
@@ -242,6 +242,10 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Fri Jun 12 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-5
+- Fix Type
+- Chage symlint to %%{_fontbasedir}/Dajavu/...
+
 * Wed Jun  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-4
 - Rework on the blender wrapper script
 
