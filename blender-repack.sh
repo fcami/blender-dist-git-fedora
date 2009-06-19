@@ -12,7 +12,7 @@ cleanup() {
 
 unset CDPATH
 pwd=$(pwd)
-BVERSION=2.49
+BVERSION=2.49a
 
 pushd "$tmp"
 if [ -e $pwd/blender-${BVERSION}.tar.gz ] ; then

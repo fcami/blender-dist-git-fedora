@@ -4,8 +4,8 @@
 %global fontname blender
 
 Name:           blender
-Version:        2.49
-Release: 	6%{?dist}
+Version:        2.49a
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -80,6 +80,8 @@ Requires:	  dejavu-fonts
 Provides:	  blender-fonts = %{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
 
+
+
 %description
 Blender is the essential software solution you need for 3D, from modeling,
 animation, rendering and post-production to interactive creation and playback.
@@ -87,7 +89,7 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
-This version doesn't contains ffmpeg support.
+
 
 %package -n blenderplayer
 Summary:       Standalone blender player
@@ -97,6 +99,8 @@ Group:	       Applications/Multimedia
 This package contains a stand alone release of the blender player.
 You will need this package to play games which are based on the
 Blender Game Engine.
+
+
 
 %prep
 %setup -q 
@@ -228,6 +232,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49a-1
+- Update to 2.49a
+
 * Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49-6
 - Update blender-wrapper script.
 - Repackage the sources archive.
