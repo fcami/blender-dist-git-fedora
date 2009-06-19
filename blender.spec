@@ -1,33 +1,26 @@
-%global blenderlib %{_datadir}/blender
-%global plugins %{_libdir}/blender/plugins
+%global blenderlib  %{_datadir}/blender
+%global blenderarch %{_libdir}/blender
 
 %global fontname blender
 
 Name:           blender
 Version:        2.49
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
-# This is a customized source package without ffmpeg, which is
-# patent encumbered (#239476)
-# wget http://download.blender.org/source/blender-2.49.tar.gz
-# cd blender-2-47/extern
-# rm -rf ffmpeg libmp3lame x264
-# cd ../..
-# tar -zcf blender-2.49-noffmpeg.tar.gz blender-2-49/
-Source0:	blender-%{version}-noffmpeg.tar.gz
-Source1:        http://bane.servebeer.com/programming/blender/import-3ds-0.7.py
-Source2:        http://bane.servebeer.com/programming/blender/export-3ds-0.71.py
-Source3:        blender.png
-Source4:        blender.desktop
+# This is a customized source package without bundled dependencies
+# See blender-repack.sh
+Source0:	blender-%{version}-repack.tar.bz2
+
 Source5:        blender.xml
 Source6:        blender-wrapper
 Source7:	blenderplayer-wraper
 Source8:	blender-2.49.config
+Source100:      blender-repack.sh
 
 Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
@@ -58,16 +51,16 @@ BuildRequires:  libXi-devel
 BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
-buildRequires:  freetype-devel
+BuildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
 BuildRequires:	fontpackages-devel
 
 BuildRequires:	fftw-devel
-#BuildRequires:	ftgl-devel
+BuildRequires:	ftgl-devel
 BuildRequires:	ode-devel
 BuildRequires:	openjpeg-devel
-#BuildRequires:  qhull-devel
+BuildRequires:  qhull-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -99,11 +92,11 @@ This version doesn't contains ffmpeg support.
 %package -n blenderplayer
 Summary:       Standalone blender player
 Group:	       Applications/Multimedia
-License:       GPLv2
+
 %description -n blenderplayer
 This package contains a stand alone release of the blender player.
 You will need this package to play games which are based on the
-Blender Geaming Engine.
+Blender Game Engine.
 
 %prep
 %setup -q 
@@ -113,13 +106,6 @@ Blender Geaming Engine.
 %patch100 -p1
 %patch101 -p1
 
-#rm -rf extern/bFTGL
-rm -rf extern/fftw
-rm -rf extern/glew
-rm -rf extern/libopenjpeg
-#rm -rf extern/qhull
-rm -rf extern/ode
-rm -rf extern/xvidcore
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -145,8 +131,6 @@ rm -rf ${RPM_BUILD_ROOT}
 install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender.bin
 install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
 
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
-
 install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}%{_bindir}/blender
 install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
@@ -154,85 +138,87 @@ install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 #  Install miscellanous files to /usr/lib/blender
 #
 
-mkdir -p ${RPM_BUILD_ROOT}/%{blenderlib}
-
-pushd bin/.blender/locale
-rm -rf $(find -name '.svn' -print)
-popd
-
-cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
-
-install -d ${RPM_BUILD_ROOT}%{blenderlib}/scripts
-
-cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
-
-install -m 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
-install -m 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
-install -m 644 bin/.blender/.bfont.ttf ${RPM_BUILD_ROOT}%{blenderlib}
-
-install -p -D -m 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/import-3ds-0.7.py
-install -p -D -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{blenderlib}/scripts/export-3ds-0.71.py
-
-pushd ${RPM_BUILD_ROOT}%{blenderlib}/scripts
-find . -exec sed -i -e 's/\r$//g' {} \;
-chmod -R 0755 *
-popd
-
-
-install -p -D -m 644 %{SOURCE3} ${RPM_BUILD_ROOT}%{_datadir}/pixmaps/blender.png
-
-install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
-
-#
-# Install plugins
-#
-
-install -d ${RPM_BUILD_ROOT}%{plugins}/sequence
-install -d ${RPM_BUILD_ROOT}%{plugins}/texture
-
-install -s -m 644 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{plugins}/sequence
-install -s -m 644 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{plugins}/texture
-
-desktop-file-install --vendor fedora                    \
-  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
-  %{SOURCE4}
+mkdir -p ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
 #
 # Create empty %%{_libdir}/blender/scripts to claim ownership
 #
 
-install -d ${RPM_BUILD_ROOT}%{_libdir}/blender/scripts
+mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
+
+#
+# Install plugins
+#
+
+install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
+install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
+
+
+find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
+
+cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
+
+cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
+
+install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
+install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 
 #
 # Create link to DejaVu-Sans
 #
-rm ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf
-(cd ${RPM_BUILD_ROOT}; ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{_datadir}/blender/.bfont.ttf)
+ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{blenderlib}/.bfont.ttf
 
-%find_lang %name
+find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -exec sed -i -e 's/\r$//g' {} \;
+
+# Install hicolor icons.
+for i in 16x16 22x22 32x32 ; do
+  mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps
+  install -pm 0644 release/freedesktop/icons/${i}/%{name}.png \
+    ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
+done
+
+install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+
+desktop-file-install --vendor fedora                    \
+  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
+  release/freedesktop/blender.desktop
+
+
+
+%find_lang %{name}
+
+
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
 %post
-update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
-update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
+%{_bindir}/update-mime-database %{_datadir}/mime
+touch --no-create %{_datadir}/icons/hicolor
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
+fi 
+%{_bindir}/update-desktop-database %{_datadir}/applications || :
 
 
 %postun
-update-mime-database %{_datadir}/mime > /dev/null 2>&1 || :
-update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
+%{_bindir}/update-mime-database %{_datadir}/mime
+%{_bindir}/update-desktop-database %{_datadir}/applications
+touch --no-create %{_datadir}/icons/hicolor
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
+fi || :
 
 
-%files -f %name.lang
+%files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc COPYING README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/blender
 %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
-%{_datadir}/pixmaps/*.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{blenderlib}/
-%{_libdir}/blender/
+%{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
 
 %files -n blenderplayer
@@ -242,9 +228,16 @@ update-desktop-database %{_datadir}/applications > /dev/null 2>&1 || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49-6
+- Update blender-wrapper script.
+- Repackage the sources archive.
+- Remove deprecated import/export-3ds-0.7.py
+- Pick desktop and icons from tarball and use hicolor icons.
+- Hack config.py to add system libqhull along with gettexlib.
+
 * Fri Jun 12 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-5
 - Fix Type
-- Chage symlint to %%{_fontbasedir}/Dajavu/...
+- Change symlink to %%{_fontbasedir}/Dejavu/...
 
 * Wed Jun  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49-4
 - Rework on the blender wrapper script

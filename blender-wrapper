@@ -4,7 +4,7 @@
 #
 
 # In case user's home directory doesn't contain ~/.blender, copy it
-# from /usr/share/blender
+# from /usr/share/blender and the detected BLENDER_LIBDIR
 
 if [ -x /usr/bin/blender-freeworld.bin ]; then
     blend="blender-freeworld"
@@ -12,35 +12,46 @@ else
     blend="blender"
 fi
 
+#Set the blender binary library directory
+if [ -d ${BLENDER_LIBDIR}/plugins ]; then
+  break
+elif [ -d /usr/lib64/blender/plugins ]; then
+  BLENDER_LIBDIR=/usr/lib64/blender
+elif [ -d /usr/lib32/blender/plugins ]; then
+  BLENDER_LIBDIR=/usr/lib32/blender
+elif [ -d /usr/lib/blender/plugins ]; then
+  BLENDER_LIBDIR=/usr/lib/blender
+else
+  echo "blender binary directory was not found or BLENDER_LIBDIR is wrong"
+  exit 1
+fi
+
 if [ ! -d ~/.blender ]; then
-    install -d ~/.blender
+    mkdir -p ~/.blender
     ln -sf /usr/share/locale ~/.blender/locale
     ln -sf /usr/share/blender/.Blanguages ~/.blender
     ln -sf /usr/share/blender/.bfont.ttf ~/.blender
     ln -sf /usr/share/blender/VERSION ~/.blender/VERSION
 
-    install -d ~/.blender/plugins/sequence
-    install -d ~/.blender/plugins/texture
+    mkdir -p ~/.blender/plugins
 
-    install -d ~/.blender/scripts
+    mkdir -p ~/.blender/scripts/bpydata/config
 
-    if [ -L ~/.blender/scripts/bpydata ]; then
-	rm ~/.blender/scripts/bpydata
-    fi
+    ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/bpymodules
 
-    if [ -d ~/.blender/scripts/bpydata ]; then
-	mkdir -p ~/blender/scripts/bpydata
-	mkdir -p ~/blender/scripts/bpydata/config
-    fi
-
-    ln -sf /usr/share/blender/scripts/bpymodules ~/.blender/scripts/pbymodules
-    ln -sf /usr/share/blender/scripts/* ~/.blender/scripts/
-
-    if [ -d /usr/lib64/blender/plugins ]; then
-	ln -sf /usr/lib64/blender/plugins/sequence ~/.blender/plugins/sequence
-	ln -sf /usr/lib64/blender/plugins/texture ~/.blender/plugins/texture
+    if [ -d ${BLENDER_LIBDIR}/plugins ]; then
+       ln -sf ${BLENDER_LIBDIR}/plugins/sequence ~/.blender/plugins/sequence
+       ln -sf ${BLENDER_LIBDIR}/plugins/texture ~/.blender/plugins/texture
     fi
 fi
+
+if [ ! -d ~/.blender/scripts/bpydata ]; then
+  if [ -L ~/.blender/scripts/bpydata ]; then
+	rm ~/.blender/scripts/bpydata
+  fi
+	mkdir -p ~/.blender/scripts/bpydata/config
+fi
+
 
 
 #
@@ -48,44 +59,35 @@ fi
 #
 
 for s in /usr/share/blender/scripts/bpydata/config/* ; do
-    s=`basename $s`
-    if [ ! -e ~/.blender/scripts/bpydata/config/$s ] ; then
-	cp /usr/share/blender/scripts/bpydata/config/$s \
-           ~/.blender/scripts/pbydata/config/$s
+    s=`basename ${s}`
+    if [ $? ]; then
+      break 
+    fi
+    if [ ! -e ~/.blender/scripts/bpydata/config/${s} ] ; then
+	cp -p /usr/share/blender/scripts/bpydata/config/${s} \
+           ~/.blender/scripts/bpydata/config/${s}
     fi
 done
 
-for s in /usr/share/blender/scripts/*.p* ; do
-    s=`basename $s`
-    if [ ! -e ~/.blender/scripts/$s ] ; then
-         ln -sf /usr/share/blender/scripts/$s ~/.blender/scripts/
+for s in /usr/share/blender/scripts/*.py* ; do
+    s=`basename ${s}`
+    if [ ! -e ~/.blender/scripts/${s} ] ; then
+         ln -sf /usr/share/blender/scripts/${s} ~/.blender/scripts/
     fi
 done
 
-if [ -d /usr/lib64/blender/scripts ] ; then
-    for s in /usr/lib64/blender/scripts/* ; do
-	s=`basename $s`
-	if [ ! -e ~/.blender/scripts/$s -a -x /usr/lib64/blender/scripts/$s ] ; then
-	    ln -sf /usr/lib64/blender/scripts/$s ~/.blender/scripts/
-	fi
-    done
-elif [ -d /usr/lib/blender/scripts ] ; then
-    for s in /usr/lib/blender/scripts/* ; do
-	s=`basename $s`
-	if [ ! -e ~/.blender/scripts/$s -a -x /usr/lib/blender/scripts/$s ] ; then
-	    ln -sf /usr/lib/blender/scripts/$s ~/.blender/scripts/
+if [ -d ${BLENDER_LIBDIR}/scripts ] ; then
+    for s in ${BLENDER_LIBDIR}/blender/scripts/*.{py*,so} ; do
+	s=`basename ${s}` 
+        if [ $? ]; then
+           break 
+        fi
+	if [ ! -e ~/.blender/scripts/${s} ] ; then
+	    ln -sf ${BLENDER_LIBDIR}/scripts/${s} ~/.blender/scripts/
 	fi
     done
 fi
 
-
-if [ -d /usr/lib64/blender/plugins ]; then
-    ln -sf /usr/lib64/blender/plugins/sequence ~/.blender/plugins/sequence
-    ln -sf /usr/lib64/blender/plugins/texture ~/.blender/plugins/texture
-elif [ -d /usr/lib/blender/plugins ]; then
-    ln -sf /usr/lib/blender/plugins/sequence ~/.blender/plugins/sequence
-    ln -sf /usr/lib/blender/plugins/texture ~/.blender/plugins/texture    
-fi
 
 /usr/bin/${blend}.bin $@
 
