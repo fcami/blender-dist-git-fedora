@@ -172,7 +172,7 @@ install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 #
 ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{blenderlib}/.bfont.ttf
 
-find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -exec sed -i -e 's/\r$//g' {} \;
+find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
 for i in 16x16 22x22 32x32 ; do
