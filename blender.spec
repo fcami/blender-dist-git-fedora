@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49a
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -187,7 +187,8 @@ desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
   release/freedesktop/blender.desktop
 
-
+#Fix perm
+chmod +x ${RPM_BUILD_ROOT}%{blenderlib}/scripts/bpymodules/blend2renderinfo.py
 
 %find_lang %{name}
 
@@ -232,6 +233,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Jul  6 2009 kwizart < kwizart at gmail.com > - 2.49a-2
+- Fix perm on blend2renderinfo.py - raised by #506957
+
 * Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49a-1
 - Update to 2.49a
 
