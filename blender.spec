@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49a
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -233,6 +233,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.49a-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
 * Mon Jul  6 2009 kwizart < kwizart at gmail.com > - 2.49a-2
 - Fix perm on blend2renderinfo.py - raised by #506957
 
