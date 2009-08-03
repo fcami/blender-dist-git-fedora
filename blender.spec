@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49a
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -80,8 +80,6 @@ Requires:	  dejavu-fonts
 Provides:	  blender-fonts = %{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
 
-
-
 %description
 Blender is the essential software solution you need for 3D, from modeling,
 animation, rendering and post-production to interactive creation and playback.
@@ -110,6 +108,20 @@ Blender Game Engine.
 %patch100 -p1
 %patch101 -p1
 
+# binreloc is not a part of fedora
+rm -rf extern/bFTGL
+rm -rf extern/ffmpeg
+rm -rf extern/fftw
+rm -rf extern/glew
+rm -rf extern/libmp3lame
+rm -rf extern/libopenjpeg
+rm -rf extern/libredcode
+rm -rf extern/ode
+rm -rf extern/x264
+rm -rf extern/xvidcore
+rm -rf extern/qhull
+rm -rf extern/make
+rm -rf extern/verse
 
 PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
 
@@ -233,6 +245,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Aug  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-4
+- Rebuild for python-2.6.2
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.49a-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 

@@ -24,7 +24,7 @@ pushd extern
 #Removed because of ip
   rm -rf ffmpeg libmp3lame x264 xvidcore
 #Removed because we can expect to use system one
-  rm -rf fftw glew libopenjpeg ode qhull make verse
+#  rm -rf fftw glew libopenjpeg ode qhull make verse
 #Will have to be removed later: bFTGL
 popd
 rm -rf scons
