@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49a
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -109,7 +109,6 @@ Blender Game Engine.
 %patch101 -p1
 
 # binreloc is not a part of fedora
-rm -rf extern/bFTGL
 rm -rf extern/ffmpeg
 rm -rf extern/fftw
 rm -rf extern/glew
@@ -245,6 +244,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Aug  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-5
+- Revoke using of system FTGL library
+
 * Mon Aug  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-4
 - Rebuild for python-2.6.2
 
