@@ -4,8 +4,8 @@
 %global fontname blender
 
 Name:           blender
-Version:        2.49a
-Release: 	6%{?dist}
+Version:        2.49b
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -244,8 +244,11 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
-* Tue Aug 11 2009 Jochen Schmitt <Jochen herr-schmitt de> - 2.49a-6
-- Build again neu freealut relase (openalut-soft)
+* Mon Sep  7 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-1
+- New upstream release (#520780)
+
+* Tue Aug 11 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-6
+- Build again new freealut relase (openalut-soft)
 
 * Mon Aug  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-5
 - Revoke using of system FTGL library
