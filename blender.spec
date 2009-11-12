@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -244,6 +244,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Thu Nov 12 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-2
+- Rebuild
+
 * Mon Sep  7 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-1
 - New upstream release (#520780)
 
