@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -168,7 +168,6 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
 install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
-
 find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
 cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
@@ -181,7 +180,7 @@ install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 #
 # Create link to DejaVu-Sans
 #
-ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{blenderlib}/.bfont.ttf
+# ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{blenderlib}/.bfont.ttf
 
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
@@ -244,6 +243,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Nov 23 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-3
+- Remove symlink to DejaVu font from package
+
 * Thu Nov 12 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-2
 - Rebuild
 
