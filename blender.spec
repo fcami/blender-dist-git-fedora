@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -244,6 +244,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> - 2.49b-5
+- Add forgotten patch
+
 * Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-4
 - Fix O_CREAT issue on existing quit.blend file (#553959)
 - Move quit.blend to ~/.blender

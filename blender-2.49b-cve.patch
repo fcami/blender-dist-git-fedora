@@ -1,0 +1,61 @@
+diff -up blender-2.49b/source/blender/blenkernel/intern/blender.c.cve blender-2.49b/source/blender/blenkernel/intern/blender.c
+--- blender-2.49b/source/blender/blenkernel/intern/blender.c.cve	2009-09-01 17:21:17.000000000 +0200
++++ blender-2.49b/source/blender/blenkernel/intern/blender.c	2010-01-13 17:32:11.312632711 +0100
+@@ -41,6 +41,7 @@
+ 	#define write _write
+ #endif
+ 
++#include <errno.h>
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+@@ -753,7 +754,7 @@ void BKE_undo_save_quit(void)
+ {
+ 	UndoElem *uel;
+ 	MemFileChunk *chunk;
+-	int file;
++	int file = -1;
+ 	char str[FILE_MAXDIR+FILE_MAXFILE];
+ 	
+ 	if( (U.uiflag & USER_GLOBALUNDO)==0) return;
+@@ -767,12 +768,20 @@ void BKE_undo_save_quit(void)
+ 	/* no undo state to save */
+ 	if(undobase.first==undobase.last) return;
+ 		
+-	BLI_make_file_string("/", str, btempdir, "quit.blend");
++	BLI_make_file_string("/", str, BLI_gethome(), ".blender/quit.blend");
+ 
+-	file = open(str,O_BINARY+O_WRONLY+O_CREAT+O_TRUNC, 0666);
+-	if(file == -1) {
+-		error("Unable to save %s, check you have permissions", str);
+-		return;
++	int flags = O_BINARY+O_WRONLY+O_TRUNC+O_EXCL+O_CREAT;
++	
++        while(file == -1) {
++	  file = open(str,flags,0666);
++	  if(file == -1) {
++	    if(errno == EEXIST) {
++	      flags ^= O_CREAT;
++	    } else {
++	      error("Unable to save %s, check you have permissions", str);
++	      return;
++	    }
++	  }
+ 	}
+ 
+ 	chunk= uel->memfile.chunks.first;
+diff -up blender-2.49b/source/blender/python/BPY_interface.c.cve blender-2.49b/source/blender/python/BPY_interface.c
+--- blender-2.49b/source/blender/python/BPY_interface.c.cve	2009-09-01 17:21:12.000000000 +0200
++++ blender-2.49b/source/blender/python/BPY_interface.c	2010-01-13 17:08:19.567752630 +0100
+@@ -236,6 +236,11 @@ void BPY_start_python( int argc, char **
+ 	Py_Initialize(  );
+ 	
+ 	PySys_SetArgv( argc_copy, argv_copy );
++	
++	/* Sanitize sys.path to prevent relative imports loading modules in
++	   the current working directory */
++	PyRun_SimpleString("import sys; sys.path = filter(None, sys.path)");
++
+ 	/* Initialize thread support (also acquires lock) */
+ 	PyEval_InitThreads();
+ 	
