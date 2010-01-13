@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,8 +26,9 @@ Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 
 # Both patches are forwarded to upstream via email
-Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
-Patch101:	blender-2.48a-cve-2008-4863.patch
+#Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
+#Patch101:	blender-2.48a-cve-2008-4863.patch
+Patch100:	blender-2.49b-cve.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -105,8 +106,8 @@ Blender Game Engine.
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 
-%patch100 -p1
-%patch101 -p1
+%patch100 -p1 -b .cve
+# %patch101 -p1
 
 # binreloc is not a part of fedora
 rm -rf extern/ffmpeg
@@ -243,6 +244,10 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-4
+- Fix O_CREAT issue on existing quit.blend file (#553959)
+- Move quit.blend to ~/.blender
+
 * Mon Nov 23 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-3
 - Remove symlink to DejaVu font from package
 
