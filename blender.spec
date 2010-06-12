@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -244,6 +244,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Sat Jun 12 2010 Nicolas Chauvet <kwizart@gmail.com> - 2.49b-6
+- Rebuild for gettext
+
 * Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> - 2.49b-5
 - Add forgotten patch
 
