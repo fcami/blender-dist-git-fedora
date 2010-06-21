@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	6%{?dist}
+Release: 	9%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -24,6 +24,7 @@ Source100:      blender-repack.sh
 
 Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
+Patch3:		blender-2.49b-uid.patch
 
 # Both patches are forwarded to upstream via email
 #Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -55,7 +56,6 @@ BuildRequires:  libGLU-devel
 BuildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
-BuildRequires:	fontpackages-devel
 
 BuildRequires:	fftw-devel
 BuildRequires:	ftgl-devel
@@ -105,6 +105,7 @@ Blender Game Engine.
 %setup -q 
 %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
+%patch3 -p1 -b .uid
 
 %patch100 -p1 -b .cve
 # %patch101 -p1
@@ -244,10 +245,19 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
-* Sat Jun 12 2010 Nicolas Chauvet <kwizart@gmail.com> - 2.49b-6
+* Mon Jun 21 2010 Nicolas Chauvet <kwizart@gmail.com> - 2.49b-9
 - Rebuild for gettext
 
-* Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> - 2.49b-5
+* Wed May 26 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-8
+- Add large file support for 32-bit plattforms (#585668)
+
+* Thu Apr  8 2010 Jochen Schmitt <s4504kr@omega> 2.49b-7
+- Remove unused BR fontpackages-devel
+
+* Sun Mar 28 2010 Jochen Schmitt <s4504kr@omega> 2.49b-6
+- Try to fix copy of userid into files.owner (#572186)
+
+* Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-5
 - Add forgotten patch
 
 * Wed Jan 13 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-4
