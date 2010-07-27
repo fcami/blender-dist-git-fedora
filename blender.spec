@@ -5,7 +5,7 @@
 
 Name:           blender
 Version:        2.49b
-Release: 	9%{?dist}
+Release: 	10%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -245,6 +245,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Tue Jul 27 2010 David Malcolm <dmalcolm@redhat.com> - 2.49b-10
+- Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
+
 * Mon Jun 21 2010 Nicolas Chauvet <kwizart@gmail.com> - 2.49b-9
 - Rebuild for gettext
 
