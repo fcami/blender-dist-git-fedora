@@ -1,11 +1,12 @@
 %global blenderlib  %{_datadir}/blender
 %global blenderarch %{_libdir}/blender
+%global __python %{__python3}
 
 %global fontname blender
 
 Name:           blender
-Version:        2.49b
-Release: 	10%{?dist}
+Version:        2.55
+Release: 	0.1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -14,7 +15,7 @@ License:        GPLv2
 URL:            http://www.blender.org
 # This is a customized source package without bundled dependencies
 # See blender-repack.sh
-Source0:	blender-%{version}-repack.tar.bz2
+Source0:	blender-2.54-beta.tar.gz
 
 Source5:        blender.xml
 Source6:        blender-wrapper
@@ -25,6 +26,8 @@ Source100:      blender-repack.sh
 Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.49b-uid.patch
+Patch4:		blender-2.54-glew.patch
+Patch5:		blender-2.54-desktop.patch
 
 # Both patches are forwarded to upstream via email
 #Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -44,7 +47,7 @@ BuildRequires:  libtool
 BuildRequires:  libvorbis-devel
 BuildRequires:  freealut-devel
 BuildRequires:  openssl-devel
-BuildRequires:  python-devel
+BuildRequires:  python3-devel
 BuildRequires:  scons
 BuildRequires:  SDL-devel
 BuildRequires:  zlib-devel
@@ -57,6 +60,7 @@ BuildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
 
+BuildRequires:	libsamplerate-devel
 BuildRequires:	fftw-devel
 BuildRequires:	ftgl-devel
 BuildRequires:	ode-devel
@@ -88,26 +92,15 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
-
-
-%package -n blenderplayer
-Summary:       Standalone blender player
-Group:	       Applications/Multimedia
-
-%description -n blenderplayer
-This package contains a stand alone release of the blender player.
-You will need this package to play games which are based on the
-Blender Game Engine.
-
-
-
 %prep
-%setup -q 
-%patch1 -p1 -b .org
+%setup -q -n %{name}-%{version}-beta
+# %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
-%patch3 -p1 -b .uid
+# %patch3 -p1 -b .uid
+%patch4 -p1 -b .glewp
+%patch5 -p1 -b .dsk
 
-%patch100 -p1 -b .cve
+# %patch100 -p1 -b .cve
 # %patch101 -p1
 
 # binreloc is not a part of fedora
@@ -124,7 +117,7 @@ rm -rf extern/qhull
 rm -rf extern/make
 rm -rf extern/verse
 
-PYVER=$(%{__python} -c "import sys ; print sys.version[:3]")
+PYVER=$(%{__python3} -c "import sys ; print(sys.version[:3])")
 
 sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
@@ -133,7 +126,7 @@ iconv -f iso-8859-1 -t utf-8 doc/bf-members.txt -o doc/bf-members.txt.utf8
 mv doc/bf-members.txt.utf8 doc/bf-members.txt
 
 %build
-scons %{?_smp_mflags} blenderplayer BF_QUIET=0
+scons # WITH_BF_PLAYER=false BF_QUIET=0 
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -146,10 +139,10 @@ make -C release/plugins/
 rm -rf ${RPM_BUILD_ROOT}
 
 install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender.bin
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
+# install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
 
 install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}%{_bindir}/blender
-install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
+# install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -170,14 +163,14 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
 install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
-find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
+# find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
-cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
+# cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
 install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
-install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
+# install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 
 #
 # Create link to DejaVu-Sans
@@ -200,11 +193,9 @@ desktop-file-install --vendor fedora                    \
   release/freedesktop/blender.desktop
 
 #Fix perm
-chmod +x ${RPM_BUILD_ROOT}%{blenderlib}/scripts/bpymodules/blend2renderinfo.py
+#chmod +x ${RPM_BUILD_ROOT}%{blenderlib}/scripts/bpymodules/blend2renderinfo.py
 
-%find_lang %{name}
-
-
+# %find_lang %{name}
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -216,7 +207,6 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi 
 %{_bindir}/update-desktop-database %{_datadir}/applications || :
-
 
 %postun
 %{_bindir}/update-mime-database %{_datadir}/mime
@@ -238,13 +228,6 @@ fi || :
 %{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
 
-%files -n blenderplayer
-%doc COPYING
-%defattr(-,root,root,-)
-%{_bindir}/blenderplayer
-%{_bindir}/blenderplayer.bin
-
-%changelog
 * Tue Jul 27 2010 David Malcolm <dmalcolm@redhat.com> - 2.49b-10
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
