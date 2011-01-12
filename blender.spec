@@ -228,6 +228,16 @@ fi || :
 %{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
 
+%files -n blenderplayer
+%doc COPYING
+%defattr(-,root,root,-)
+%{_bindir}/blenderplayer
+%{_bindir}/blenderplayer.bin
+
+%changelog
+* Wed Jan 12 2011 Rex Dieter <rdieter@fedoraproject.org> - 2.49b-11
+- rebuild (openjpeg)
+
 * Tue Jul 27 2010 David Malcolm <dmalcolm@redhat.com> - 2.49b-10
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
