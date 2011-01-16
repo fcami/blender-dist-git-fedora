@@ -5,8 +5,8 @@
 %global fontname blender
 
 Name:           blender
-Version:        2.55
-Release: 	0.1%{?dist}
+Version:        2.56
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -15,19 +15,19 @@ License:        GPLv2
 URL:            http://www.blender.org
 # This is a customized source package without bundled dependencies
 # See blender-repack.sh
-Source0:	blender-2.54-beta.tar.gz
+Source0:	http://download.blender.org/source/blender-%{version}-beta.tar.gz
 
 Source5:        blender.xml
 Source6:        blender-wrapper
 Source7:	blenderplayer-wraper
-Source8:	blender-2.49.config
+Source8:	blender-2.56.config
 Source100:      blender-repack.sh
 
 Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.49b-uid.patch
-Patch4:		blender-2.54-glew.patch
-Patch5:		blender-2.54-desktop.patch
+Patch4:		blender-2.56-ext.patch
+patch5:		blender-2.56-py32.patch
 
 # Both patches are forwarded to upstream via email
 #Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -93,12 +93,12 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %prep
-%setup -q -n %{name}-%{version}-beta
+%setup -q -n %{name}-%{version}-beta-source
 # %patch1 -p1 -b .org
 %patch2 -p1 -b .bid
 # %patch3 -p1 -b .uid
-%patch4 -p1 -b .glewp
-%patch5 -p1 -b .dsk
+%patch4 -p1 -b .ext
+%patch5 -p1 -b .py32
 
 # %patch100 -p1 -b .cve
 # %patch101 -p1
@@ -122,11 +122,8 @@ PYVER=$(%{__python3} -c "import sys ; print(sys.version[:3])")
 sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
 
-iconv -f iso-8859-1 -t utf-8 doc/bf-members.txt -o doc/bf-members.txt.utf8
-mv doc/bf-members.txt.utf8 doc/bf-members.txt
-
 %build
-scons # WITH_BF_PLAYER=false BF_QUIET=0 
+scons BF_QUIET=0 
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -217,9 +214,10 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
 fi || :
 
 
-%files -f %{name}.lang
+%files 
 %defattr(-,root,root,-)
-%doc COPYING README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
+%doc COPYING 
+# README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/blender
 %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
@@ -227,12 +225,6 @@ fi || :
 %{blenderlib}/
 %{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
-
-%files -n blenderplayer
-%doc COPYING
-%defattr(-,root,root,-)
-%{_bindir}/blenderplayer
-%{_bindir}/blenderplayer.bin
 
 %changelog
 * Wed Jan 12 2011 Rex Dieter <rdieter@fedoraproject.org> - 2.49b-11
