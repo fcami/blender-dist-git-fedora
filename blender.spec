@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -245,6 +245,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-5
+- Remove ref to #extern/glew/include from all scons files
+
 * Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-4
 - Readd blenderplayer subpackage
 
