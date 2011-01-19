@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -231,16 +231,19 @@ fi || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
-* Wed Jan 19 2011 Dan Horák <dan[at]danny.cz> - 2.56-2
+* Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-3
+- Fix RPM_OPT_FLAGS honour issue
+
+* Wed Jan 19 2011 Dan Horák <dan[at]danny.cz> 2.56-2
 - use SSE optimization only on x86 platforms
 
-* Wed Jan 12 2011 Rex Dieter <rdieter@fedoraproject.org> - 2.49b-11
+* Wed Jan 12 2011 Rex Dieter <rdieter@fedoraproject.org> 2.49b-11
 - rebuild (openjpeg)
 
-* Tue Jul 27 2010 David Malcolm <dmalcolm@redhat.com> - 2.49b-10
+* Tue Jul 27 2010 David Malcolm <dmalcolm@redhat.com> 2.49b-10
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
-* Mon Jun 21 2010 Nicolas Chauvet <kwizart@gmail.com> - 2.49b-9
+* Mon Jun 21 2010 Nicolas Chauvet <kwizart@gmail.com> 2.49b-9
 - Rebuild for gettext
 
 * Wed May 26 2010 Jochen Schmitt <Jochen herr-schmitt de> 2.49b-8
