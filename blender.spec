@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -92,6 +92,15 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
+%package -n blenderplayer
+Summary:       Standalone blender player
+Group:	       Applications/Multimedia
+
+%description -n blenderplayer
+This package contains a stand alone release of the blender player.
+You will need this package to play games which are based on the
+Blender Game Engine.
+
 %prep
 %setup -q -n %{name}-%{version}-beta-source
 # %patch1 -p1 -b .org
@@ -123,7 +132,7 @@ sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
 
 %build
-scons \
+scons blenderplayer \
 %ifnarch %{ix86} x86_64
     WITH_BF_RAYOPTIMIZATION=False \
 %endif
@@ -140,10 +149,10 @@ make -C release/plugins/
 rm -rf ${RPM_BUILD_ROOT}
 
 install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender.bin
-# install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
 
 install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}%{_bindir}/blender
-# install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
+install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -217,7 +226,6 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi || :
 
-
 %files 
 %defattr(-,root,root,-)
 %doc COPYING 
@@ -230,7 +238,16 @@ fi || :
 %{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
 
+%files -n blenderplayer
+%defattr(-,root,root,-)
+%doc COPYING
+%{_bindir}/blenderplayer
+%{_bindir}/blenderplayer.bin
+
 %changelog
+* Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-4
+- Readd blenderplayer subpackage
+
 * Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-3
 - Fix RPM_OPT_FLAGS honour issue
 
@@ -280,16 +297,16 @@ fi || :
 * Mon Aug  3 2009 Jochen Schmitt <Jochen herr-schmitt de> 2.49a-4
 - Rebuild for python-2.6.2
 
-* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.49a-3
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> 2.49a-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
-* Mon Jul  6 2009 kwizart < kwizart at gmail.com > - 2.49a-2
+* Mon Jul  6 2009 kwizart < kwizart at gmail.com > 2.49a-2
 - Fix perm on blend2renderinfo.py - raised by #506957
 
-* Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49a-1
+* Fri Jun 19 2009 kwizart < kwizart at gmail.com > 2.49a-1
 - Update to 2.49a
 
-* Fri Jun 19 2009 kwizart < kwizart at gmail.com > - 2.49-6
+* Fri Jun 19 2009 kwizart < kwizart at gmail.com > 2.49-6
 - Update blender-wrapper script.
 - Repackage the sources archive.
 - Remove deprecated import/export-3ds-0.7.py
