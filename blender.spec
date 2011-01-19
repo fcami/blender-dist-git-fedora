@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -123,7 +123,11 @@ sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
 
 %build
-scons BF_QUIET=0 
+scons \
+%ifnarch %{ix86} x86_64
+    WITH_BF_RAYOPTIMIZATION=False \
+%endif
+    BF_QUIET=0
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -227,6 +231,9 @@ fi || :
 %{_datadir}/mime/packages/blender.xml
 
 %changelog
+* Wed Jan 19 2011 Dan Horák <dan[at]danny.cz> - 2.56-2
+- use SSE optimization only on x86 platforms
+
 * Wed Jan 12 2011 Rex Dieter <rdieter@fedoraproject.org> - 2.49b-11
 - rebuild (openjpeg)
 
