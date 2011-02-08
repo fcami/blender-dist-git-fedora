@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -245,6 +245,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.56-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Wed Jan 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-5
 - Remove ref to #extern/glew/include from all scons files
 
