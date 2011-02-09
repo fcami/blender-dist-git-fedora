@@ -1,0 +1,110 @@
+diff -Naur blender-2.56-beta-source/extern/bullet2/src/BulletSoftBody/btSoftBody.h blender-2.56-beta-source-new/extern/bullet2/src/BulletSoftBody/btSoftBody.h
+--- blender-2.56-beta-source/extern/bullet2/src/BulletSoftBody/btSoftBody.h	2009-09-14 11:45:32.000000000 -0300
++++ blender-2.56-beta-source-new/extern/bullet2/src/BulletSoftBody/btSoftBody.h	2011-02-08 22:32:34.300937158 -0200
+@@ -177,6 +177,7 @@
+ 	/* Material		*/ 
+ 	struct	Material : Element
+ 	{
++                Material (){}
+ 		btScalar				m_kLST;			// Linear stiffness coefficient [0,1]
+ 		btScalar				m_kAST;			// Area/Angular stiffness coefficient [0,1]
+ 		btScalar				m_kVST;			// Volume stiffness coefficient [0,1]
+@@ -191,6 +192,7 @@
+ 	/* Node			*/ 
+ 	struct	Node : Feature
+ 	{
++                Node (){}
+ 		btVector3				m_x;			// Position
+ 		btVector3				m_q;			// Previous step position
+ 		btVector3				m_v;			// Velocity
+@@ -204,6 +206,7 @@
+ 	/* Link			*/ 
+ 	struct	Link : Feature
+ 	{
++                Link (){}
+ 		Node*					m_n[2];			// Node pointers
+ 		btScalar				m_rl;			// Rest length		
+ 		int						m_bbending:1;	// Bending link
+@@ -215,6 +218,7 @@
+ 	/* Face			*/ 
+ 	struct	Face : Feature
+ 	{
++                Face (){} 
+ 		Node*					m_n[3];			// Node pointers
+ 		btVector3				m_normal;		// Normal
+ 		btScalar				m_ra;			// Rest area
+@@ -255,6 +259,7 @@
+ 	/* Note			*/ 
+ 	struct	Note : Element
+ 	{
++                Note (){}
+ 		const char*				m_text;			// Text
+ 		btVector3				m_offset;		// Offset
+ 		int						m_rank;			// Rank
+diff -Naur blender-2.56-beta-source/extern/Eigen2/Eigen/src/Core/util/Memory.h blender-2.56-beta-source-new/extern/Eigen2/Eigen/src/Core/util/Memory.h
+--- blender-2.56-beta-source/extern/Eigen2/Eigen/src/Core/util/Memory.h	2009-10-20 07:50:24.000000000 -0200
++++ blender-2.56-beta-source-new/extern/Eigen2/Eigen/src/Core/util/Memory.h	2011-02-08 16:06:14.142965371 -0200
+@@ -37,6 +37,8 @@
+ #define EIGEN_FREEBSD_MALLOC_ALREADY_ALIGNED 0
+ #endif
+ 
++#include <stddef.h>
++
+ #if defined(__APPLE__) || defined(_WIN64) || EIGEN_FREEBSD_MALLOC_ALREADY_ALIGNED
+   #define EIGEN_MALLOC_ALREADY_ALIGNED 1
+ #else
+diff -Naur blender-2.56-beta-source/intern/memutil/MEM_Allocator.h blender-2.56-beta-source-new/intern/memutil/MEM_Allocator.h
+--- blender-2.56-beta-source/intern/memutil/MEM_Allocator.h	2010-02-12 11:34:04.000000000 -0200
++++ blender-2.56-beta-source-new/intern/memutil/MEM_Allocator.h	2011-02-08 15:40:37.846834599 -0200
+@@ -24,6 +24,7 @@
+ #ifndef __MEM_Allocator_h_included__
+ #define __MEM_Allocator_h_included__ 1
+ 
++#include <stddef.h>
+ #include "guardedalloc/MEM_guardedalloc.h"
+ #include "guardedalloc/BLO_sys_types.h"
+ 
+diff -Naur blender-2.56-beta-source/source/blender/imbuf/intern/openexr/openexr_api.cpp blender-2.56-beta-source-new/source/blender/imbuf/intern/openexr/openexr_api.cpp
+--- blender-2.56-beta-source/source/blender/imbuf/intern/openexr/openexr_api.cpp	2010-12-03 15:05:21.000000000 -0200
++++ blender-2.56-beta-source-new/source/blender/imbuf/intern/openexr/openexr_api.cpp	2011-02-08 16:27:14.132080102 -0200
+@@ -29,6 +29,7 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string>
++#include <stddef.h>
+ 
+ 
+ #include <openexr_api.h>
+diff -Naur blender-2.56-beta-source/source/gameengine/Converter/BL_ArmatureChannel.cpp blender-2.56-beta-source-new/source/gameengine/Converter/BL_ArmatureChannel.cpp
+--- blender-2.56-beta-source/source/gameengine/Converter/BL_ArmatureChannel.cpp	2010-11-15 23:19:37.000000000 -0200
++++ blender-2.56-beta-source-new/source/gameengine/Converter/BL_ArmatureChannel.cpp	2011-02-08 16:45:20.671268280 -0200
+@@ -32,6 +32,7 @@
+ #include "BL_ArmatureConstraint.h"
+ #include "BLI_math.h"
+ #include "BLI_string.h"
++#include <stddef.h>
+ 
+ #ifdef WITH_PYTHON
+ 
+diff -Naur blender-2.56-beta-source/source/gameengine/Expressions/PyObjectPlus.h blender-2.56-beta-source-new/source/gameengine/Expressions/PyObjectPlus.h
+--- blender-2.56-beta-source/source/gameengine/Expressions/PyObjectPlus.h	2010-10-31 02:11:39.000000000 -0200
++++ blender-2.56-beta-source-new/source/gameengine/Expressions/PyObjectPlus.h	2011-02-08 16:46:22.135397092 -0200
+@@ -38,6 +38,7 @@
+ #include "STR_String.h"
+ #include "MT_Vector3.h"
+ #include "SG_QList.h"
++#include <stddef.h>
+ 
+ /*------------------------------
+  * Python defines
+diff -Naur blender-2.56-beta-source/source/gameengine/Physics/Dummy/DummyPhysicsEnvironment.cpp blender-2.56-beta-source-new/source/gameengine/Physics/Dummy/DummyPhysicsEnvironment.cpp
+--- blender-2.56-beta-source/source/gameengine/Physics/Dummy/DummyPhysicsEnvironment.cpp	2010-04-18 07:28:37.000000000 -0300
++++ blender-2.56-beta-source-new/source/gameengine/Physics/Dummy/DummyPhysicsEnvironment.cpp	2011-02-08 19:39:51.796249897 -0200
+@@ -28,6 +28,7 @@
+  */
+ #include "DummyPhysicsEnvironment.h"
+ #include "PHY_IMotionState.h"
++#include <stddef.h>
+ 
+ DummyPhysicsEnvironment::DummyPhysicsEnvironment()
+ {

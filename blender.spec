@@ -6,7 +6,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,7 +27,8 @@ Patch1:         blender-2.49-scons.patch
 Patch2:		blender-2.44-bid.patch
 Patch3:		blender-2.49b-uid.patch
 Patch4:		blender-2.56-ext.patch
-patch5:		blender-2.56-py32.patch
+Patch5:		blender-2.56-py32.patch
+Patch6:         blender-2.56-gcc46.patch
 
 # Both patches are forwarded to upstream via email
 #Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -39,7 +40,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  desktop-file-utils
 BuildRequires:  esound-devel
 BuildRequires:  freeglut-devel
-BuildRequires:  gettext-devel
+BuildRequires:  gettext
 BuildRequires:  libjpeg-devel
 BuildRequires:  libogg-devel
 BuildRequires:  libpng-devel
@@ -108,9 +109,14 @@ Blender Game Engine.
 # %patch3 -p1 -b .uid
 %patch4 -p1 -b .ext
 %patch5 -p1 -b .py32
+%patch6 -p1 -b .gcc46
 
 # %patch100 -p1 -b .cve
 # %patch101 -p1
+
+# No executable or shared library outside the gettext package is
+# supposed to link against libgettextlib or libgettextsrc.
+sed -i -e"s,gettextlib,,g" build_files/scons/config/linux2-config.py
 
 # binreloc is not a part of fedora
 rm -rf extern/ffmpeg
@@ -130,6 +136,10 @@ PYVER=$(%{__python3} -c "import sys ; print(sys.version[:3])")
 
 sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
+
+# No executable or shared library outside the gettext package is
+# supposed to link against libgettextlib or libgettextsrc.
+sed -i -e"s,gettextlib,,g" user-config.py
 
 %build
 scons blenderplayer \
@@ -245,6 +255,10 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Tue Feb 08 2011 Paulo Roma <roma@lcg.ufrj.br> - 2.56-7
+- Rebuilt without linking to libgettextlib (bugzilla #650471).
+- Applied gcc46 patch
+
 * Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.56-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
