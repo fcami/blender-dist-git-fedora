@@ -1,21 +1,25 @@
 %global blenderlib  %{_datadir}/blender
 %global blenderarch %{_libdir}/blender
 %global __python %{__python3}
+%global svn .svn35722
 
 %global fontname blender
 
 Name:           blender
 Version:        2.56
-Release: 	7%{?dist}
+Release: 	8%{svn}%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
-# This is a customized source package without bundled dependencies
-# See blender-repack.sh
-Source0:	http://download.blender.org/source/blender-%{version}-beta.tar.gz
+
+# Source0:	http://download.blender.org/source/blender-%{version}-beta.tar.gz
+# Upstream tar ball was created von upstream svn repository
+# using revision 35722
+
+Source0:	blender-2.56%{svn}.tar.bz2
 
 Source5:        blender.xml
 Source6:        blender-wrapper
@@ -23,12 +27,8 @@ Source7:	blenderplayer-wraper
 Source8:	blender-2.56.config
 Source100:      blender-repack.sh
 
-Patch1:         blender-2.49-scons.patch
-Patch2:		blender-2.44-bid.patch
-Patch3:		blender-2.49b-uid.patch
-Patch4:		blender-2.56-ext.patch
-Patch5:		blender-2.56-py32.patch
-Patch6:         blender-2.56-gcc46.patch
+Patch1:		blender-2.44-bid.patch
+Patch2:		blender-2.56-ext.patch
 
 # Both patches are forwarded to upstream via email
 #Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
@@ -103,13 +103,9 @@ You will need this package to play games which are based on the
 Blender Game Engine.
 
 %prep
-%setup -q -n %{name}-%{version}-beta-source
-# %patch1 -p1 -b .org
-%patch2 -p1 -b .bid
-# %patch3 -p1 -b .uid
-%patch4 -p1 -b .ext
-%patch5 -p1 -b .py32
-%patch6 -p1 -b .gcc46
+%setup -q -n %{name}
+%patch1 -p1 -b .bid
+%patch2 -p1 -b .ext
 
 # %patch100 -p1 -b .cve
 # %patch101 -p1
@@ -189,7 +185,7 @@ install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plu
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
-install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
+# install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
 # install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 
 #
@@ -255,6 +251,9 @@ fi || :
 %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Mar 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-8.svn35722%{?dist}
+- Update to snapshot svn35722
+
 * Tue Feb 08 2011 Paulo Roma <roma@lcg.ufrj.br> - 2.56-7
 - Rebuilt without linking to libgettextlib (bugzilla #650471).
 - Applied gcc46 patch
