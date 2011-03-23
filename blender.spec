@@ -30,11 +30,6 @@ Source100:      blender-repack.sh
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.56-ext.patch
 
-# Both patches are forwarded to upstream via email
-#Patch100:	blender-2.46rc3-cve-2008-1103-1.patch
-#Patch101:	blender-2.48a-cve-2008-4863.patch
-Patch100:	blender-2.49b-cve.patch
-
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
@@ -106,9 +101,6 @@ Blender Game Engine.
 %setup -q -n %{name}
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .ext
-
-# %patch100 -p1 -b .cve
-# %patch101 -p1
 
 # No executable or shared library outside the gettext package is
 # supposed to link against libgettextlib or libgettextsrc.
