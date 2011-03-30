@@ -1,13 +1,13 @@
-%global blenderlib  %{_datadir}/blender
+%global blenderlib  %{_datadir}/blender/2.56
 %global blenderarch %{_libdir}/blender
 %global __python %{__python3}
-%global svn .svn35722
+%global svn .svn36007
 
 %global fontname blender
 
 Name:           blender
 Version:        2.56
-Release: 	8%{svn}%{?dist}
+Release: 	9%{svn}%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -22,13 +22,12 @@ URL:            http://www.blender.org
 Source0:	blender-2.56%{svn}.tar.bz2
 
 Source5:        blender.xml
-Source6:        blender-wrapper
-Source7:	blenderplayer-wraper
 Source8:	blender-2.56.config
 Source100:      blender-repack.sh
 
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.56-ext.patch
+Patch3:		blender-2.56-syspath.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -43,7 +42,7 @@ BuildRequires:  libtool
 BuildRequires:  libvorbis-devel
 BuildRequires:  freealut-devel
 BuildRequires:  openssl-devel
-BuildRequires:  python3-devel
+BuildRequires:  python3-devel >= 3.2
 BuildRequires:  scons
 BuildRequires:  SDL-devel
 BuildRequires:  zlib-devel
@@ -101,6 +100,7 @@ Blender Game Engine.
 %setup -q -n %{name}
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .ext
+%patch3 -p1 -b .syspath
 
 # No executable or shared library outside the gettext package is
 # supposed to link against libgettextlib or libgettextsrc.
@@ -120,7 +120,9 @@ rm -rf extern/qhull
 rm -rf extern/make
 rm -rf extern/verse
 
-PYVER=$(%{__python3} -c "import sys ; print(sys.version[:3])")
+find -name '.svn' -print | xargs rm -rf
+
+PYVER=$(%{__python3} -c "import sys; print (sys.version[:3])") 
 
 sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
 	 <%{SOURCE8} >user-config.py
@@ -134,6 +136,7 @@ scons blenderplayer \
 %ifnarch %{ix86} x86_64
     WITH_BF_RAYOPTIMIZATION=False \
 %endif
+    BF_PYTHON_ABI_FLAGS=mu \
     BF_QUIET=0
 
 install -d release/plugins/include
@@ -146,11 +149,8 @@ make -C release/plugins/
 %install
 rm -rf ${RPM_BUILD_ROOT}
 
-install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender.bin
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer.bin
-
-install -D -m 755 %{SOURCE6} ${RPM_BUILD_ROOT}%{_bindir}/blender
-install -D -m 755 %{SOURCE7} ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
+install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender
+install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -180,11 +180,6 @@ cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 # install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
 # install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 
-#
-# Create link to DejaVu-Sans
-#
-# ln -sf %{_fontbasedir}/dejavu/DejaVuSans.ttf ${RPM_BUILD_ROOT}%{blenderlib}/.bfont.ttf
-
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
@@ -199,11 +194,6 @@ install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blend
 desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
   release/freedesktop/blender.desktop
-
-#Fix perm
-#chmod +x ${RPM_BUILD_ROOT}%{blenderlib}/scripts/bpymodules/blend2renderinfo.py
-
-# %find_lang %{name}
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -229,7 +219,7 @@ fi || :
 %doc COPYING 
 # README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/blender
-%{_bindir}/blender.bin
+# %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{blenderlib}/
@@ -240,9 +230,13 @@ fi || :
 %defattr(-,root,root,-)
 %doc COPYING
 %{_bindir}/blenderplayer
-%{_bindir}/blenderplayer.bin
+# %{_bindir}/blenderplayer.bin
 
 %changelog
+* Wed Apr  6 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-9.svn36007%{?dist}
+- New upstream release
+- Missing UI issue fixed (#671284)
+
 * Wed Mar 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-8.svn35722%{?dist}
 - Update to snapshot svn35722
 
