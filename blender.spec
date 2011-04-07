@@ -7,7 +7,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	9%{svn}%{?dist}
+Release: 	10%{svn}%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -222,7 +222,8 @@ fi || :
 # %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{blenderlib}/
+# Plugins are not support in this current release
+%exclude %{blenderlib}/
 %{blenderarch}/
 %{_datadir}/mime/packages/blender.xml
 
@@ -230,9 +231,12 @@ fi || :
 %defattr(-,root,root,-)
 %doc COPYING
 %{_bindir}/blenderplayer
-# %{_bindir}/blenderplayer.bin
 
 %changelog
+* Thu Apr  7 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-10.svn36007%{?dist}
+- Change compiler flags to fixed UI issue (#671284)
+- Exclude plugin directory (not supported in current release)
+
 * Wed Apr  6 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-9.svn36007%{?dist}
 - New upstream release
 - Missing UI issue fixed (#671284)
