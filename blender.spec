@@ -7,7 +7,7 @@
 
 Name:           blender
 Version:        2.56
-Release: 	10%{svn}%{?dist}
+Release: 	11%{svn}%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -195,6 +195,9 @@ desktop-file-install --vendor fedora                    \
   --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
   release/freedesktop/blender.desktop
 
+# Plugins are not support now
+rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
@@ -222,9 +225,8 @@ fi || :
 # %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-# Plugins are not support in this current release
-%exclude %{blenderlib}/
 %{blenderarch}/
+%{blenderlib}/
 %{_datadir}/mime/packages/blender.xml
 
 %files -n blenderplayer
@@ -233,6 +235,9 @@ fi || :
 %{_bindir}/blenderplayer
 
 %changelog
+* Sun Apr 10 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-11.svn36007%{?dist}
+- Add accidently removed files
+
 * Thu Apr  7 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-10.svn36007%{?dist}
 - Change compiler flags to fixed UI issue (#671284)
 - Exclude plugin directory (not supported in current release)
