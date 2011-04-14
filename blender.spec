@@ -1,7 +1,6 @@
 %global blenderlib  %{_datadir}/blender/%{version}
-# %global blenderarch %{_libdir}/blender
+%global blenderarch %{_libdir}/blender/%{version}
 %global __python %{__python3}
-%global svn .svn36147
 
 %global fontname blender
 
@@ -16,11 +15,7 @@ Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
 
-# Source0:	http://download.blender.org/source/blender-%{version}-beta.tar.gz
-# Upstream tar ball was created von upstream svn repository
-# using revision 35722
-
-Source0:	blender-2.57%{svn}.tar.bz2
+Source0:	http://download.blender.org/source/blender-%{version}.tar.gz
 
 Source5:        blender.xml
 Source8:	blender-2.56.config
@@ -109,7 +104,7 @@ This package provides rpm macros to support the creation of third-party
 addon packages to extend blender.
 
 %prep
-%setup -q -n %{name}
+%setup -q 
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .ext
 %patch3 -p1 -b .syspath
@@ -174,14 +169,14 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 # Create empty %%{_libdir}/blender/scripts to claim ownership
 #
 
-# mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
+mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
 
 #
 # Install plugins
 #
 
-# install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
-# install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
+install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
+install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
 # find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
@@ -215,6 +210,13 @@ desktop-file-install --vendor fedora                    \
 rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
 
 #
+# man page
+#
+
+mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man1
+install -p -D -m 644 doc/manpage/blender.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/
+
+#
 # rpm macros
 #
 
@@ -244,20 +246,19 @@ fi || :
 
 %files 
 %defattr(-,root,root,-)
-%doc COPYING 
-# README doc/python-dev-guide.txt doc/GPL-license.txt doc/bf-members.txt
 %{_bindir}/blender
-# %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
-# %{blenderarch}/
+%{blenderarch}/
 %{blenderlib}/
 %{_datadir}/mime/packages/blender.xml
+%{_mandir}/man1/blender.*
+%doc COPYING doc/license/*-license.txt 
 
 %files -n blenderplayer
 %defattr(-,root,root,-)
-%doc COPYING
 %{_bindir}/blenderplayer
+%doc COPYING doc/license/*-license.txt
 
 %files rpm-macros
 %defattr(-,root,root,-)
