@@ -1,13 +1,14 @@
-%global blenderlib  %{_datadir}/blender/2.56
-%global blenderarch %{_libdir}/blender
+%global blenderlib  %{_datadir}/blender/%{version}
+# %global blenderarch %{_libdir}/blender
 %global __python %{__python3}
-%global svn .svn36007
+%global svn .svn36147
 
 %global fontname blender
 
 Name:           blender
-Version:        2.56
-Release: 	11%{svn}%{?dist}
+Epoch:		1
+Version:        2.57
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -19,14 +20,17 @@ URL:            http://www.blender.org
 # Upstream tar ball was created von upstream svn repository
 # using revision 35722
 
-Source0:	blender-2.56%{svn}.tar.bz2
+Source0:	blender-2.57%{svn}.tar.bz2
 
 Source5:        blender.xml
 Source8:	blender-2.56.config
+
+Source10:	macros.blender
+
 Source100:      blender-repack.sh
 
 Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.56-ext.patch
+Patch2:		blender-2.57-ext.patch
 Patch3:		blender-2.56-syspath.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -67,7 +71,7 @@ Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
-Requires:	  blender-fonts = %{version}-%{release}
+Requires:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %if 0%{?fedora} > 10
 Requires:	  dejavu-sans-fonts
@@ -77,7 +81,7 @@ Requires:	  dejavu-sans-fonts
 Requires:	  dejavu-fonts
 %endif
 
-Provides:	  blender-fonts = %{version}-%{release}
+Provides:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
 
 %description
@@ -95,6 +99,14 @@ Group:	       Applications/Multimedia
 This package contains a stand alone release of the blender player.
 You will need this package to play games which are based on the
 Blender Game Engine.
+
+%package rpm-macros
+Summary:       RPM macros to build third-party blender addons packages
+Group:	       Development/Tools
+
+%description rpm-macros
+This package provides rpm macros to support the creation of third-party
+addon packages to extend blender.
 
 %prep
 %setup -q -n %{name}
@@ -162,14 +174,14 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 # Create empty %%{_libdir}/blender/scripts to claim ownership
 #
 
-mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
+# mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
 
 #
 # Install plugins
 #
 
-install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
-install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
+# install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
+# install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
 # find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
@@ -183,11 +195,15 @@ cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
-for i in 16x16 22x22 32x32 ; do
+for i in 16x16 22x22 32x32 48x48 64x64 96x96 128x128 192x192 ; do
   mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps
   install -pm 0644 release/freedesktop/icons/${i}/%{name}.png \
     ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
 done
+
+mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps
+install -pm 0644 release/freedesktop/icons/scalable/%{name}.svg \
+    ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 
@@ -197,6 +213,15 @@ desktop-file-install --vendor fedora                    \
 
 # Plugins are not support now
 rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
+
+#
+# rpm macros
+#
+
+mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
+
+sed -e 's/@VERSION@/%{version}/g' %{SOURCE10} \
+     >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -224,8 +249,8 @@ fi || :
 %{_bindir}/blender
 # %{_bindir}/blender.bin
 %{_datadir}/applications/fedora-blender.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{blenderarch}/
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
+# %{blenderarch}/
 %{blenderlib}/
 %{_datadir}/mime/packages/blender.xml
 
@@ -234,7 +259,19 @@ fi || :
 %doc COPYING
 %{_bindir}/blenderplayer
 
+%files rpm-macros
+%defattr(-,root,root,-)
+%{_sysconfdir}/rpm/macros.blender
+
 %changelog
+* Thu Apr 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-1
+- First non-beta release of the 2.5 series (taken from svn)
+
+* Wed Apr 13 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.56-12.svn36007%{?dist}
+- Increase Epoch
+- Add rpm-macros subpackage
+- Exclude currently unsed directories (plugin support)
+
 * Sun Apr 10 2011 Jochen Schmitt <Jochen herr-schmitt de> 2.56-11.svn36007%{?dist}
 - Add accidently removed files
 
