@@ -7,7 +7,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.57
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -26,7 +26,7 @@ Source100:      blender-repack.sh
 
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.57-ext.patch
-Patch3:		blender-2.56-syspath.patch
+Patch3:		blender-2.57-syspath.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -178,9 +178,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
 install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
-# find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
+find release/bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
-# cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
+cp -a release/bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
@@ -225,6 +225,8 @@ mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
 sed -e 's/@VERSION@/%{version}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
+%find_lang %{name}
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
@@ -244,7 +246,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi || :
 
-%files 
+%files -f blender.lang
 %defattr(-,root,root,-)
 %{_bindir}/blender
 %{_datadir}/applications/fedora-blender.desktop
@@ -265,6 +267,10 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sat Apr 16 2011 Jochen Schmitt <s4504kr@omega.inet.herr-schmitt.de> 1:2.57-2
+- Add plugin directory
+- Add locale
+
 * Thu Apr 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-1
 - First non-beta release of the 2.5 series (taken from svn)
 
