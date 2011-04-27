@@ -7,7 +7,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.57
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,6 +27,9 @@ Source100:      blender-repack.sh
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.57-ext.patch
 Patch3:		blender-2.57-syspath.patch
+
+# Patch taken from Gentoo Bug #364291
+Patch10:	blender-2.57-CVE-2009-3850.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -108,6 +111,8 @@ addon packages to extend blender.
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .ext
 %patch3 -p1 -b .syspath
+
+%patch10 -p1 -b .cve
 
 # No executable or shared library outside the gettext package is
 # supposed to link against libgettextlib or libgettextsrc.
@@ -267,7 +272,10 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Sat Apr 16 2011 Jochen Schmitt <s4504kr@omega.inet.herr-schmitt.de> 1:2.57-2
+* Wed Apr 27 2011 Jochen Schmitt <s4504kr@omega.inet.herr-schmitt.de> - 1:2.57-3
+- Add patch to solve CVE-2009-3850 (#5333395)
+
+* Sat Apr 16 2011 Jochen Schmitt <JOchen herr-schmitt de> 1:2.57-2
 - Add plugin directory
 - Add locale
 
