@@ -6,8 +6,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.57
-Release: 	3%{?dist}
+Version:        2.57b
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -195,14 +195,14 @@ cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
-for i in 16x16 22x22 32x32 48x48 64x64 96x96 128x128 192x192 ; do
+for i in 16x16 22x22 32x32 48x48 256x256 ; do
   mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps
-  install -pm 0644 release/freedesktop/icons/${i}/%{name}.png \
+  install -pm 0644 release/freedesktop/icons/${i}/apps/%{name}.png \
     ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
 done
 
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps
-install -pm 0644 release/freedesktop/icons/scalable/%{name}.svg \
+install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
     ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
@@ -272,10 +272,13 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Wed Apr 27 2011 Jochen Schmitt <s4504kr@omega.inet.herr-schmitt.de> - 1:2.57-3
+* Fri Apr 29 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-1
+- New minor upstream update
+
+* Wed Apr 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-3
 - Add patch to solve CVE-2009-3850 (#5333395)
 
-* Sat Apr 16 2011 Jochen Schmitt <JOchen herr-schmitt de> 1:2.57-2
+* Sat Apr 16 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-2
 - Add plugin directory
 - Add locale
 
