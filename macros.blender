@@ -1,4 +1,7 @@
-y%blender_version @VERSION@
+blender_api @VERSION@
 
-%blender_libdir %{_datadir}/blender/%{blender_version}
-%blender_archdir %{_libdir}/blender/%{blender_version}
+%blender_libdir %{_datadir}/blender/%{blender_api}
+%blender_archdir %{_libdir}/blender/%{blender_api}
+
+%blender_requires \
+Requires: blender(ABI) = %{blender_api}

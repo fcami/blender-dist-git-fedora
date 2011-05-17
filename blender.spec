@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.57b
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -28,7 +28,10 @@ Source100:      blender-repack.sh
 
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.57-ext.patch
-Patch3:		blender-2.56-syspath.patch
+Patch3:		blender-2.57-syspath.patch
+
+# Patch taken from Gentoo Bug #364291
+Patch10:	blender-2.57-CVE-2009-3850.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -111,6 +114,8 @@ addon packages to extend blender.
 %patch2 -p1 -b .ext
 %patch3 -p1 -b .syspath
 
+%patch10 -p1 -b .cve
+
 # No executable or shared library outside the gettext package is
 # supposed to link against libgettextlib or libgettextsrc.
 sed -i -e"s,gettextlib,,g" build_files/scons/config/linux2-config.py
@@ -180,9 +185,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
 install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
-# find bin/.blender/locale -name '.svn' -exec rm -f {} ';'
+find release/bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 
-# cp -a bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
+cp -a release/bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
@@ -192,14 +197,14 @@ cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
-for i in 16x16 22x22 32x32 48x48 64x64 96x96 128x128 192x192 ; do
+for i in 16x16 22x22 32x32 48x48 256x256 ; do
   mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps
-  install -pm 0644 release/freedesktop/icons/${i}/%{name}.png \
+  install -pm 0644 release/freedesktop/icons/${i}/apps/%{name}.png \
     ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
 done
 
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps
-install -pm 0644 release/freedesktop/icons/scalable/%{name}.svg \
+install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
     ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
@@ -227,6 +232,8 @@ mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
+%find_lang %{name}
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
 
@@ -246,7 +253,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi || :
 
-%files 
+%files -f blender.lang
 %defattr(-,root,root,-)
 %{_bindir}/blender
 %{_datadir}/applications/fedora-blender.desktop
@@ -267,8 +274,18 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-1
-- Minor upstream update
+* Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-2
+- Definition of blender_api macro
+
+* Fri Apr 29 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-1
+- New minor upstream update
+
+* Wed Apr 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-3
+- Add patch to solve CVE-2009-3850 (#5333395)
+
+* Sat Apr 16 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-2
+- Add plugin directory
+- Add locale
 
 * Thu Apr 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-1
 - First non-beta release of the 2.5 series (taken from svn)
