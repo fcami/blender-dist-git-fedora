@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.57b
-Release: 	2%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -23,8 +23,6 @@ Source5:        blender.xml
 Source8:	blender-2.56.config
 
 Source10:	macros.blender
-
-Source100:      blender-repack.sh
 
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.57-ext.patch
@@ -81,6 +79,8 @@ Requires:	  dejavu-sans-fonts
 Requires:	  dejavu-fonts
 %endif
 
+Provides:	  blender(ABI) = %{blender_api}
+
 Provides:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:	  blender-fonts <= 2.48a-9
 
@@ -94,6 +94,8 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 %package -n blenderplayer
 Summary:       Standalone blender player
 Group:	       Applications/Multimedia
+
+Provides:      blender(ABI) = %{blender_api}
 
 %description -n blenderplayer
 This package contains a stand alone release of the blender player.
@@ -274,6 +276,12 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-4
+- Add virtual provides for blenderplayer(ABI)
+
+* Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-3
+- Add virtual provides for blender ABI
+
 * Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-2
 - Definition of blender_api macro
 

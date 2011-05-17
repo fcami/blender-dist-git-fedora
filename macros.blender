@@ -5,3 +5,6 @@ blender_api @VERSION@
 
 %blender_requires \
 Requires: blender(ABI) = %{blender_api}
+
+%blenderplayer_requires \
+Requires: blenderplayer(ABI) = %{blender_api}
