@@ -1,4 +1,4 @@
-%blender_version @VERSION@
+y%blender_version @VERSION@
 
 %blender_libdir %{_datadir}/blender/%{blender_version}
 %blender_archdir %{_libdir}/blender/%{blender_version}

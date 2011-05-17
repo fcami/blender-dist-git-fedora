@@ -1,12 +1,14 @@
-%global blenderlib  %{_datadir}/blender/%{version}
-%global blenderarch %{_libdir}/blender/%{version}
+%global blender_api 2.57
+
+%global blenderlib  %{_datadir}/blender/%{blender_api}
+%global blenderarch %{_libdir}/blender/%{belnder_api}
 %global __python %{__python3}
 
 %global fontname blender
 
 Name:           blender
 Epoch:		1
-Version:        2.57
+Version:        2.57b
 Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -222,7 +224,7 @@ install -p -D -m 644 doc/manpage/blender.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/
 
 mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
 
-sed -e 's/@VERSION@/%{version}/g' %{SOURCE10} \
+sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
 %clean
@@ -265,6 +267,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue May 17 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57b-1
+- Minor upstream update
+
 * Thu Apr 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.57-1
 - First non-beta release of the 2.5 series (taken from svn)
 
