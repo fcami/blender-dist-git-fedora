@@ -1,4 +1,4 @@
-%global blender_api 2.57
+%global blender_api 2.58
 
 %global blenderlib  %{_datadir}/blender/%{blender_api}
 %global blenderarch %{_libdir}/blender/%{belnder_api}
@@ -8,8 +8,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.57b
-Release: 	5%{?dist}
+Version:        2.58
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -17,7 +17,7 @@ Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
 
-Source0:	http://download.blender.org/source/blender-%{version}.tar.gz
+Source0:	http://download.blender.org/source/blender-%{version}.tgz
 
 Source5:        blender.xml
 Source8:	blender-2.56.config
@@ -25,11 +25,11 @@ Source8:	blender-2.56.config
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.57-ext.patch
-Patch3:		blender-2.57-syspath.patch
+Patch2:		blender-2.58-ext.patch
+Patch3:		blender-2.58-syspath.patch
 
 # Patch taken from Gentoo Bug #364291
-Patch10:	blender-2.57-CVE-2009-3850.patch
+# Patch10:	blender-2.57-CVE-2009-3850.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -116,7 +116,7 @@ addon packages to extend blender.
 %patch2 -p1 -b .ext
 %patch3 -p1 -b .syspath
 
-%patch10 -p1 -b .cve
+# %patch10 -p1 -b .cve
 
 # No executable or shared library outside the gettext package is
 # supposed to link against libgettextlib or libgettextsrc.

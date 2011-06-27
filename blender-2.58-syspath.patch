@@ -1,0 +1,22 @@
+diff -up blender-2.57/source/blender/blenfont/intern/blf_lang.c.syspath blender-2.57/source/blender/blenfont/intern/blf_lang.c
+--- blender-2.57/source/blender/blenfont/intern/blf_lang.c.syspath	2011-04-14 17:19:49.000000000 +0200
++++ blender-2.57/source/blender/blenfont/intern/blf_lang.c	2011-04-16 21:26:46.734205021 +0200
+@@ -68,15 +68,15 @@ static char global_encoding_name[32];
+ 
+ void BLF_lang_init(void)
+ {
+-	char *messagepath= BLI_get_folder(BLENDER_DATAFILES, "locale");
+-	
++        // char *messagepath= BLI_get_folder(BLENDER_DATAFILES, "locale");
++        char *messagepath = "/usr/share/locale";
++
+ 	BLI_strncpy(global_encoding_name, SYSTEM_ENCODING_DEFAULT, sizeof(global_encoding_name));
+ 	
+ 	if (messagepath)
+ 		BLI_strncpy(global_messagepath, messagepath, sizeof(global_messagepath));
+ 	else
+ 		global_messagepath[0]= '\0';
+-	
+ }
+ 
+ /* XXX WARNING!!! IN osx somehow the previous function call jumps in this one??? (ton, ppc) */
