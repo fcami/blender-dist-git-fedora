@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -25,11 +25,7 @@ Source8:	blender-2.56.config
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.58-ext.patch
 Patch3:		blender-2.58-syspath.patch
-
-# Patch taken from Gentoo Bug #364291
-# Patch10:	blender-2.57-CVE-2009-3850.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -45,7 +41,7 @@ BuildRequires:  libvorbis-devel
 BuildRequires:  freealut-devel
 BuildRequires:  openssl-devel
 BuildRequires:  python3-devel >= 3.2
-BuildRequires:  scons
+BuildRequires:  cmake
 BuildRequires:  SDL-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libtiff-devel
@@ -113,47 +109,21 @@ addon packages to extend blender.
 %prep
 %setup -q 
 %patch1 -p1 -b .bid
-%patch2 -p1 -b .ext
 %patch3 -p1 -b .syspath
-
-# %patch10 -p1 -b .cve
-
-# No executable or shared library outside the gettext package is
-# supposed to link against libgettextlib or libgettextsrc.
-sed -i -e"s,gettextlib,,g" build_files/scons/config/linux2-config.py
-
-# binreloc is not a part of fedora
-rm -rf extern/ffmpeg
-rm -rf extern/fftw
-rm -rf extern/glew
-rm -rf extern/libmp3lame
-rm -rf extern/libopenjpeg
-rm -rf extern/libredcode
-rm -rf extern/ode
-rm -rf extern/x264
-rm -rf extern/xvidcore
-rm -rf extern/qhull
-rm -rf extern/make
-rm -rf extern/verse
 
 find -name '.svn' -print | xargs rm -rf
 
-PYVER=$(%{__python3} -c "import sys; print (sys.version[:3])") 
-
-sed -e 's|@LIB@|%{_libdir}|g' -e "s/@PYVER@/$PYVER/g" \
-	 <%{SOURCE8} >user-config.py
-
-# No executable or shared library outside the gettext package is
-# supposed to link against libgettextlib or libgettextsrc.
-sed -i -e"s,gettextlib,,g" user-config.py
-
 %build
-scons blenderplayer \
+mkdir cmake-make
+cd cmake-make
+cmake .. -DWITH_BUILTIN_GLEW=OFF \
 %ifnarch %{ix86} x86_64
-    WITH_BF_RAYOPTIMIZATION=False \
+  -DWITH_RAYOPTIMIZATION=OFF \
 %endif
-    BF_PYTHON_ABI_FLAGS=mu \
-    BF_QUIET=0
+  -DWITH_PLAYER=ON
+
+make
+cd ..
 
 install -d release/plugins/include
 install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
@@ -165,8 +135,8 @@ make -C release/plugins/
 %install
 rm -rf ${RPM_BUILD_ROOT}
 
-install -D -m 755 build/linux2/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender
-install -D -m 755 build/linux2/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
+install -D -m 755 cmake-make/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender
+install -D -m 755 cmake-make/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
 #
 #  Install miscellanous files to /usr/lib/blender
@@ -192,9 +162,6 @@ find release/bin/.blender/locale -name '.svn' -exec rm -f {} ';'
 cp -a release/bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
-
-# install -pm 644 release/VERSION ${RPM_BUILD_ROOT}%{blenderlib}
-# install -pm 644 bin/.blender/.Blanguages ${RPM_BUILD_ROOT}%{blenderlib}
 
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
@@ -276,6 +243,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Jun 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58-3
+- Migrating to the cmake build system
+
 * Mon Jun 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58-2
 - New upstream release
 
