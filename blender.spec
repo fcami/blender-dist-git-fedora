@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -276,6 +276,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Jun 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58-2
+- New upstream release
+
 * Mon Jun 20 2011 ajax@redhat.com - 1:2.57b-5
 - Rebuild for new glew soname
 
