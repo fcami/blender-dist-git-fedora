@@ -1,7 +1,7 @@
 %global blender_api 2.58
 
 %global blenderlib  %{_datadir}/blender/%{blender_api}
-%global blenderarch %{_libdir}/blender/%{belnder_api}
+%global blenderarch %{_libdir}/blender/%{blender_api}
 %global __python %{__python3}
 
 %global fontname blender
@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -25,7 +25,7 @@ Source8:	blender-2.56.config
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
-Patch3:		blender-2.58-syspath.patch
+Patch2:		blender-2.58-syspath.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -109,18 +109,25 @@ addon packages to extend blender.
 %prep
 %setup -q 
 %patch1 -p1 -b .bid
-%patch3 -p1 -b .syspath
+%patch2 -p1 -b .syspath
 
 find -name '.svn' -print | xargs rm -rf
 
 %build
 mkdir cmake-make
 cd cmake-make
-cmake .. -DWITH_BUILTIN_GLEW=OFF \
+export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing"
+export CXXFLAGS="$CFLAGS"
+cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
   -DWITH_RAYOPTIMIZATION=OFF \
 %endif
-  -DWITH_PLAYER=ON
+ -DCMAKE_SKIP_RPATH=ON \
+ -DBUILD_SHARED_LIBS=OFF \
+ -DWITH_BUILTIN_GLEW=OFF \
+ -DWITH_INSTALL_PORTABLE=OFF \
+ -DWITH_PYTHON_SAFETY=ON \
+ -DWITH_PLAYER=ON
 
 make
 cd ..
@@ -243,6 +250,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Jun 30 2011 Jochen Schmitt <Jochen herr schmitt.de>  1:2.58-4
+- Rework on cmake build
+
 * Mon Jun 27 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58-3
 - Migrating to the cmake build system
 
