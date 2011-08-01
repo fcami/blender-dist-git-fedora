@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58a
-Release: 	1%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -20,7 +20,6 @@ URL:            http://www.blender.org
 Source0:	http://download.blender.org/source/blender-%{version}.tar.gz
 
 Source5:        blender.xml
-Source8:	blender-2.56.config
 
 Source10:	macros.blender
 
@@ -250,6 +249,12 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Aug  1 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-3
+- Cleanup
+
+* Mon Aug  1 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-2
+- Remove scons configuration file
+
 * Sun Jul 10 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-1
 - New upstream release with minor bug fixes
 
