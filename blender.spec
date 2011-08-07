@@ -9,7 +9,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58a
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -18,13 +18,22 @@ License:        GPLv2
 URL:            http://www.blender.org
 
 Source0:	http://download.blender.org/source/blender-%{version}.tar.gz
-
+Source1:	blenderplayer.1
 Source5:        blender.xml
 
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
 Patch2:		blender-2.58-syspath.patch
+
+Patch3:		blender-2.48-python64.patch
+Patch4:		blender-2.48-undefine-operation.patch
+Patch5:		blender-2.50-uninit-var.patch
+Patch6:		blender-2.56-gcc46.patch
+Patch7:		blender-2.57-cmake_include.patch
+Patch8:		blender-2.58-nobuffer_ftoa_utf_link.patch
+Patch9:		blender-2.58-include_install_dir.patch
+Patch10:	blender-2.58-python_include.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -58,6 +67,11 @@ BuildRequires:	ftgl-devel
 BuildRequires:	ode-devel
 BuildRequires:	openjpeg-devel
 BuildRequires:  qhull-devel
+
+BuildRequires:	xz-devel
+BuildRequires:	jack-audio-connection-kit-devel
+
+BuildRequires:	openCOLLADA-devel >= svn825
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -109,6 +123,14 @@ addon packages to extend blender.
 %setup -q 
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .syspath
+%patch3 -p0
+%patch4 -p0
+%patch5 -p0
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+# %patch9 -p1
+%patch10 -p1
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -123,6 +145,17 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %endif
  -DCMAKE_SKIP_RPATH=ON \
  -DBUILD_SHARED_LIBS=OFF \
+ -DWITH_FFTW3:BOOL=ON \
+ -DWITH_JACK:BOOL=ON \
+ -DWITH_CODEC_SNDFILE:BOOL=ON \
+ -DWITH_IMAGE_OPENJPEG:BOOL=ON \
+ -DWITH_OPENCOLLADA:BOOL=ON \
+ -DOPENCOLLADA=%{_includedir} \
+ -DWITH_PYTHON:BOOL=ON \
+ -DWITH_PYTHON_INSTALL:BOOL=OFF \
+ -DWITH_CODEC_FFMPEG:BOOL=OFF \
+ -DWITH_GAMEENGINE:BOOL=ON \
+ -DWITH_CXX_GUARDEDALLOC:BOOL=OFF \
  -DWITH_BUILTIN_GLEW=OFF \
  -DWITH_INSTALL_PORTABLE=OFF \
  -DWITH_PYTHON_SAFETY=ON \
@@ -197,6 +230,7 @@ rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
 
 mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man1
 install -p -D -m 644 doc/manpage/blender.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/
+install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_mandir}/man1/
 
 #
 # rpm macros
@@ -242,6 +276,7 @@ fi || :
 %files -n blenderplayer
 %defattr(-,root,root,-)
 %{_bindir}/blenderplayer
+%{_mandir}/man1/blenderplayer.*
 %doc COPYING doc/license/*-license.txt
 
 %files rpm-macros
@@ -249,6 +284,11 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sun Aug  7 2011 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.58a-4
+- Add man page for blenderplayer
+- Add support for openCOLLADA
+- Remove debugging statement from syspath patch
+
 * Mon Aug  1 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-3
 - Cleanup
 
