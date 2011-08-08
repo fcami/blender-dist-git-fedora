@@ -73,6 +73,8 @@ BuildRequires:	jack-audio-connection-kit-devel
 
 BuildRequires:	openCOLLADA-devel >= svn825
 
+BuildRequires:	expat-devel, pcre-devel, libxml2-devel
+
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
