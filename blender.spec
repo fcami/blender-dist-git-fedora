@@ -1,5 +1,8 @@
 %global blender_api 2.58
 
+# [Fedora] Turn off the brp-python-bytecompile script 
+%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
+
 %global blenderlib  %{_datadir}/blender/%{blender_api}
 %global blenderarch %{_libdir}/blender/%{blender_api}
 %global __python %{__python3}
@@ -9,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58a
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -38,21 +41,20 @@ Patch10:	blender-2.58-python_include.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  esound-devel
-BuildRequires:  freeglut-devel
 BuildRequires:  gettext
-BuildRequires:  libjpeg-devel
-BuildRequires:  libogg-devel
-BuildRequires:  libpng-devel
 BuildRequires:  libtool
-BuildRequires:  libvorbis-devel
-BuildRequires:  freealut-devel
 BuildRequires:  openssl-devel
 BuildRequires:  python3-devel >= 3.2
 BuildRequires:  cmake
 BuildRequires:  SDL-devel
+BuildRequires:	expat-devel
+BuildRequires:  pcre-devel
+BuildRequires: libxml2-devel
+
+# Compression stuff
+BuildRequires:	xz-devel
 BuildRequires:  zlib-devel
-BuildRequires:  libtiff-devel
+
 BuildRequires:  libXi-devel
 BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  libGL-devel
@@ -60,20 +62,33 @@ BuildRequires:  libGLU-devel
 BuildRequires:  freetype-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
+BuildRequires:  freeglut-devel
 
-BuildRequires:	libsamplerate-devel
 BuildRequires:	fftw-devel
 BuildRequires:	ftgl-devel
 BuildRequires:	ode-devel
 BuildRequires:	openjpeg-devel
 BuildRequires:  qhull-devel
 
-BuildRequires:	xz-devel
+# Picture/Vidoe stuff
+BuildRequires:  libjpeg-devel
+BuildRequires:  openjpeg-devel
+BuildRequires:	libjpeg-turbo-devel
+BuildRequires:  libogg-devel
+BuildRequires:	libtheora-devel
+BuildRequires:	libvorbis-devel
+BuildRequires:  libpng-devel
+BuildRequires:  libtiff-devel
+
+# Audio stuff
+BuildRequires:	libsamplerate-devel
+BuildRequires:  libao-devel
+BuildRequires:  libsndfile-devel
+BuildRequires:  esound-devel
+BuildRequires:	freealut-devel
 BuildRequires:	jack-audio-connection-kit-devel
 
 BuildRequires:	openCOLLADA-devel >= svn825
-
-BuildRequires:	expat-devel, pcre-devel, libxml2-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -286,7 +301,11 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Sun Aug  7 2011 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.58a-4
+* Tue Aug  9 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-5
+- Suppres python byte compiling
+- Add additional codecs
+
+* Sun Aug  7 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-4
 - Add man page for blenderplayer
 - Add support for openCOLLADA
 - Remove debugging statement from syspath patch
