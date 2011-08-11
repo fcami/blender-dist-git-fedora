@@ -4,7 +4,7 @@ blender_api @VERSION@
 %blender_archdir %{_libdir}/blender/%{blender_api}
 
 %blender_requires \
-Requires: blender(ABI) = %{blender_api}
+Requires: blender(ABI) = @VERSION@
 
 %blenderplayer_requires \
-Requires: blenderplayer(ABI) = %{blender_api}
+Requires: blenderplayer(ABI) = @VERSION@

@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.58a
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -301,6 +301,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Aug 11 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-6
+- Fix issues with blneder_requires macro
+
 * Tue Aug  9 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-5
 - Suppres python byte compiling
 - Add additional codecs
