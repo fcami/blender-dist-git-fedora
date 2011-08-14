@@ -1,4 +1,4 @@
-%global blender_api 2.58
+%global blender_api 2.59
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -11,8 +11,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.58a
-Release: 	6%{?dist}
+Version:        2.59
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -301,6 +301,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sun Aug 14 2011 Jochen Schmitt <JOchen herr-schmitt de> 1:2.59-1
+- New upstream release
+
 * Thu Aug 11 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.58a-6
 - Fix issues with blneder_requires macro
 
