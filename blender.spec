@@ -1,4 +1,4 @@
-%global blender_api 2.59
+%global blender_api 2.60
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -11,7 +11,7 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.59
+Version:        2.60
 Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -27,15 +27,12 @@ Source5:        blender.xml
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.58-syspath.patch
+Patch2:		blender-2.60-syspath.patch
 
-Patch3:		blender-2.48-python64.patch
 Patch4:		blender-2.48-undefine-operation.patch
 Patch5:		blender-2.50-uninit-var.patch
 Patch6:		blender-2.56-gcc46.patch
-Patch7:		blender-2.57-cmake_include.patch
-Patch8:		blender-2.58-nobuffer_ftoa_utf_link.patch
-Patch9:		blender-2.58-include_install_dir.patch
+
 Patch10:	blender-2.58-python_include.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -140,13 +137,11 @@ addon packages to extend blender.
 %setup -q 
 %patch1 -p1 -b .bid
 %patch2 -p1 -b .syspath
-%patch3 -p0
+
 %patch4 -p0
 %patch5 -p0
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
-# %patch9 -p1
+
 %patch10 -p1
 
 find -name '.svn' -print | xargs rm -rf
@@ -301,6 +296,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Oct 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60-1
+- New upstream release
+
 * Sun Aug 14 2011 Jochen Schmitt <JOchen herr-schmitt de> 1:2.59-1
 - New upstream release
 
