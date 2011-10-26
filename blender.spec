@@ -11,7 +11,7 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.60
+Version:        2.60a
 Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -296,6 +296,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Oct 26 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-1
+- New upstream release
+
 * Wed Oct 19 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60-1
 - New upstream release
 
