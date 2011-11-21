@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.60a
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -296,6 +296,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Nov 21 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-4
+- Fix error in macros.blender, add %%blendert_addons
+
 * Mon Nov  7 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-3
 - Rebuilt for new openCOLLADA release
 
