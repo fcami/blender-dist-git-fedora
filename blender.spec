@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.60a
-Release: 	7%{?dist}
+Release: 	8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -129,6 +129,7 @@ Blender Game Engine.
 %package rpm-macros
 Summary:       RPM macros to build third-party blender addons packages
 Group:	       Development/Tools
+BuildArch:     noarch
 
 %description rpm-macros
 This package provides rpm macros to support the creation of third-party
@@ -297,6 +298,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-8
+- Set BuildArch to noarch for blender-rpm-macros
+
 * Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-7
 - Remove %%blender_requires and %%blenderplayer_requires entirely
 
