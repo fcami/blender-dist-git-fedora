@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.60a
-Release: 	4%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -46,7 +46,8 @@ BuildRequires:  cmake
 BuildRequires:  SDL-devel
 BuildRequires:	expat-devel
 BuildRequires:  pcre-devel
-BuildRequires: libxml2-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  boost-devel
 
 # Compression stuff
 BuildRequires:	xz-devel
@@ -296,6 +297,10 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-6
+- Futher rework on macros.blender
+- Add explicit BR to boost-devel
+
 * Mon Nov 21 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-4
 - Fix error in macros.blender, add %%blendert_addons
 

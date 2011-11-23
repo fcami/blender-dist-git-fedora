@@ -4,8 +4,6 @@
 %blender_archdir %{_libdir}/blender/%{blender_api}
 %blender_addons %{blender_libdir}/scripts/addons
 
-%blender_requires \
-Requires: blender(ABI) = @VERSION@
+%blender_requires blender(ABI) = @VERSION@
 
-%blenderplayer_requires \
-Requires: blenderplayer(ABI) = @VERSION@
+%blenderplayer_requires blenderplayer(ABI) = @VERSION@
