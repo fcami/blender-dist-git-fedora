@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.60a
-Release: 	6%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -297,6 +297,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-7
+- Remove %%blender_requires and %%blenderplayer_requires entirely
+
 * Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-6
 - Futher rework on macros.blender
 - Add explicit BR to boost-devel

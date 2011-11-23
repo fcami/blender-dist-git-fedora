@@ -3,7 +3,3 @@
 %blender_libdir %{_datadir}/blender/%{blender_api}
 %blender_archdir %{_libdir}/blender/%{blender_api}
 %blender_addons %{blender_libdir}/scripts/addons
-
-%blender_requires blender(ABI) = @VERSION@
-
-%blenderplayer_requires blenderplayer(ABI) = @VERSION@
