@@ -1,4 +1,4 @@
-%global blender_api 2.60
+%global blender_api 2.61
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -11,8 +11,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.60a
-Release: 	8%{?dist}
+Version:        2.61
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,15 +27,13 @@ Source5:        blender.xml
 Source10:	macros.blender
 
 Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.60-syspath.patch
+Patch2:		blender-2.61-syspath.patch
 
 Patch4:		blender-2.48-undefine-operation.patch
 Patch5:		blender-2.50-uninit-var.patch
 Patch6:		blender-2.56-gcc46.patch
 
 Patch10:	blender-2.58-python_include.patch
-
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -77,6 +75,7 @@ BuildRequires:	libtheora-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libtiff-devel
+BuildRequires:	OpenImageIO-devel
 
 # Audio stuff
 BuildRequires:	libsamplerate-devel
@@ -186,8 +185,6 @@ chmod +x release/plugins/bmake
 make -C release/plugins/
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
-
 install -D -m 755 cmake-make/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender
 install -D -m 755 cmake-make/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
 
@@ -210,9 +207,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
 install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
-find release/bin/.blender/locale -name '.svn' -exec rm -f {} ';'
+find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
 
-cp -a release/bin/.blender/locale ${RPM_BUILD_ROOT}%{_datadir}
+cp -a release/datafiles/locale ${RPM_BUILD_ROOT}%{_datadir}
 
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
@@ -257,9 +254,6 @@ sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
 
 %find_lang %{name}
 
-%clean
-rm -rf ${RPM_BUILD_ROOT}
-
 %post
 %{_bindir}/update-mime-database %{_datadir}/mime
 touch --no-create %{_datadir}/icons/hicolor
@@ -298,6 +292,11 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Dec 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-1
+- New upstream release
+- Add OpenImageIO-devel as a BR
+- Package cleanup
+
 * Wed Nov 23 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.60a-8
 - Set BuildArch to noarch for blender-rpm-macros
 
