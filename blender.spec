@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.61
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -292,6 +292,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Jan  5 2012 Jochen Schmitt <JOchen herr-schmitt de> 1:2.61-2
+- Fix typo in syspth patch (#771814)
+
 * Wed Dec 14 2011 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-1
 - New upstream release
 - Add OpenImageIO-devel as a BR
