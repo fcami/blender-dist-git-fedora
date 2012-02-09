@@ -142,7 +142,6 @@ addon packages to extend blender.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p1
-%patch7 -p1
 
 %patch10 -p1
 
