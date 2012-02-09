@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.61
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,8 +31,7 @@ Patch2:		blender-2.61-syspath.patch
 
 Patch4:		blender-2.48-undefine-operation.patch
 Patch5:		blender-2.50-uninit-var.patch
-Patch6:		blender-2.56-gcc46.patch
-Patch7:		blender-2.61-gcc47.patch
+Patch6:		blender-2.61-gcc47.patch
 
 Patch10:	blender-2.58-python_include.patch
 
@@ -143,7 +142,7 @@ addon packages to extend blender.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p1
-%patch7 -p1 -b .gcc47
+%patch7 -p1
 
 %patch10 -p1
 
@@ -294,6 +293,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de>  1:2.61-4
+- Remove unnecessary gcc-4.5 patch
+
 * Wed Feb  8 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-3
 - Fix gcc-4.7 related issue
 
