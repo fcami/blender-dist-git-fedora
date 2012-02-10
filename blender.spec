@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.61
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -292,6 +292,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Feb 09 2012 Rex Dieter <rdieter@fedoraproject.org> 1:2.61-5
+- rebuild (openjpeg)
+
 * Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.61-4
 - Remove unnecessary gcc-4.5 patch
 
