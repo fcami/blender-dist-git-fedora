@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.61
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -292,6 +292,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1:2.61-6
+- Rebuild against PCRE 8.30
+
 * Thu Feb 09 2012 Rex Dieter <rdieter@fedoraproject.org> 1:2.61-5
 - rebuild (openjpeg)
 
