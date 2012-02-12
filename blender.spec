@@ -34,6 +34,7 @@ Patch5:		blender-2.50-uninit-var.patch
 Patch6:		blender-2.61-gcc47.patch
 
 Patch10:	blender-2.58-python_include.patch
+Patch11: 	blender-2.61-openjpeg_stdbool.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -144,6 +145,7 @@ addon packages to extend blender.
 %patch6 -p1
 
 %patch10 -p1
+%patch11 -p1 -b .openjpeg_stdbool
 
 find -name '.svn' -print | xargs rm -rf
 
