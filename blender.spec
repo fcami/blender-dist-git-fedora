@@ -11,8 +11,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.61
-Release: 	6%{?dist}
+Version:        2.62
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,7 +31,6 @@ Patch2:		blender-2.61-syspath.patch
 
 Patch4:		blender-2.48-undefine-operation.patch
 Patch5:		blender-2.50-uninit-var.patch
-Patch6:		blender-2.61-gcc47.patch
 
 Patch10:	blender-2.58-python_include.patch
 Patch11: 	blender-2.61-openjpeg_stdbool.patch
@@ -142,7 +141,6 @@ addon packages to extend blender.
 
 %patch4 -p0
 %patch5 -p0
-%patch6 -p1
 
 %patch10 -p1
 %patch11 -p1 -b .openjpeg_stdbool
