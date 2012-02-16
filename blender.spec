@@ -1,4 +1,4 @@
-%global blender_api 2.61
+%global blender_api 2.62
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -292,13 +292,16 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> - 1:2.61-6
+* Thu Feb 16 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-1
+- New upstream release
+
+* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> 1:2.61-6
 - Rebuild against PCRE 8.30
 
 * Thu Feb 09 2012 Rex Dieter <rdieter@fedoraproject.org> 1:2.61-5
 - rebuild (openjpeg)
 
-* Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.61-4
+* Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-4
 - Remove unnecessary gcc-4.5 patch
 
 * Wed Feb  8 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-3
