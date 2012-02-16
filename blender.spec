@@ -1,4 +1,4 @@
-%global blender_api 2.61
+%global blender_api 2.62
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -11,8 +11,8 @@
 
 Name:           blender
 Epoch:		1
-Version:        2.61
-Release: 	4%{?dist}
+Version:        2.62
+Release: 	1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,9 +31,9 @@ Patch2:		blender-2.61-syspath.patch
 
 Patch4:		blender-2.48-undefine-operation.patch
 Patch5:		blender-2.50-uninit-var.patch
-Patch6:		blender-2.61-gcc47.patch
 
 Patch10:	blender-2.58-python_include.patch
+Patch11: 	blender-2.61-openjpeg_stdbool.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -141,9 +141,9 @@ addon packages to extend blender.
 
 %patch4 -p0
 %patch5 -p0
-%patch6 -p1
 
 %patch10 -p1
+%patch11 -p1 -b .openjpeg_stdbool
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -292,7 +292,16 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de>  1:2.61-4
+* Thu Feb 16 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-1
+- New upstream release
+
+* Fri Feb 10 2012 Petr Pisar <ppisar@redhat.com> 1:2.61-6
+- Rebuild against PCRE 8.30
+
+* Thu Feb 09 2012 Rex Dieter <rdieter@fedoraproject.org> 1:2.61-5
+- rebuild (openjpeg)
+
+* Thu Feb  9 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-4
 - Remove unnecessary gcc-4.5 patch
 
 * Wed Feb  8 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.61-3
