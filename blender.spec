@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.62
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -292,6 +292,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue Feb 28 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.62-2
+- Rebuilt for c++ ABI breakage
+
 * Thu Feb 16 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-1
 - New upstream release
 
