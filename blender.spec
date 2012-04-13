@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.62
-Release: 	3%{?dist}
+Release: 	4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -86,6 +86,8 @@ BuildRequires:	freealut-devel
 BuildRequires:	jack-audio-connection-kit-devel
 
 BuildRequires:	openCOLLADA-devel >= svn825
+
+BuildRequires:  libspnav-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
@@ -292,6 +294,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Apr 13 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-4
+- Add BR to libspnav-devel
+
 * Sun Mar 18 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-3
 - Rebuild for new OpenImageIO release
 
