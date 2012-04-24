@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.62
-Release: 	4%{?dist}
+Release: 	5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -187,14 +187,9 @@ chmod +x release/plugins/bmake
 make -C release/plugins/
 
 %install
-install -D -m 755 cmake-make/bin/blender ${RPM_BUILD_ROOT}%{_bindir}/blender
-install -D -m 755 cmake-make/bin/blenderplayer ${RPM_BUILD_ROOT}%{_bindir}/blenderplayer
-
-#
-#  Install miscellanous files to /usr/lib/blender
-#
-
-mkdir -p ${RPM_BUILD_ROOT}%{blenderlib}/scripts
+cd cmake-make
+make install DESTDIR=${RPM_BUILD_ROOT}
+cd ..
 
 #
 # Create empty %%{_libdir}/blender/scripts to claim ownership
@@ -230,9 +225,7 @@ install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
 
 install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
 
-desktop-file-install --vendor fedora                    \
-  --dir ${RPM_BUILD_ROOT}%{_datadir}/applications       \
-  release/freedesktop/blender.desktop
+desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/blender.desktop
 
 # Plugins are not support now
 rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
@@ -244,6 +237,10 @@ rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
 mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man1
 install -p -D -m 644 doc/manpage/blender.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/
 install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_mandir}/man1/
+
+rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
+rm -rf ${RPM_BUILD_ROOT}%{blenderlib}/datafiles/*
+rm -rf ${RPM_BUILD_ROOT}%{_docdir}/blender/*
 
 #
 # rpm macros
@@ -275,7 +272,7 @@ fi || :
 %files -f blender.lang
 %defattr(-,root,root,-)
 %{_bindir}/blender
-%{_datadir}/applications/fedora-blender.desktop
+%{_datadir}/applications/blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
 %{blenderarch}/
 %{blenderlib}/
@@ -294,6 +291,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue Apr 24 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-5
+- Add cycles support (#812354)
+
 * Fri Apr 13 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-4
 - Add BR to libspnav-devel
 
