@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        2.62
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -34,6 +34,9 @@ Patch5:		blender-2.50-uninit-var.patch
 
 Patch10:	blender-2.58-python_include.patch
 Patch11: 	blender-2.61-openjpeg_stdbool.patch
+
+# Upstream Patch, Should fixed in 2.63
+Patch101:       blender-2.62-ndof.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -146,6 +149,8 @@ addon packages to extend blender.
 
 %patch10 -p1
 %patch11 -p1 -b .openjpeg_stdbool
+
+%patch101 -p0 -b .ndof
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -291,6 +296,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Apr 25 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-6
+- Fix crash in libspnav (#814665)
+
 * Tue Apr 24 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.62-5
 - Add cycles support (#812354)
 
