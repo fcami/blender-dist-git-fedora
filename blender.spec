@@ -290,7 +290,7 @@ fi || :
 %defattr(-,root,root,-)
 %{_sysconfdir}/rpm/macros.blender
 
-%changeloga
+%changelog
 * Tue Jun 26 2012 Richard Shaw <hobbes1069@gmail.com> 1:2.63a-2
 - Bump revision to be >= f17 for AutoQA.
 
