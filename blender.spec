@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        %{blender_api}a
-Release: 	1%{?dist}
+Release: 	2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -290,7 +290,10 @@ fi || :
 %defattr(-,root,root,-)
 %{_sysconfdir}/rpm/macros.blender
 
-%changelog
+%changeloga
+* Tue Jun 26 2012 Richard Shaw <hobbes1069@gmail.com> 1:2.63a-2
+- Bump revision to be >= f17 for AutoQA.
+
 * Fri May 11 2012 Jochen Schmitt <Jochen herr-schmitt de> 1:2.63a-1
 - New upstream release
 
