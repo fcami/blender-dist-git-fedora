@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        %{blender_api}a
-Release: 	2%{?dist}
+Release: 	3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -291,6 +291,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.63a-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Tue Jun 26 2012 Richard Shaw <hobbes1069@gmail.com> 1:2.63a-2
 - Bump revision to be >= f17 for AutoQA.
 
