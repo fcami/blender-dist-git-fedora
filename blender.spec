@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        %{blender_api}a
-Release: 	5%{?dist}
+Release: 	6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -291,6 +291,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sat Aug 04 2012 David Malcolm <dmalcolm@redhat.com> - 1:2.63a-6
+- rebuild for https://fedoraproject.org/wiki/Features/Python_3.3
+
 * Wed Aug 01 2012 Adam Jackson <ajax@redhat.com> - 1:2.63a-5
 - -Rebuild for new glew
 
