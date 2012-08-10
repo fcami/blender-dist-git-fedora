@@ -12,7 +12,7 @@
 Name:           blender
 Epoch:		1
 Version:        %{blender_api}a
-Release: 	3%{?dist}
+Release: 	7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -291,8 +291,20 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
-* Fri Aug 10 2012 Richard Shaw <hobbes1069@gmail.com> 1:2.64a-3
+* Fri Aug 10 2012 Richard Shaw <hobbes1069@gmail.com> - 1:2.63a-7
 - Rebuild for libboost 1.50.
+
+* Sat Aug 04 2012 David Malcolm <dmalcolm@redhat.com> - 1:2.63a-6
+- rebuild for https://fedoraproject.org/wiki/Features/Python_3.3
+
+* Wed Aug 01 2012 Adam Jackson <ajax@redhat.com> - 1:2.63a-5
+- -Rebuild for new glew
+
+* Sun Jul 29 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.63a-4
+- Rebult to fix broken dependencies
+
+* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.63a-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
 * Tue Jun 26 2012 Richard Shaw <hobbes1069@gmail.com> 1:2.63a-2
 - Bump revision to be >= f17 for AutoQA.
