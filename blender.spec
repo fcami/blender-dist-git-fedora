@@ -6,13 +6,14 @@
 %global blenderlib  %{_datadir}/blender/%{blender_api}
 %global blenderarch %{_libdir}/blender/%{blender_api}
 %global __python %{__python3}
+%global pyver %(%{__python} -c "import sys ; print(sys.version[:3])")
 
 %global fontname blender
 
 Name:           blender
-Epoch:		1
+Epoch:          1
 Version:        %{blender_api}a
-Release: 	7%{?dist}
+Release:        7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -20,20 +21,20 @@ Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
 
-Source0:	http://download.blender.org/source/blender-%{version}.tar.gz
-Source1:	blenderplayer.1
+Source0:        http://download.blender.org/source/blender-%{version}.tar.gz
+Source1:        blenderplayer.1
 Source5:        blender.xml
 
-Source10:	macros.blender
+Source10:       macros.blender
 
-Patch1:		blender-2.44-bid.patch
-Patch2:		blender-2.63-syspath.patch
+Patch1:         blender-2.44-bid.patch
+Patch2:         blender-2.63-syspath.patch
 
-Patch4:		blender-2.48-undefine-operation.patch
-Patch5:		blender-2.50-uninit-var.patch
+Patch4:         blender-2.48-undefine-operation.patch
+Patch5:         blender-2.50-uninit-var.patch
 
-Patch10:	blender-2.58-python_include.patch
-Patch11: 	blender-2.61-openjpeg_stdbool.patch
+Patch10:        blender-2.58-python_include.patch
+Patch11:        blender-2.61-openjpeg_stdbool.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -42,13 +43,13 @@ BuildRequires:  openssl-devel
 BuildRequires:  python3-devel >= 3.2
 BuildRequires:  cmake
 BuildRequires:  SDL-devel
-BuildRequires:	expat-devel
+BuildRequires:  expat-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  boost-devel
 
 # Compression stuff
-BuildRequires:	xz-devel
+BuildRequires:  xz-devel
 BuildRequires:  zlib-devel
 
 BuildRequires:  libXi-devel
@@ -60,32 +61,32 @@ BuildRequires:  OpenEXR-devel
 BuildRequires:  glew-devel
 BuildRequires:  freeglut-devel
 
-BuildRequires:	fftw-devel
-BuildRequires:	ftgl-devel
-BuildRequires:	ode-devel
-BuildRequires:	openjpeg-devel
+BuildRequires:  fftw-devel
+BuildRequires:  ftgl-devel
+BuildRequires:  ode-devel
+BuildRequires:  openjpeg-devel
 BuildRequires:  qhull-devel
 
 # Picture/Vidoe stuff
 BuildRequires:  libjpeg-devel
 BuildRequires:  openjpeg-devel
-BuildRequires:	libjpeg-turbo-devel
+BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  libogg-devel
-BuildRequires:	libtheora-devel
-BuildRequires:	libvorbis-devel
+BuildRequires:  libtheora-devel
+BuildRequires:  libvorbis-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libtiff-devel
-BuildRequires:	OpenImageIO-devel
+BuildRequires:  OpenImageIO-devel
 
 # Audio stuff
-BuildRequires:	libsamplerate-devel
+BuildRequires:  libsamplerate-devel
 BuildRequires:  libao-devel
 BuildRequires:  libsndfile-devel
 BuildRequires:  esound-devel
-BuildRequires:	freealut-devel
-BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:  freealut-devel
+BuildRequires:  jack-audio-connection-kit-devel
 
-BuildRequires:	openCOLLADA-devel >= svn825
+BuildRequires:  openCOLLADA-devel >= svn825
 
 BuildRequires:  libspnav-devel
 
@@ -167,6 +168,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_OPENCOLLADA:BOOL=ON \
  -DOPENCOLLADA=%{_includedir} \
  -DWITH_PYTHON:BOOL=ON \
+ -DPYTHON_VERSION:STRING=%{pyver} \
  -DWITH_PYTHON_INSTALL:BOOL=OFF \
  -DWITH_CODEC_FFMPEG:BOOL=OFF \
  -DWITH_GAMEENGINE:BOOL=ON \
