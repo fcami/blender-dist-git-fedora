@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        7%{?dist}
+Release:        8%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -36,6 +36,9 @@ Patch5:         blender-2.50-uninit-var.patch
 Patch10:        blender-2.58-python_include.patch
 Patch11:        blender-2.61-openjpeg_stdbool.patch
 Patch12:        blender-boost150.patch
+
+# Security Patch for CVE-2008-1103
+Patch13:   	 blender-2.63a-cve.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -149,6 +152,8 @@ addon packages to extend blender.
 %patch10 -p1
 %patch11 -p1 -b .openjpeg_stdbool
 %patch12 -p0 -b .boost
+
+%patch13 -p1 -b .cve
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -295,6 +300,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Sep  6 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.63a-8
+- Porting blender-2.49b-cve.patch (#855092, CVE-2008-1103)
+
 * Fri Aug 10 2012 Richard Shaw <hobbes1069@gmail.com> - 1:2.63a-7
 - Rebuild for libboost 1.50.
 
