@@ -15,7 +15,7 @@ diff -up blender-2.63a/source/blender/blenkernel/intern/blender.c.cve blender-2.
  	MemFileChunk *chunk;
 -	int file;
 +	int file = -1;
-+	int flags = O_BINARY+O_WRONLY+O_CREAT+O_TRUNC;
++	int flags = O_BINARY+O_WRONLY+O_CREAT+O_TRUNC+O_EXCL;
  	char str[FILE_MAX];
  	
  	if ( (U.uiflag & USER_GLOBALUNDO)==0) return;
