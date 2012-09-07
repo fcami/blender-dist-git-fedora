@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        8%{?dist}
+Release:        9%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -300,6 +300,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Sep  7 2012 Jochen Schmitt <s4504kr@omega.in.herr-schmitt.de> - 1:2.63a-9
+- Fix corrupted patch
+
 * Thu Sep  6 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.63a-8
 - Porting blender-2.49b-cve.patch (#855092, CVE-2008-1103)
 
