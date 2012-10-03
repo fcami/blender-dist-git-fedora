@@ -1,4 +1,4 @@
-%global blender_api 2.63
+%global blender_api 2.64
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -12,8 +12,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        10%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,18 +27,10 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.44-bid.patch
-Patch2:         blender-2.63-syspath.patch
+Patch1:         blender-2.64-syspath.patch
 
-Patch4:         blender-2.48-undefine-operation.patch
-Patch5:         blender-2.50-uninit-var.patch
-
-Patch10:        blender-2.58-python_include.patch
-Patch11:        blender-2.61-openjpeg_stdbool.patch
-Patch12:        blender-boost150.patch
-
-# Security Patch for CVE-2008-1103
-Patch13:   	 blender-2.63a-cve.patch
+Patch2:        blender-2.58-python_include.patch
+Patch3:        blender-2.64-openjpeg_stdbool.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -142,18 +134,11 @@ This package provides rpm macros to support the creation of third-party
 addon packages to extend blender.
 
 %prep
-%setup -q 
-%patch1 -p1 -b .bid
-%patch2 -p1 -b .syspath
-
-%patch4 -p0
-%patch5 -p0
-
-%patch10 -p1
-%patch11 -p1 -b .openjpeg_stdbool
-%patch12 -p0 -b .boost
-
-%patch13 -p1 -b .cve
+%setup -q
+ 
+%patch1 -p1 -b .syspath
+%patch2 -p1
+%patch3 -p1 -b .openjpeg_stdbool
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -186,14 +171,6 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_PLAYER=ON
 
 make
-cd ..
-
-install -d release/plugins/include
-install -m 644 source/blender/blenpluginapi/*.h release/plugins/include
-
-chmod +x release/plugins/bmake
-
-make -C release/plugins/
 
 %install
 cd cmake-make
@@ -205,13 +182,6 @@ cd ..
 #
 
 mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
-
-#
-# Install plugins
-#
-
-install -pm 755 release/plugins/sequence/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/sequence
-install -pm 755 release/plugins/texture/*.so ${RPM_BUILD_ROOT}%{blenderarch}/plugins/texture
 
 find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
 
@@ -300,6 +270,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Wed Oct  3 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64-1
+- New upstream release
+
 * Fri Sep  7 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.63a-10
 - Add forgotten O_EXCL to CVE-patch
 
