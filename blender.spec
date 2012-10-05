@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,6 +31,8 @@ Patch1:         blender-2.64-syspath.patch
 
 Patch2:        blender-2.58-python_include.patch
 Patch3:        blender-2.64-openjpeg_stdbool.patch
+# fix build on non-x86 64-bit arches
+Patch4:        blender-2.64-64bit.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -139,6 +141,7 @@ addon packages to extend blender.
 %patch1 -p1 -b .syspath
 %patch2 -p1
 %patch3 -p1 -b .openjpeg_stdbool
+%patch4 -p1 -b .64bit
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -270,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Oct  5 2012 Dan Horák <dan[at]danny.cz> - 1:2.64-2
+- fix build on non-x86 64-bit arches
+
 * Wed Oct  3 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64-1
 - New upstream release
 
