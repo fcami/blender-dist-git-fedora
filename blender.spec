@@ -12,8 +12,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
-Release:        2%{?dist}
+Version:        %{blender_api}a
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -273,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue Oct  9 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64a-1
+- New minor upstream update release
+
 * Fri Oct  5 2012 Dan Horák <dan[at]danny.cz> - 1:2.64-2
 - fix build on non-x86 64-bit arches
 
