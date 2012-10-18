@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -33,6 +33,8 @@ Patch2:        blender-2.58-python_include.patch
 Patch3:        blender-2.64-openjpeg_stdbool.patch
 # fix build on non-x86 64-bit arches
 Patch4:        blender-2.64-64bit.patch
+
+Patch5:	       blender-2.64a-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -93,8 +95,6 @@ Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
-Requires:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
-
 %if 0%{?fedora} > 10
 Requires:	  dejavu-sans-fonts
 %endif
@@ -102,6 +102,8 @@ Requires:	  dejavu-sans-fonts
 %if 0%{?fedora} <= 10
 Requires:	  dejavu-fonts
 %endif
+
+Requires:	  google-droid-sans-fonts
 
 Provides:	  blender(ABI) = %{blender_api}
 
@@ -142,6 +144,8 @@ addon packages to extend blender.
 %patch2 -p1
 %patch3 -p1 -b .openjpeg_stdbool
 %patch4 -p1 -b .64bit
+
+%patch5 -p1 -b .droid
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -273,6 +277,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Oct 18 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64a-2
+- Loading droid-sans font from /usr/share/fonts (#867205)
+
 * Tue Oct  9 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64a-1
 - New minor upstream update release
 
@@ -284,9 +291,6 @@ fi || :
 
 * Fri Sep  7 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.63a-10
 - Add forgotten O_EXCL to CVE-patch
-
-* Fri Sep  7 2012 Jochen Schmitt <s4504kr@omega.in.herr-schmitt.de> - 1:2.63a-9
-- Fix corrupted patch
 
 * Thu Sep  6 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.63a-8
 - Porting blender-2.49b-cve.patch (#855092, CVE-2008-1103)
