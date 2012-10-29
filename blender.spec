@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -35,6 +35,8 @@ Patch3:        blender-2.64-openjpeg_stdbool.patch
 Patch4:        blender-2.64-64bit.patch
 
 Patch5:	       blender-2.64a-droid.patch
+# fix typo in big endian support
+Patch6:	       blender-2.64a-big-endian.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -146,6 +148,7 @@ addon packages to extend blender.
 %patch4 -p1 -b .64bit
 
 %patch5 -p1 -b .droid
+%patch6 -p1 -b .big-endian
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -277,6 +280,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Oct 29 2012 Dan Horák <dan[at]danny.cz> - 1:2.64a-3
+- fix build on big endian arches
+
 * Thu Oct 18 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.64a-2
 - Loading droid-sans font from /usr/share/fonts (#867205)
 
