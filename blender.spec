@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -281,6 +281,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Dec 13 2012 Adam Jackson <ajax@redhat.com> - 1:2.65-2
+- Rebuild for glew 1.9.0
+
 * Tue Dec 11 2012 Jochen Schmitt <Jochen herr schmitt de> - 1:2.65-1
 - New upstream release
 
