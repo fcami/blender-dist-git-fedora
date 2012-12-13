@@ -1,4 +1,4 @@
-%global blender_api 2.64
+%global blender_api 2.65
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -12,8 +12,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        3%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,22 +27,20 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.64-syspath.patch
+Patch1:         blender-2.65-syspath.patch
 
-Patch2:        blender-2.58-python_include.patch
-Patch3:        blender-2.64-openjpeg_stdbool.patch
 # fix build on non-x86 64-bit arches
-Patch4:        blender-2.64-64bit.patch
+Patch2:        blender-2.64-64bit.patch
 
-Patch5:	       blender-2.64a-droid.patch
+Patch3:	       blender-2.65-droid.patch
 # fix typo in big endian support
-Patch6:	       blender-2.64a-big-endian.patch
+Patch4:	       blender-2.64a-big-endian.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  libtool
 BuildRequires:  openssl-devel
-BuildRequires:  python3-devel >= 3.2
+BuildRequires:  python3-devel >= 3.3
 BuildRequires:  cmake
 BuildRequires:  SDL-devel
 BuildRequires:  expat-devel
@@ -89,6 +87,8 @@ BuildRequires:  freealut-devel
 BuildRequires:  jack-audio-connection-kit-devel
 
 BuildRequires:  openCOLLADA-devel >= svn825
+
+BuildRequires:	subversion-devel
 
 BuildRequires:  libspnav-devel
 
@@ -143,12 +143,9 @@ addon packages to extend blender.
 %setup -q
  
 %patch1 -p1 -b .syspath
-%patch2 -p1
-%patch3 -p1 -b .openjpeg_stdbool
-%patch4 -p1 -b .64bit
-
-%patch5 -p1 -b .droid
-%patch6 -p1 -b .big-endian
+%patch2 -p1 -b .64bit
+%patch3 -p1 -b .droid
+%patch4 -p1 -b .big-endian
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -178,9 +175,10 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_BUILTIN_GLEW=OFF \
  -DWITH_INSTALL_PORTABLE=OFF \
  -DWITH_PYTHON_SAFETY=ON \
- -DWITH_PLAYER=ON
+ -DWITH_PLAYER=ON \
+ -DBOOST_ROOT=%{_prefix}
 
-make
+make VERBOSE=1
 
 %install
 cd cmake-make
@@ -240,6 +238,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
+mv ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages \
+   ${RPM_BUILD_ROOT}/%{_datadir}/blender/
+
 %find_lang %{name}
 
 %post
@@ -280,6 +281,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Tue Dec 11 2012 Jochen Schmitt <Jochen herr schmitt de> - 1:2.65-1
+- New upstream release
+
 * Mon Oct 29 2012 Dan Horák <dan[at]danny.cz> - 1:2.64a-3
 - fix build on big endian arches
 
