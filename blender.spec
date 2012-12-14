@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -96,14 +96,6 @@ Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
-
-%if 0%{?fedora} > 10
-Requires:	  dejavu-sans-fonts
-%endif
-
-%if 0%{?fedora} <= 10
-Requires:	  dejavu-fonts
-%endif
 
 Requires:	  google-droid-sans-fonts
 
@@ -281,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Dec 14 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.65-3
+- Remove Req. to the DejaVu Sans font
+
 * Thu Dec 13 2012 Adam Jackson <ajax@redhat.com> - 1:2.65-2
 - Rebuild for glew 1.9.0
 
