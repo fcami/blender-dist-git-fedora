@@ -1,12 +1,12 @@
 diff -up blender-2.65/source/blender/blenfont/intern/blf_lang.c.syspath blender-2.65/source/blender/blenfont/intern/blf_lang.c
 --- blender-2.65/source/blender/blenfont/intern/blf_lang.c.syspath	2012-12-10 20:25:45.000000000 +0100
-+++ blender-2.65/source/blender/blenfont/intern/blf_lang.c	2012-12-13 10:38:50.273961152 +0100
++++ blender-2.65/source/blender/blenfont/intern/blf_lang.c	2012-12-15 08:39:00.897062402 +0100
 @@ -83,7 +83,7 @@ static void free_locales(void)
  
  static void fill_locales(void)
  {
 -	char *languages_path = BLI_get_folder(BLENDER_DATAFILES, "locale");
-+	char *languages_path = "/usr/share/blender";
++        char languages_path[FILE_MAX] = "/usr/share/blender";
  	LinkNode *lines = NULL, *line;
  	char *str;
  	int idx = 0;
@@ -21,7 +21,7 @@ diff -up blender-2.65/source/blender/blenfont/intern/blf_lang.c.syspath blender-
  		bl_locale_init(messagepath, TEXT_DOMAIN_NAME);
 diff -up blender-2.65/source/blender/blenlib/intern/path_util.c.syspath blender-2.65/source/blender/blenlib/intern/path_util.c
 --- blender-2.65/source/blender/blenlib/intern/path_util.c.syspath	2012-12-10 20:25:44.000000000 +0100
-+++ blender-2.65/source/blender/blenlib/intern/path_util.c	2012-12-11 23:06:50.847028569 +0100
++++ blender-2.65/source/blender/blenlib/intern/path_util.c	2012-12-15 08:34:18.594027763 +0100
 @@ -983,38 +983,6 @@ static int get_path_system(char *targetp
  	char system_path[FILE_MAX];
  	const char *system_base_path;
