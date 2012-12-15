@@ -274,7 +274,7 @@ fi || :
 
 %changelog
 * Sat Dec 15 2012 Jochen Schmitt <JOchen herr-schmitt de> - 1:2.65-4
-- Fis SEGFAULT in blf_lang.c (#887413)
+- Fix SEGFAULT in blf_lang.c (#887413)
 
 * Fri Dec 14 2012 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.65-3
 - Remove Req. to the DejaVu Sans font
