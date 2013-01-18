@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -273,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 1:2.65a-3
+- rebuild due to "jpeg8-ABI" feature drop
+
 * Tue Jan 15 2013 Richard Shaw <hobbes1069@gmail.com> - 1:2.65a-2
 - Rebuild for updated OpenImageIO library.
 
