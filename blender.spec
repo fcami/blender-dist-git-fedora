@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -273,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sat Feb 09 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> - 1:2.65a-4
+- Rebuild for Boost-1.53.0
+
 * Fri Jan 18 2013 Adam Tkac <atkac redhat com> - 1:2.65a-3
 - rebuild due to "jpeg8-ABI" feature drop
 
