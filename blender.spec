@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -273,6 +273,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sun Feb 10 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> - 1:2.65a-5
+- Rebuild for Boost-1.53.0
+
 * Sat Feb 09 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> - 1:2.65a-4
 - Rebuild for Boost-1.53.0
 
