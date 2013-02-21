@@ -1,4 +1,4 @@
-%global blender_api 2.65
+%global blender_api 2.66
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -12,8 +12,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        5%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,14 +27,8 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.65-syspath.patch
-
-# fix build on non-x86 64-bit arches
-Patch2:        blender-2.64-64bit.patch
-
-Patch3:	       blender-2.65-droid.patch
-# fix typo in big endian support
-Patch4:	       blender-2.64a-big-endian.patch
+Patch1:         blender-2.66-syspath.patch
+Patch2:	       blender-2.66-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -135,9 +129,7 @@ addon packages to extend blender.
 %setup -q
  
 %patch1 -p1 -b .syspath
-%patch2 -p1 -b .64bit
-%patch3 -p1 -b .droid
-%patch4 -p1 -b .big-endian
+%patch2 -p1 -b .droid
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -273,6 +265,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Thu Feb 21 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-1
+- New upstream release
+
 * Sun Feb 10 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> - 1:2.65a-5
 - Rebuild for Boost-1.53.0
 
