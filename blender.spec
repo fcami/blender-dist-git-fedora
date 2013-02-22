@@ -30,6 +30,9 @@ Source10:       macros.blender
 Patch1:         blender-2.66-syspath.patch
 Patch2:	       blender-2.66-droid.patch
 
+# New rpm release does't like '//' in includes
+Patch3:	       blender-2.66-dbgedit.patch
+
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  libtool
@@ -130,6 +133,7 @@ addon packages to extend blender.
  
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
+%patch3 -p1 -b .dbg
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -267,6 +271,8 @@ fi || :
 %changelog
 * Thu Feb 21 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-1
 - New upstream release
+- Remove unnecessaries patches
+- Add Patch to remove '//' in includes
 
 * Sun Feb 10 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> - 1:2.65a-5
 - Rebuild for Boost-1.53.0
