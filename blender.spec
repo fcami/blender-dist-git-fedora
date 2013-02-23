@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -269,6 +269,9 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Sat Feb 23 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-2
+- Fi wrong font name for international feature (#867205)
+
 * Thu Feb 21 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-1
 - New upstream release
 - Remove unnecessaries patches

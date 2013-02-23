@@ -1,6 +1,15 @@
 diff -up blender-2.66/source/blender/blenfont/intern/blf_translation.c.droid blender-2.66/source/blender/blenfont/intern/blf_translation.c
 --- blender-2.66/source/blender/blenfont/intern/blf_translation.c.droid	2013-02-13 12:52:01.000000000 +0100
-+++ blender-2.66/source/blender/blenfont/intern/blf_translation.c	2013-02-21 20:31:57.800940997 +0100
++++ blender-2.66/source/blender/blenfont/intern/blf_translation.c	2013-02-23 20:04:13.851326385 +0100
+@@ -47,7 +47,7 @@
+ 
+ #include "boost_locale_wrapper.h"
+ 
+-static const char unifont_filename[] = "droidsans.ttf.gz";
++static const char unifont_filename[] = "DroidSans.ttf";
+ static unsigned char *unifont_ttf = NULL;
+ static int unifont_size = 0;
+ #endif  /* WITH_INTERNATIONAL */
 @@ -56,17 +56,10 @@ unsigned char *BLF_get_unifont(int *unif
  {
  #ifdef WITH_INTERNATIONAL
@@ -25,7 +34,7 @@ diff -up blender-2.66/source/blender/blenfont/intern/blf_translation.c.droid ble
  	*unifont_size_r = unifont_size;
 diff -up blender-2.66/source/blender/blenlib/BLI_fileops.h.droid blender-2.66/source/blender/blenlib/BLI_fileops.h
 --- blender-2.66/source/blender/blenlib/BLI_fileops.h.droid	2012-10-06 09:03:03.000000000 +0200
-+++ blender-2.66/source/blender/blenlib/BLI_fileops.h	2013-02-21 20:12:46.152168063 +0100
++++ blender-2.66/source/blender/blenlib/BLI_fileops.h	2013-02-23 19:55:54.818513899 +0100
 @@ -81,6 +81,8 @@ int    BLI_file_touch(const char *file);
  int    BLI_file_gzip(const char *from, const char *to);
  char  *BLI_file_ungzip_to_mem(const char *from_file, int *size_r);
@@ -37,7 +46,7 @@ diff -up blender-2.66/source/blender/blenlib/BLI_fileops.h.droid blender-2.66/so
  
 diff -up blender-2.66/source/blender/blenlib/intern/fileops.c.droid blender-2.66/source/blender/blenlib/intern/fileops.c
 --- blender-2.66/source/blender/blenlib/intern/fileops.c.droid	2013-02-11 01:49:00.000000000 +0100
-+++ blender-2.66/source/blender/blenlib/intern/fileops.c	2013-02-21 20:12:46.154167927 +0100
++++ blender-2.66/source/blender/blenlib/intern/fileops.c	2013-02-23 19:55:54.821513746 +0100
 @@ -155,6 +155,31 @@ char *BLI_file_ungzip_to_mem(const char
  	return mem;
  }
