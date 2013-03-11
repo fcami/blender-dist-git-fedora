@@ -13,7 +13,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -32,6 +32,12 @@ Patch2:	       blender-2.66-droid.patch
 
 # New rpm release does't like '//' in includes
 Patch3:	       blender-2.66-dbgedit.patch
+
+# Bigendian fix from http://lists.blender.org/pipermail/bf-blender-cvs/2013-March/054231.html
+Patch4: blender-2.66a-bigendian.patch
+
+# Archs without SSE2/SSE3 need system_cpu_support_sse? functions
+Patch5: blender-2.66a-nosse.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -134,6 +140,8 @@ addon packages to extend blender.
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
 %patch3 -p1 -b .dbg
+%patch4 -p1 -b .bigendian
+%patch5 -p1 -b .nosse
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -269,6 +277,10 @@ fi || :
 %{_sysconfdir}/rpm/macros.blender
 
 %changelog
+* Mon Mar 11 2013 Karsten Hopp <karsten@redhat.com> 1:2.66a-3
+- add upstream bigendian patch 
+- Archs without SSE2/SSE3 need boolean system_cpu_support_sse? functions
+
 * Sun Mar 10 2013 Rex Dieter <rdieter@fedoraproject.org> - 1:2.66a-2
 - rebuild (OpenEXR)
 
