@@ -1,4 +1,5 @@
-%global blender_api 2.66
+%global blender_api 2.67
+%global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -12,8 +13,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        2%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -27,11 +28,8 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.66-syspath.patch
-Patch2:	       blender-2.66-droid.patch
-
-# New rpm release does't like '//' in includes
-Patch3:	       blender-2.66-dbgedit.patch
+Patch1:         blender-2.67-syspath.patch
+Patch2:	        blender-2.67-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -89,6 +87,8 @@ BuildRequires:	subversion-devel
 
 BuildRequires:  libspnav-devel
 
+BuildRequires:	fontpackages-devel
+
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
@@ -128,12 +128,22 @@ BuildArch:     noarch
 This package provides rpm macros to support the creation of third-party
 addon packages to extend blender.
 
+%package -n fonts-blender
+Summary:       International blender mono space font
+Group:	       User Interface/X
+License:       ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
+Requires:       %{name} = %{version}-%{release}
+
+%description -n fonts-blender
+This package contains an international blender mono space font which is
+a composition of several mono space fonts to cover several character
+sets.
+
 %prep
 %setup -q
  
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
-%patch3 -p1 -b .dbg
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -229,6 +239,11 @@ sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
 mv ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages \
    ${RPM_BUILD_ROOT}/%{_datadir}/blender/
 
+
+mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
+cp -p release/datafiles/fonts/bmonofont-i18n.ttf.gz \
+    ${RPM_BUILD_ROOT}%{blender_fontdir}/
+
 %find_lang %{name}
 
 %post
@@ -268,7 +283,16 @@ fi || :
 %defattr(-,root,root,-)
 %{_sysconfdir}/rpm/macros.blender
 
+%files -n fonts-blender
+%defattr(-,root,root,-)
+%{blender_fontdir}/
+%doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
+
 %changelog
+* Wed May  8 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67-1
+- New upstream release
+- Add subpackage for international mono space font
+
 * Sun Mar 10 2013 Rex Dieter <rdieter@fedoraproject.org> - 1:2.66a-2
 - rebuild (OpenEXR)
 
