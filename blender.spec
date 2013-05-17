@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -95,11 +95,9 @@ Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
 Requires:	  google-droid-sans-fonts
+Requires:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
 Provides:	  blender(ABI) = %{blender_api}
-
-Provides:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	  blender-fonts <= 2.48a-9
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -132,7 +130,10 @@ addon packages to extend blender.
 Summary:       International blender mono space font
 Group:	       User Interface/X
 License:       ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
-Requires:       %{name} = %{version}-%{release}
+BuildArch:     noarch
+
+Provides:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:	  blender-fonts <= 2.48a-9
 
 %description -n fonts-blender
 This package contains an international blender mono space font which is
@@ -289,6 +290,10 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri May 17 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67-2
+- Fix dependency issues with fonts subpackage
+- Make fonts subpackage noarch
+
 * Wed May  8 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67-1
 - New upstream release
 - Add subpackage for international mono space font
