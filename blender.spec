@@ -13,8 +13,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
-Release:        2%{?dist}
+Version:        %{blender_api}a
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -290,6 +290,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri May 24 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-1
+- New minor upstream release
+
 * Fri May 17 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67-2
 - Fix dependency issues with fonts subpackage
 - Make fonts subpackage noarch
