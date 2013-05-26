@@ -1,0 +1,17 @@
+diff -up blender-2.67a/intern/cycles/util/util_system.cpp.non-x86 blender-2.67a/intern/cycles/util/util_system.cpp
+--- blender-2.67a/intern/cycles/util/util_system.cpp.non-x86	2013-05-26 14:48:10.000000000 +0200
++++ blender-2.67a/intern/cycles/util/util_system.cpp	2013-05-26 14:48:27.000000000 +0200
+@@ -199,7 +199,12 @@ bool system_cpu_support_sse3()
+ 
+ #else
+ 
+-bool system_cpu_support_optimized()
++bool system_cpu_support_sse2()
++{
++	return false;
++}
++
++bool system_cpu_support_sse3()
+ {
+ 	return false;
+ }
