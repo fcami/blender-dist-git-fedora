@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,6 +31,7 @@ Source10:       macros.blender
 Patch1:         blender-2.67-syspath.patch
 Patch2:	        blender-2.67-droid.patch
 Patch3:		blender-2.67a-rna.patch
+Patch4:	        blender-2.67a-non-x86.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -147,6 +148,7 @@ sets.
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
 %patch3 -p1 -b .rna
+%patch4 -p1 -b .non-x86
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -292,8 +294,11 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
-* Mon Jun  3 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-2
+* Mon Jun  3 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-3
 - Fix crash in blender/makerna/intern/rna_access.c (ä969043)
+
+* Sun May 26 2013 Dan Horák <dan[at]danny.cz> - 1:2.67a-2
+- fix build on non-x86 arches
 
 * Fri May 24 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-1
 - New minor upstream release
