@@ -1,0 +1,15 @@
+diff -up blender-2.67a/source/blender/makesrna/intern/rna_access.c.rna blender-2.67a/source/blender/makesrna/intern/rna_access.c
+--- blender-2.67a/source/blender/makesrna/intern/rna_access.c.rna	2013-06-03 17:18:37.070246295 +0200
++++ blender-2.67a/source/blender/makesrna/intern/rna_access.c	2013-06-03 17:37:49.453608060 +0200
+@@ -1273,8 +1273,9 @@ void RNA_property_enum_items_gettexted(b
+ 			int totitem = 0;
+ 
+ 			/* count */
+-			for (i = 0; (*item)[i].identifier; i++)
+-				totitem++;
++			if (*item)
++			  for (i = 0; (*item)[i].identifier; i++)
++			    totitem++;
+ 
+ 			nitem = MEM_callocN(sizeof(EnumPropertyItem) * (totitem + 1), "enum_items_gettexted");
+ 

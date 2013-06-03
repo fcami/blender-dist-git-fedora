@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -30,6 +30,7 @@ Source10:       macros.blender
 
 Patch1:         blender-2.67-syspath.patch
 Patch2:	        blender-2.67-droid.patch
+Patch3:		blender-2.67a-rna.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -145,6 +146,7 @@ sets.
  
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
+%patch3 -p1 -b .rna
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -290,6 +292,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Jun  3 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-2
+- Fix crash in blender/makerna/intern/rna_access.c (ä969043)
+
 * Fri May 24 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-1
 - New minor upstream release
 
@@ -308,7 +313,7 @@ fi || :
 - New upstream release
 
 * Sat Feb 23 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-2
-- Fi wrong font name for international feature (#867205)
+- Fix wrong font name for international feature (#867205)
 
 * Thu Feb 21 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.66-1
 - New upstream release
