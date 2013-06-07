@@ -13,8 +13,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        3%{?dist}
+Version:        %{blender_api}b
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -294,6 +294,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri Jun  7 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67b-1
+- Minor upstream bugfix update
+
 * Mon Jun  3 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67a-3
 - Fix crash in blender/makerna/intern/rna_access.c (ä969043)
 
