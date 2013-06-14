@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}b
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -30,7 +30,7 @@ Source10:       macros.blender
 
 Patch1:         blender-2.67-syspath.patch
 Patch2:	        blender-2.67-droid.patch
-Patch3:		blender-2.67a-rna.patch
+Patch3:		blender-2.67b-rna.patch
 Patch4:	        blender-2.67a-non-x86.patch
 
 BuildRequires:  desktop-file-utils
