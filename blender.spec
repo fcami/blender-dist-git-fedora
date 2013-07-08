@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}b
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -252,7 +252,7 @@ cp -p release/datafiles/fonts/bmonofont-i18n.ttf.gz \
 %find_lang %{name}
 
 %post
-%{_bindir}/update-mime-database %{_datadir}/mime
+%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
@@ -260,7 +260,7 @@ fi
 %{_bindir}/update-desktop-database %{_datadir}/applications || :
 
 %postun
-%{_bindir}/update-mime-database %{_datadir}/mime
+%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
 %{_bindir}/update-desktop-database %{_datadir}/applications
 touch --no-create %{_datadir}/icons/hicolor
 if [ -x %{_bindir}/gtk-update-icon-cache ]; then
@@ -294,6 +294,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sun Jul  7 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67b-3
+- Suppress output of update-mime-database (#541041)
+
 * Fri Jun  7 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67b-1
 - Minor upstream bugfix update
 
