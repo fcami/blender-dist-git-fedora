@@ -1,4 +1,4 @@
-%global blender_api 2.67
+%global blender_api 2.68
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -13,8 +13,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}b
-Release:        3%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,7 +31,6 @@ Source10:       macros.blender
 Patch1:         blender-2.67-syspath.patch
 Patch2:	        blender-2.67-droid.patch
 Patch3:		blender-2.67b-rna.patch
-Patch4:	        blender-2.67a-non-x86.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -148,7 +147,6 @@ sets.
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
 %patch3 -p1 -b .rna
-%patch4 -p1 -b .non-x86
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -294,6 +292,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri Jul 19 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68-1
+- New upstream release
+
 * Sun Jul  7 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.67b-3
 - Suppress output of update-mime-database (#541041)
 
