@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -292,6 +292,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Jul 23 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68-3
+- Rebuilt again
+
 * Mon Jul 22 2013 Richard Shaw <hobbes1069@gmail.com> - 1:2.68-2
 - Rebuild for updated OpenImageIO.
 
