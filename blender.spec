@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -43,6 +43,7 @@ BuildRequires:  expat-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  boost-devel
+BuildRequires:  jemalloc-devel
 
 # Compression stuff
 BuildRequires:  xz-devel
@@ -73,6 +74,7 @@ BuildRequires:  libvorbis-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libtiff-devel
 BuildRequires:  OpenImageIO-devel
+BuildRequires:  OpenColorIO-devel
 
 # Audio stuff
 BuildRequires:  libsamplerate-devel
@@ -177,6 +179,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_INSTALL_PORTABLE=OFF \
  -DWITH_PYTHON_SAFETY=ON \
  -DWITH_PLAYER=ON \
+ -DWITH_MEM_JEMALLOC=ON \
  -DBOOST_ROOT=%{_prefix}
 
 make VERBOSE=1
@@ -227,7 +230,7 @@ install -p -D -m 644 doc/manpage/blender.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/
 install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_mandir}/man1/
 
 rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
-rm -rf ${RPM_BUILD_ROOT}%{blenderlib}/datafiles/*
+
 rm -rf ${RPM_BUILD_ROOT}%{_docdir}/blender/*
 
 #
@@ -292,6 +295,10 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Aug 28 2013 François Cami <fcami@fedoraproject.org> - 1:2.68a-3
+- Enable jemalloc and OpenColorIO. (#1002197)
+- Re-enable localization (#867285)
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.68a-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
