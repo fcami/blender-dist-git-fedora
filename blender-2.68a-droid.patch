@@ -6,7 +6,7 @@ diff -up blender-2.67/source/blender/blenfont/intern/blf_translation.c.droid ble
  #include "boost_locale_wrapper.h"
  
 -static const char unifont_filename[] = "droidsans.ttf.gz";
-+static const char unifont_filename[] = "droidsans.ttf";
++static const char unifont_filename[] = "DroidSans.ttf";
  static unsigned char *unifont_ttf = NULL;
  static int unifont_size = 0;
  static const char unifont_mono_filename[] = "bmonofont-i18n.ttf.gz";

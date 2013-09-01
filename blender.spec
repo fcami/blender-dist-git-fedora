@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -28,9 +28,8 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.67-syspath.patch
-Patch2:	        blender-2.67-droid.patch
-Patch3:		blender-2.67b-rna.patch
+Patch1:         blender-2.68a-syspath.patch
+Patch2:	        blender-2.68a-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -148,7 +147,6 @@ sets.
  
 %patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
-%patch3 -p1 -b .rna
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -233,6 +231,11 @@ rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
 
 rm -rf ${RPM_BUILD_ROOT}%{_docdir}/blender/*
 
+rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/locale/*
+cp -a release/datafiles/locale/languages ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/locale/
+
+rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/fonts
+
 #
 # rpm macros
 #
@@ -242,9 +245,7 @@ mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
 
-mv ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages \
-   ${RPM_BUILD_ROOT}/%{_datadir}/blender/
-
+rm ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages
 
 mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
 cp -p release/datafiles/fonts/bmonofont-i18n.ttf.gz \
@@ -295,6 +296,10 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sun Sep  1 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68a-4
+- Aboid twice occurance of locale files
+- Fix typo in DroideSans font name
+
 * Wed Aug 28 2013 François Cami <fcami@fedoraproject.org> - 1:2.68a-3
 - Enable jemalloc and OpenColorIO. (#1002197)
 - Re-enable localization (#867285)
