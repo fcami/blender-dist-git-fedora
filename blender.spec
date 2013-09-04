@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -248,7 +248,7 @@ sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
 rm ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages
 
 mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
-cp -p release/datafiles/fonts/bmonofont-i18n.ttf.gz \
+cp -p release/datafiles/fonts/*.ttf.gz \
     ${RPM_BUILD_ROOT}%{blender_fontdir}/
 
 %find_lang %{name}
@@ -296,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Sep  4 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68a-5
+- Include derived DoridSans font for CJK support (#867205)
+
 * Sun Sep  1 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68a-4
 - Aboid twice occurance of locale files
 - Fix typo in DroideSans font name
