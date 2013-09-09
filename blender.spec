@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        5%{?dist}
+Release:        6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -296,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Sep  9 2013 François Cami <fcami@fedoraproject.org> - 1:2.68a-6
+- Rebuild.
+
 * Wed Sep  4 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.68a-5
 - Include derived DoridSans font for CJK support (#867205)
 
