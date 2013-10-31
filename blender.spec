@@ -1,4 +1,4 @@
-%global blender_api 2.68
+%global blender_api 2.69
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -13,8 +13,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        6%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -296,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Oct 31 2013 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.69-1
+- New upsream release
+
 * Mon Sep  9 2013 François Cami <fcami@fedoraproject.org> - 1:2.68a-6
 - Rebuild.
 
