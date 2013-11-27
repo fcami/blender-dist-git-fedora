@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -296,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Nov 27 2013 Rex Dieter <rdieter@fedoraproject.org> - 1:2.69-3
+- rebuild (openexr)
+
 * Mon Nov 18 2013 Dave Airlie <airlied@redhat.com> - 1:2.69-2
 - rebuilt for GLEW 1.10
 
