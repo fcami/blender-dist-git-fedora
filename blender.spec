@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -29,7 +29,7 @@ Source5:        blender.xml
 Source10:       macros.blender
 
 Patch1:         blender-2.68a-syspath.patch
-Patch2:	        blender-2.68a-droid.patch
+Patch2:         blender-2.68a-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -85,21 +85,21 @@ BuildRequires:  jack-audio-connection-kit-devel
 
 BuildRequires:  openCOLLADA-devel >= svn825
 
-BuildRequires:	subversion-devel
+BuildRequires:  subversion-devel
 
 BuildRequires:  libspnav-devel
 
-BuildRequires:	fontpackages-devel
+BuildRequires:  fontpackages-devel
 
 Requires(post): desktop-file-utils
 Requires(post): shared-mime-info
 Requires(postun): desktop-file-utils
 Requires(postun): shared-mime-info
 
-Requires:	  google-droid-sans-fonts
-Requires:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:         google-droid-sans-fonts
+Requires:         blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
-Provides:	  blender(ABI) = %{blender_api}
+Provides:         blender(ABI) = %{blender_api}
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -110,7 +110,7 @@ secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %package -n blenderplayer
 Summary:       Standalone blender player
-Group:	       Applications/Multimedia
+Group:         Applications/Multimedia
 
 Provides:      blender(ABI) = %{blender_api}
 
@@ -121,7 +121,7 @@ Blender Game Engine.
 
 %package rpm-macros
 Summary:       RPM macros to build third-party blender addons packages
-Group:	       Development/Tools
+Group:         Development/Tools
 BuildArch:     noarch
 
 %description rpm-macros
@@ -130,12 +130,12 @@ addon packages to extend blender.
 
 %package -n fonts-blender
 Summary:       International blender mono space font
-Group:	       User Interface/X
+Group:         User Interface/X
 License:       ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
 BuildArch:     noarch
 
-Provides:	  blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	  blender-fonts <= 2.48a-9
+Provides:      blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:     blender-fonts <= 2.48a-9
 
 %description -n fonts-blender
 This package contains an international blender mono space font which is
@@ -166,6 +166,9 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_CODEC_SNDFILE:BOOL=ON \
  -DWITH_IMAGE_OPENJPEG:BOOL=ON \
  -DWITH_OPENCOLLADA:BOOL=ON \
+ -DWITH_CYCLES:BOOL=ON \
+ -DWITH_FFTW3:BOOL=ON \
+ -DWITH_MOD_OCEANSIM:BOOL=ON \
  -DOPENCOLLADA=%{_includedir} \
  -DWITH_PYTHON:BOOL=ON \
  -DPYTHON_VERSION:STRING=%{pyver} \
@@ -296,6 +299,10 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Dec 31 2013 François Cami <fcami@fedoraproject.org> - 1:2.69-4
+- Add Ocean Simulation (#1047589).
+- Fix mixed use of tabs and spaces in blender.spec (rpmlint).
+
 * Wed Nov 27 2013 Rex Dieter <rdieter@fedoraproject.org> - 1:2.69-3
 - rebuild (openexr)
 
