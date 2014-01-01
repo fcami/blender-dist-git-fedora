@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -183,7 +183,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_MEM_JEMALLOC=ON \
  -DBOOST_ROOT=%{_prefix}
 
-make VERBOSE=1
+make VERBOSE=1 %{?_smp_mflags}
 
 %install
 cd cmake-make
@@ -299,6 +299,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Dec 31 2013 François Cami <fcami@fedoraproject.org> - 1:2.69-5
+- Enable parallel building.
+
 * Tue Dec 31 2013 François Cami <fcami@fedoraproject.org> - 1:2.69-4
 - Add Ocean Simulation (#1047589).
 - Fix mixed use of tabs and spaces in blender.spec (rpmlint).
