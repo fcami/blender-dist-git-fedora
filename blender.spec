@@ -14,7 +14,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        5%{?dist}
+Release:        6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -299,6 +299,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Jan 13 2014 Richard Shaw <hobbes1069@gmail.com> - 1:2.69-6
+- Rebuild for updated OpenImageIO 1.3.11.
+
 * Tue Dec 31 2013 François Cami <fcami@fedoraproject.org> - 1:2.69-5
 - Enable parallel building.
 
