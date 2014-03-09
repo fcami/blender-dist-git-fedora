@@ -293,7 +293,7 @@ fi || :
 
 %files rpm-macros
 %defattr(-,root,root,-)
-%{macrosdir}/rpm/macros.blender
+%{macrosdir}/macros.blender
 
 %files -n fonts-blender
 %defattr(-,root,root,-)
