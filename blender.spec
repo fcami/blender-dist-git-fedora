@@ -11,10 +11,12 @@
 
 %global fontname blender
 
+%global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
+
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        6%{?dist}
+Release:        7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -243,10 +245,10 @@ rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/fonts
 # rpm macros
 #
 
-mkdir -p ${RPM_BUILD_ROOT}%{_sysconfdir}/rpm
+mkdir -p ${RPM_BUILD_ROOT}%{macrosdir}
 
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
-     >${RPM_BUILD_ROOT}%{_sysconfdir}/rpm/macros.blender
+     >${RPM_BUILD_ROOT}%{macrosdir}/macros.blender
 
 rm ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages
 
@@ -291,7 +293,7 @@ fi || :
 
 %files rpm-macros
 %defattr(-,root,root,-)
-%{_sysconfdir}/rpm/macros.blender
+%{macrosdir}/rpm/macros.blender
 
 %files -n fonts-blender
 %defattr(-,root,root,-)
@@ -299,6 +301,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sun Mar  9 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.69-7
+- Use new rpm macro for rpm macro direcgory  (#1074263)
+
 * Mon Jan 13 2014 Richard Shaw <hobbes1069@gmail.com> - 1:2.69-6
 - Rebuild for updated OpenImageIO 1.3.11.
 
