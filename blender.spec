@@ -1,4 +1,4 @@
-%global blender_api 2.69
+%global blender_api 2.70
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -16,7 +16,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        7%{?dist}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -30,7 +30,6 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch1:         blender-2.68a-syspath.patch
 Patch2:         blender-2.68a-droid.patch
 
 BuildRequires:  desktop-file-utils
@@ -147,7 +146,6 @@ sets.
 %prep
 %setup -q
  
-%patch1 -p1 -b .syspath
 %patch2 -p1 -b .droid
 
 find -name '.svn' -print | xargs rm -rf
@@ -200,8 +198,6 @@ mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/textu
 
 find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
 
-cp -a release/datafiles/locale ${RPM_BUILD_ROOT}%{_datadir}
-
 cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
 
 find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
@@ -236,8 +232,7 @@ rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
 
 rm -rf ${RPM_BUILD_ROOT}%{_docdir}/blender/*
 
-rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/locale/*
-cp -a release/datafiles/locale/languages ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/locale/
+cp -aR release/datafiles/locale ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/
 
 rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/fonts
 
@@ -250,13 +245,9 @@ mkdir -p ${RPM_BUILD_ROOT}%{macrosdir}
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >${RPM_BUILD_ROOT}%{macrosdir}/macros.blender
 
-rm ${RPM_BUILD_ROOT}/%{_datadir}/locale/languages
-
 mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
 cp -p release/datafiles/fonts/*.ttf.gz \
     ${RPM_BUILD_ROOT}%{blender_fontdir}/
-
-%find_lang %{name}
 
 %post
 %{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
@@ -274,7 +265,7 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
 fi || :
 
-%files -f blender.lang
+%files
 %defattr(-,root,root,-)
 %{_bindir}/blender
 %{_datadir}/applications/blender.desktop
@@ -301,6 +292,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Mar 20 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-1
+- New upstream releasw
+
 * Sun Mar  9 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.69-7
 - Use new rpm macro for rpm macro direcgory  (#1074263)
 
