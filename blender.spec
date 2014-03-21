@@ -102,6 +102,8 @@ Requires:         blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
 Provides:         blender(ABI) = %{blender_api}
 
+ExcludeArch:     armv7hl
+
 %description
 Blender is the essential software solution you need for 3D, from modeling,
 animation, rendering and post-production to interactive creation and playback.
@@ -294,6 +296,7 @@ fi || :
 %changelog
 * Thu Mar 20 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-1
 - New upstream releasw
+- Exclude armv7hl
 
 * Sun Mar  9 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.69-7
 - Use new rpm macro for rpm macro direcgory  (#1074263)
