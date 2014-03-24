@@ -16,7 +16,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -31,6 +31,7 @@ Source5:        blender.xml
 Source10:       macros.blender
 
 Patch2:         blender-2.68a-droid.patch
+Patch3:         blender-2.70-arm.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -102,8 +103,6 @@ Requires:         blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 
 Provides:         blender(ABI) = %{blender_api}
 
-ExcludeArch:     armv7hl
-
 %description
 Blender is the essential software solution you need for 3D, from modeling,
 animation, rendering and post-production to interactive creation and playback.
@@ -149,6 +148,9 @@ sets.
 %setup -q
  
 %patch2 -p1 -b .droid
+%ifarch armv7hl
+%patch3 -p1 -b .arm
+%endif
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -294,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Mar 24 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-2
+- Add patch to fix issue with unsupported CFLAGS on armv7hl
+
 * Thu Mar 20 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-1
 - New upstream releasw
 - Exclude armv7hl
