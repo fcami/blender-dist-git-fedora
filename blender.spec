@@ -13,6 +13,12 @@
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
+%ifarch %{ix86} x86_64
+%global cyclesflag ON
+%else
+%global cyclesflag OFF
+%endif
+
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
@@ -31,7 +37,6 @@ Source5:        blender.xml
 Source10:       macros.blender
 
 Patch2:         blender-2.68a-droid.patch
-Patch3:         blender-2.70-arm.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -148,9 +153,6 @@ sets.
 %setup -q
  
 %patch2 -p1 -b .droid
-%ifarch armv7hl
-%patch3 -p1 -b .arm
-%endif
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -170,7 +172,7 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_CODEC_SNDFILE:BOOL=ON \
  -DWITH_IMAGE_OPENJPEG:BOOL=ON \
  -DWITH_OPENCOLLADA:BOOL=ON \
- -DWITH_CYCLES:BOOL=ON \
+ -DWITH_CYCLES:BOOL=%{cyclesflag} \
  -DWITH_FFTW3:BOOL=ON \
  -DWITH_MOD_OCEANSIM:BOOL=ON \
  -DOPENCOLLADA=%{_includedir} \
@@ -297,7 +299,7 @@ fi || :
 
 %changelog
 * Mon Mar 24 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-2
-- Add patch to fix issue with unsupported CFLAGS on armv7hl
+- Disable CYCLES for non-Intel processors
 
 * Thu Mar 20 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-1
 - New upstream releasw
