@@ -13,16 +13,12 @@
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
-%ifarch %{ix86} x86_64
 %global cyclesflag ON
-%else
-%global cyclesflag OFF
-%endif
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
-Release:        2%{?dist}
+Version:        %{blender_api}a
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -150,7 +146,7 @@ a composition of several mono space fonts to cover several character
 sets.
 
 %prep
-%setup -q
+%setup -q -n blender-v%{version}
  
 %patch2 -p1 -b .droid
 
@@ -298,6 +294,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Apr 16 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70a-1
+- Minor upstream update
+
 * Mon Mar 24 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.70-2
 - Disable CYCLES for non-Intel processors
 
