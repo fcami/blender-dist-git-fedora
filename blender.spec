@@ -13,7 +13,11 @@
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
+%ifarch %{ix86} x86_64
 %global cyclesflag ON
+%else
+%global cyclesflag OFF
+%endif
 
 Name:           blender
 Epoch:          1
