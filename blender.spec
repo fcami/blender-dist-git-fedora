@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -298,6 +298,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri May 23 2014 Petr Machata <pmachata@redhat.com> - 1:2.70a-4
+- Rebuild for boost 1.55.0
+
 * Fri May 23 2014 David Tardon <dtardon@redhat.com> - 1:2.70a-3
 - rebuild for boost 1.55.0
 
