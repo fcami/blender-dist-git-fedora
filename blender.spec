@@ -1,4 +1,4 @@
-%global blender_api 2.70
+%global blender_api 2.71
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -21,8 +21,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        6%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -150,7 +150,7 @@ a composition of several mono space fonts to cover several character
 sets.
 
 %prep
-%setup -q -n blender-v%{version}
+%setup -q
  
 %patch2 -p1 -b .droid
 
@@ -298,6 +298,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sun Jun 29 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.71-1
+- New upstream release
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.70a-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
