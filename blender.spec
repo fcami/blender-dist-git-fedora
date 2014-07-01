@@ -231,7 +231,7 @@ rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
 #
 
 mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man1
-%__python doc/manpage/blender.1.py /usr/bin/blender ${RPM_BUILD_ROOT}%{_mandir}/man1/blender.1
+%__python doc/manpage/blender.1.py $RPM_BUILD_ROOT%{_bindir}/blender ${RPM_BUILD_ROOT}%{_mandir}/man1/blender.1
 install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_mandir}/man1/
 
 rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
