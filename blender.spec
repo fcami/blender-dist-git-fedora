@@ -189,7 +189,8 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_MEM_JEMALLOC=ON \
  -DBOOST_ROOT=%{_prefix}
 
-make VERBOSE=1 %{?_smp_mflags}
+
+make VERBOSE=1 # %{?_smp_mflags}
 
 %install
 cd cmake-make
@@ -300,6 +301,8 @@ fi || :
 %changelog
 * Sun Jun 29 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.71-1
 - New upstream release
+- Use blender.1.py to build man page
+- Disable parallel build
 
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.70a-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
