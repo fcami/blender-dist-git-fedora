@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -299,6 +299,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.71-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Sun Jun 29 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.71-1
 - New upstream release
 - Use blender.1.py to build man page
