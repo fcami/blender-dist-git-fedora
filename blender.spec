@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -97,11 +97,6 @@ BuildRequires:  subversion-devel
 BuildRequires:  libspnav-devel
 
 BuildRequires:  fontpackages-devel
-
-Requires(post): desktop-file-utils
-Requires(post): shared-mime-info
-Requires(postun): desktop-file-utils
-Requires(postun): shared-mime-info
 
 Requires:         google-droid-sans-fonts
 Requires:         blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -257,20 +252,22 @@ cp -p release/datafiles/fonts/*.ttf.gz \
     ${RPM_BUILD_ROOT}%{blender_fontdir}/
 
 %post
-%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
-fi 
-%{_bindir}/update-desktop-database %{_datadir}/applications || :
+/usr/bin/update-desktop-database &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
 
 %postun
-%{_bindir}/update-mime-database %{_datadir}/mime &> /dev/null || :
-%{_bindir}/update-desktop-database %{_datadir}/applications
-touch --no-create %{_datadir}/icons/hicolor
-if [ -x %{_bindir}/gtk-update-icon-cache ]; then
-  %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor
-fi || :
+/usr/bin/update-desktop-database &> /dev/null || :
+if [ $1 -eq 0 ] ; then
+/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+/usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 %files
 %defattr(-,root,root,-)
@@ -299,6 +296,9 @@ fi || :
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sat Aug 16 2014 Rex Dieter <rdieter@fedoraproject.org> 1:2.71-3
+- fix/update icon/mime scriptlets
+
 * Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.71-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
