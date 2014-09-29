@@ -1,4 +1,4 @@
-%global blender_api 2.71
+%global blender_api 2.72
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        4%{?dist}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -42,7 +42,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
 BuildRequires:  libtool
 BuildRequires:  openssl-devel
-BuildRequires:  python3-devel >= 3.3
+BuildRequires:  python3-devel >= 3.4
 BuildRequires:  cmake
 BuildRequires:  SDL-devel
 BuildRequires:  expat-devel
