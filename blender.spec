@@ -36,6 +36,7 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
+Patch1:		blender-2.72-collada.patch
 Patch2:         blender-2.68a-droid.patch
 
 BuildRequires:  desktop-file-utils
@@ -146,7 +147,8 @@ sets.
 
 %prep
 %setup -q
- 
+
+%patch1 -p1 -b .cfix 
 %patch2 -p1 -b .droid
 
 find -name '.svn' -print | xargs rm -rf
@@ -296,6 +298,10 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Sep 30 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72-1
+- New upstream release
+- Add patch to fix FTBFS with current OpenCOLLADA release
+
 * Sat Sep 06 2014 François Cami <fcami@fedoraproject.org> - 1:2.71-4
 - Rebuilt for openCOLLADA 0-19.git69b844d
 

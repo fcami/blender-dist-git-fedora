@@ -1,0 +1,12 @@
+diff -up blender-2.72/source/blender/collada/ArmatureImporter.h.cfix blender-2.72/source/blender/collada/ArmatureImporter.h
+--- blender-2.72/source/blender/collada/ArmatureImporter.h.cfix	2014-09-30 19:22:38.559089753 +0200
++++ blender-2.72/source/blender/collada/ArmatureImporter.h	2014-09-30 19:23:40.926742855 +0200
+@@ -27,6 +27,8 @@
+ #ifndef __ARMATUREIMPORTER_H__
+ #define __ARMATUREIMPORTER_H__
+ 
++#include <vector>
++
+ #include "COLLADAFWNode.h"
+ #include "COLLADAFWUniqueId.h"
+ #include "COLLADAFWMorphController.h"
