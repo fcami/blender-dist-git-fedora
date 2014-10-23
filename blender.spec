@@ -37,6 +37,8 @@ Source5:        blender.xml
 Source10:       macros.blender
 
 Patch2:         blender-2.68a-droid.patch
+# https://developer.blender.org/T42183
+Patch3:         blender-2.72-size_t.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -148,6 +150,7 @@ sets.
 %setup -q
 
 %patch2 -p1 -b .droid
+%patch3 -p1 -b .size_t
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -298,6 +301,9 @@ fi
 %changelog
 * Thu Oct 23 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72b-1
 - New upstream release
+
+* Sat Oct 11 2014 Dan Horák <dan[at]danny.cz> - 1:2.72-3
+- fix size_t inconsistency (upstream issue T42183)
 
 * Thu Oct  9 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72-2
 - Remove OpenCOLLADA patch
