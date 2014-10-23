@@ -21,8 +21,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
-Release:        2%{?dist}
+Version:        %{blender_api}b
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -296,6 +296,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Oct 23 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72b-1
+- New upstream release
+
 * Thu Oct  9 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72-2
 - Remove OpenCOLLADA patch
 
