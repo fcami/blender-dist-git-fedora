@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}b
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -101,7 +101,7 @@ BuildRequires:  libspnav-devel
 BuildRequires:  fontpackages-devel
 
 Requires:         google-droid-sans-fonts
-Requires:         blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:         fonts-blender = %{?epoch:%{epoch}:}%{version}-%{release}
 
 Provides:         blender(ABI) = %{blender_api}
 
@@ -299,6 +299,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Nov  6 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72b-3
+- Fix odd dependy issue
+
 * Sun Nov  2 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72b-2
 - Fix dependency issue (#1157600)
 
