@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}b
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -299,6 +299,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> - 1:2.72b-4
+- rebuild (openexr)
+
 * Thu Nov  6 2014 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.72b-3
 - Fix odd dependy issue
 
