@@ -1,4 +1,4 @@
-%global blender_api 2.72
+%global blender_api 2.73
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -21,8 +21,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}b
-Release:        4%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -36,9 +36,7 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch2:         blender-2.68a-droid.patch
-# https://developer.blender.org/T42183
-Patch3:         blender-2.72-size_t.patch
+Patch2:         blender-2.73-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -150,7 +148,6 @@ sets.
 %setup -q
 
 %patch2 -p1 -b .droid
-%patch3 -p1 -b .size_t
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -299,6 +296,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Jan  8 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.73-1
+- New upstream release
+
 * Wed Nov 26 2014 Rex Dieter <rdieter@fedoraproject.org> - 1:2.72b-4
 - rebuild (openexr)
 
