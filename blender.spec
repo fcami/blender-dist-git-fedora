@@ -21,7 +21,7 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
+Version:        %{blender_api}a
 Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -296,6 +296,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Jan 21 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.73a-1
+- New minor bug-fixing release from upstream
+
 * Thu Jan  8 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.73-1
 - New upstream release
 
