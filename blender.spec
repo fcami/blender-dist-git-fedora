@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}a
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -251,6 +251,59 @@ mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
 cp -p release/datafiles/fonts/*.ttf.gz \
     ${RPM_BUILD_ROOT}%{blender_fontdir}/
 
+# Register as an application to be visible in the software center
+#
+# NOTE: It would be *awesome* if this file was maintained by the upstream
+# project, translated and installed into the right place during `make install`.
+#
+# See http://www.freedesktop.org/software/appstream/docs/ for more details.
+#
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
+cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
+<!--
+BugReportURL: Long discussions with sergey on #blendercoders
+BugReportURL: http://lists.blender.org/pipermail/bf-committers/2014-September/044217.html
+SentUpstream: 2014-09-23
+-->
+<application>
+  <id type="desktop">blender.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <description>
+    <p>
+      Blender provides a broad spectrum of modeling, texturing, lighting,
+      animation and video post-processing functionality in one package.
+      Through its open architecture, Blender provides cross-platform
+      interoperability, extensibility, an incredibly small footprint, and a
+      tightly integrated workflow.
+      Blender is one of the most popular Open Source 3D graphics applications in
+      the world.
+    </p>
+    <p>
+      Aimed at media professionals and artists world-wide, Blender can be used
+      to create 3D visualizations and still images, as well as broadcast- and
+      cinema-quality videos, while the incorporation of a real-time 3D engine
+      allows for the creation of 3D interactive content for stand-alone
+      playback.
+    </p>
+  </description>
+  <url type="homepage">http://www.blender.org/</url>
+  <screenshots>
+    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/a.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/b.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/c.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/d.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/e.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/f.png</screenshot>
+    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/g.png</screenshot>
+  </screenshots>
+  <!-- FIXME: change this to an upstream email address for spec updates
+  <updatecontact>someone_who_cares@upstream_project.org</updatecontact>
+   -->
+</application>
+EOF
+
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
 /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
@@ -272,6 +325,7 @@ fi
 %files
 %defattr(-,root,root,-)
 %{_bindir}/blender
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/blender.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
 %{_libdir}/blender/
@@ -296,6 +350,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Mar 26 2015 Richard Hughes <rhughes@redhat.com> - 1:2.73a-5
+- Add an AppData file for the software center
+
 * Wed Feb 04 2015 Petr Machata <pmachata@redhat.com> - 1:2.73a-4
 - Bump for rebuild.
 
