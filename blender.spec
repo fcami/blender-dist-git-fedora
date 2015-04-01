@@ -1,4 +1,4 @@
-%global blender_api 2.73
+%global blender_api 2.74
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -21,8 +21,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
-Release:        5%{?dist}
+Version:        %{blender_api}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -350,6 +350,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Apr  1 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-1
+- New upstream release
+
 * Thu Mar 26 2015 Richard Hughes <rhughes@redhat.com> - 1:2.73a-5
 - Add an AppData file for the software center
 
