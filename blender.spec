@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -182,7 +182,8 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_PYTHON_SAFETY=ON \
  -DWITH_PLAYER=ON \
  -DWITH_MEM_JEMALLOC=ON \
- -DBOOST_ROOT=%{_prefix}
+ -DBOOST_ROOT=%{_prefix} \
+ -DWITH_INPUT_NDOF=ON
 
 
 make VERBOSE=1 # %{?_smp_mflags}
@@ -350,6 +351,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon May  4 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-3
+- Enable 3D mice support
+
 * Sun May 03 2015 Kalev Lember <kalevlember@gmail.com> - 1:2.74-2
 - Rebuilt for GCC 5 C++11 ABI change
 
