@@ -22,13 +22,14 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        3%{?dist}
+Release:        4%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
 Group:          Applications/Multimedia
 License:        GPLv2
 URL:            http://www.blender.org
+
 
 Source0:        http://download.blender.org/source/blender-%{version}.tar.gz
 Source1:        blenderplayer.1
@@ -37,6 +38,9 @@ Source5:        blender.xml
 Source10:       macros.blender
 
 Patch2:         blender-2.73-droid.patch
+
+# Regression patch taken from upstream
+Patch100:       blender-2.74-reg.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -148,6 +152,8 @@ sets.
 %setup -q
 
 %patch2 -p1 -b .droid
+
+%patch100 -p1
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -351,6 +357,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue May  5 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-4
+- Fix regression for 3D mice support
+
 * Mon May  4 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-3
 - Enable 3D mice support
 
