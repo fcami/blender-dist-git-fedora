@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -102,8 +102,13 @@ BuildRequires:  libspnav-devel
 
 BuildRequires:  fontpackages-devel
 
+BuildRequires:  python3-numpy
+
 Requires:         google-droid-sans-fonts
 Requires:         fonts-blender = %{?epoch:%{epoch}:}%{version}-%{release}
+
+
+Requires:         python3-numpy
 
 Provides:         blender(ABI) = %{blender_api}
 
@@ -357,6 +362,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sat May 16 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-5
+- Add dependency to numpy (#1222122I
+
 * Tue May  5 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-4
 - Fix regression for 3D mice support
 
