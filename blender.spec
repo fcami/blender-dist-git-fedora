@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        5%{?dist}
+Release:        6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -362,6 +362,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.74-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Sat May 16 2015 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.74-5
 - Add dependency to numpy (#1222122I
 
