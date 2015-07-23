@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        2%{?dist}
+Release:        3%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -87,7 +87,6 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  libsamplerate-devel
 BuildRequires:  libao-devel
 BuildRequires:  libsndfile-devel
-BuildRequires:  esound-devel
 BuildRequires:  freealut-devel
 BuildRequires:  jack-audio-connection-kit-devel
 
@@ -357,6 +356,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Jul 23 2015 Peter Robinson <pbrobinson@fedoraproject.org> 1:2.75-3
+- Drop esound dep
+
 * Wed Jul 22 2015 David Tardon <dtardon@redhat.com> - 1:2.75-2
 - rebuild for Boost 1.58
 
