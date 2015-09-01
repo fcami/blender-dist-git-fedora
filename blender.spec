@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        5%{?dist}
+Release:        6%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -356,6 +356,9 @@ fi
 %doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Sep 01 2015 Jonathan Wakely <jwakely@redhat.com> - 1:2.75-6
+- Rebuilt for jemalloc-4.0.0
+
 * Thu Aug 27 2015 Jonathan Wakely <jwakely@redhat.com> - 1:2.75-5
 - Rebuilt for Boost 1.59
 
