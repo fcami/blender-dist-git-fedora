@@ -1,4 +1,4 @@
-%global blender_api 2.75
+%global blender_api 2.76
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        6%{?dist}
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -37,7 +37,7 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch2:         blender-2.73-droid.patch
+Patch0:         blender-2.76-droid.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -45,7 +45,7 @@ BuildRequires:  libtool
 BuildRequires:  openssl-devel
 BuildRequires:  python3-devel >= 3.4
 BuildRequires:  cmake
-BuildRequires:  SDL-devel
+BuildRequires:  SDL2-devel
 BuildRequires:  expat-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libxml2-devel
@@ -99,12 +99,14 @@ BuildRequires:  libspnav-devel
 BuildRequires:  fontpackages-devel
 
 BuildRequires:  python3-numpy
+BuildRequires:  python3-requests
 
 Requires:         google-droid-sans-fonts
 Requires:         fonts-blender = %{?epoch:%{epoch}:}%{version}-%{release}
 
 
 Requires:         python3-numpy
+Requires:         python3-requests
 
 Provides:         blender(ABI) = %{blender_api}
 
@@ -151,8 +153,7 @@ sets.
 
 %prep
 %setup -q
-
-%patch2 -p1 -b .droid
+%patch0 -p1 -b .droid
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -188,7 +189,8 @@ cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
  -DWITH_PLAYER=ON \
  -DWITH_MEM_JEMALLOC=ON \
  -DBOOST_ROOT=%{_prefix} \
- -DWITH_INPUT_NDOF=ON
+ -DWITH_INPUT_NDOF=ON \
+ -DWITH_SDL:BOOL=ON
 
 
 make VERBOSE=1 # %{?_smp_mflags}
@@ -329,7 +331,6 @@ fi
 /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
 %files
-%defattr(-,root,root,-)
 %{_bindir}/blender
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/blender.desktop
@@ -338,24 +339,26 @@ fi
 %{_datadir}/blender/
 %{_datadir}/mime/packages/blender.xml
 %{_mandir}/man1/blender.*
-%doc COPYING doc/license/*-license.txt 
+%license COPYING doc/license/*-license.txt
 
 %files -n blenderplayer
-%defattr(-,root,root,-)
 %{_bindir}/blenderplayer
 %{_mandir}/man1/blenderplayer.*
-%doc COPYING doc/license/*-license.txt
+%license COPYING doc/license/*-license.txt
 
 %files rpm-macros
-%defattr(-,root,root,-)
 %{macrosdir}/macros.blender
 
 %files -n fonts-blender
-%defattr(-,root,root,-)
 %{blender_fontdir}/
-%doc release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
+%license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Oct 12 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:2.76-1
+- Update to 2.76
+- Clean up specfile
+- Enable SDL2
+
 * Tue Sep 01 2015 Jonathan Wakely <jwakely@redhat.com> - 1:2.75-6
 - Rebuilt for jemalloc-4.0.0
 
