@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -354,6 +354,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.76-2
+- Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
+
 * Mon Oct 12 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:2.76-1
 - Update to 2.76
 - Clean up specfile
