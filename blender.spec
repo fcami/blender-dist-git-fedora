@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        4%{?dist}
+Release:        5%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -354,6 +354,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Jan 25 2016 Jochen Schmitt <Jochen herr-schmitt de> - 1:2.76-5
+- Rebuilt to fix dep. issues
+
 * Thu Jan 14 2016 Adam Jackson <ajax@redhat.com> - 1:2.76-4
 - Rebuild for glew 1.13
 
