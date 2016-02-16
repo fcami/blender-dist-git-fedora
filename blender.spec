@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        6%{?dist}
+Release:        7%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -354,6 +354,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Feb 16 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.76-7
+- Rebuild for updated openCOLLADA.
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:2.76-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
