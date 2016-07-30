@@ -1,4 +1,4 @@
-%global blender_api 2.76
+%global blender_api 2.77
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -21,8 +21,8 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}
-Release:        7%{?dist}
+Version:        %{blender_api}a
+Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -37,9 +37,9 @@ Source5:        blender.xml
 
 Source10:       macros.blender
 
-Patch0:         blender-2.76-droid.patch
+#Patch0:         blender-2.76-droid.patch
 # Patch for GCC 6 narrowing conversion error
-Patch1:         blender-gcc6.patch
+#Patch1:         blender-gcc6.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
@@ -154,9 +154,9 @@ a composition of several mono space fonts to cover several character
 sets.
 
 %prep
-%setup -q
-%patch0 -p1 -b .droid
-%patch1 -p1 -b .gcc6
+%autosetup
+#%%patch0 -p1 -b .droid
+#%%patch1 -p1 -b .gcc6
 
 find -name '.svn' -print | xargs rm -rf
 
@@ -200,7 +200,8 @@ make VERBOSE=1 # %{?_smp_mflags}
 
 %install
 cd cmake-make
-make install DESTDIR=${RPM_BUILD_ROOT}
+#make install DESTDIR=${RPM_BUILD_ROOT}
+%make_install
 cd ..
 
 #
@@ -357,6 +358,10 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Fri Jul 29 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.77a-1
+- New upstream release
+- Drop patches
+
 * Tue Feb 16 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.76-7
 - Rebuild for updated openCOLLADA.
 - Add patch for GCC 6 issues.
@@ -1110,7 +1115,7 @@ fi
 * Mon Feb  6 2006 Jochen Schmitt <Jochen herr-schmitt.de> 2.41-2
 - Add freealut as dependancy.
 
-* Sun Jan 30 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-1
+* Sun Jan 29 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.41-1
 - Update to new upstream release.
 
 * Wed Jan 18 2006 Jochen Schmitt <Jochen herr-schmitt de> 2.40-2
@@ -1138,7 +1143,7 @@ fi
 - Update to 2.36.
 - Rebuild with new gcc4.
 
-* Fri Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
+* Thu Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
 - rebuilt
 
 * Mon Nov 15 2004 Phillip Compton <pcompton[AT]proteinmedia.com> 2.35-1
