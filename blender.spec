@@ -1,4 +1,4 @@
-%global blender_api 2.77
+%global blender_api 2.78
 %global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
@@ -21,7 +21,7 @@
 
 Name:           blender
 Epoch:          1
-Version:        %{blender_api}a
+Version:        %{blender_api}
 Release:        1%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
@@ -51,6 +51,7 @@ BuildRequires:  SDL2-devel
 BuildRequires:  expat-devel
 BuildRequires:  pcre-devel
 BuildRequires:  libxml2-devel
+BuildRequires:	pugixml-devel
 BuildRequires:  boost-devel
 BuildRequires:  jemalloc-devel
 
@@ -200,7 +201,6 @@ make VERBOSE=1 # %{?_smp_mflags}
 
 %install
 cd cmake-make
-#make install DESTDIR=${RPM_BUILD_ROOT}
 %make_install
 cd ..
 
@@ -208,60 +208,60 @@ cd ..
 # Create empty %%{_libdir}/blender/scripts to claim ownership
 #
 
-mkdir -p ${RPM_BUILD_ROOT}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
+mkdir -p %{buildroot}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
 
 find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
 
-cp -R -a -p release/scripts/* ${RPM_BUILD_ROOT}%{blenderlib}/scripts
+cp -R -a -p release/scripts/* %{buildroot}%{blenderlib}/scripts
 
-find ${RPM_BUILD_ROOT}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
+find %{buildroot}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
 for i in 16x16 22x22 32x32 48x48 256x256 ; do
-  mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps
+  mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${i}/apps
   install -pm 0644 release/freedesktop/icons/${i}/apps/%{name}.png \
-    ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
+    %{buildroot}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
 done
 
-mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
-    ${RPM_BUILD_ROOT}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
-install -p -D -m 644 %{SOURCE5} ${RPM_BUILD_ROOT}%{_datadir}/mime/packages/blender.xml
+install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/blender.xml
 
-desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/blender.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/blender.desktop
 
 # Plugins are not support now
-rm -rf ${RPM_BUILD_ROOT}%{blenderarch}/plugins/*
+rm -rf %{buildroot}%{blenderarch}/plugins/*
 
 #
 # man page
 #
 
-mkdir -p ${RPM_BUILD_ROOT}/%{_mandir}/man1
-%__python doc/manpage/blender.1.py $RPM_BUILD_ROOT%{_bindir}/blender ${RPM_BUILD_ROOT}%{_mandir}/man1/blender.1
-install -p -D -m 644 %{SOURCE1} ${RPM_BUILD_ROOT}%{_mandir}/man1/
+mkdir -p %{buildroot}/%{_mandir}/man1
+%__python doc/manpage/blender.1.py $RPM_BUILD_ROOT%{_bindir}/blender %{buildroot}%{_mandir}/man1/blender.1
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_mandir}/man1/
 
-rm -rf ${RPM_BUILD_ROOT}%{_bindir}/blender-thumbnailer.py
+rm -rf %{buildroot}%{_bindir}/blender-thumbnailer.py
 
-rm -rf ${RPM_BUILD_ROOT}%{_docdir}/blender/*
+rm -rf %{buildroot}%{_docdir}/blender/*
 
-cp -aR release/datafiles/locale ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/
+cp -aR release/datafiles/locale %{buildroot}/%{blenderlib}/datafiles/
 
-rm -rf ${RPM_BUILD_ROOT}/%{blenderlib}/datafiles/fonts
+rm -rf %{buildroot}/%{blenderlib}/datafiles/fonts
 
 #
 # rpm macros
 #
 
-mkdir -p ${RPM_BUILD_ROOT}%{macrosdir}
+mkdir -p %{buildroot}%{macrosdir}
 
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
-     >${RPM_BUILD_ROOT}%{macrosdir}/macros.blender
+     >%{buildroot}%{macrosdir}/macros.blender
 
-mkdir -p ${RPM_BUILD_ROOT}/%{blender_fontdir}/
+mkdir -p %{buildroot}/%{blender_fontdir}/
 cp -p release/datafiles/fonts/*.ttf.gz \
-    ${RPM_BUILD_ROOT}%{blender_fontdir}/
+    %{buildroot}%{blender_fontdir}/
 
 # Register as an application to be visible in the software center
 #
@@ -358,7 +358,11 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
-* Fri Jul 29 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.77a-1
+* Thu Sep 29 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78-1
+- New upstream release
+- Added pugixml as dependency
+
+* Fri Jul 29 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.77a-1
 - New upstream release
 - Drop patches
 
