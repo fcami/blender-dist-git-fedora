@@ -22,7 +22,7 @@
 Name:           blender
 Epoch:          1
 Version:        %{blender_api}
-Release:        1%{?dist}
+Release:        2%{?dist}
 
 Summary:        3D modeling, animation, rendering and post-production
 
@@ -358,6 +358,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Oct 03 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.78-2
+- Rebuild for new OpenImageIO release.
+
 * Thu Sep 29 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78-1
 - New upstream release
 - Added pugixml as dependency
