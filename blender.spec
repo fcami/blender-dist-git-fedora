@@ -9,7 +9,7 @@
 %global __python %{__python3}
 %global pyver %(%{__python} -c "import sys ; print(sys.version[:3])")
 
-%global fontname blender
+%global fontname blender-fonts
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
@@ -19,99 +19,90 @@
 %global cyclesflag OFF
 %endif
 
-Name:           blender
-Epoch:          1
-Version:        %{blender_api}
-Release:        2%{?dist}
+Name:		blender
+Epoch:		1
+Version:	%{blender_api}
+Release:	3%{?dist}
 
-Summary:        3D modeling, animation, rendering and post-production
-
-Group:          Applications/Multimedia
-License:        GPLv2
-URL:            http://www.blender.org
+Summary:	3D modeling, animation, rendering and post-production
+License:	GPLv2
+URL:		http://www.blender.org
 
 
-Source0:        http://download.blender.org/source/blender-%{version}.tar.gz
-Source1:        blenderplayer.1
-Source5:        blender.xml
+Source0:	http://download.%{name}.org/source/%{name}-%{version}.tar.gz
+Source1:	%{name}player.1
+Source2:	%{fontname}.metainfo.xml
+Source5:	%{name}.xml
+Source10:	macros.%{name}
+#Patch0:		blender-2.78-locales-directory.patch
 
-Source10:       macros.blender
-
-#Patch0:         blender-2.76-droid.patch
-# Patch for GCC 6 narrowing conversion error
-#Patch1:         blender-gcc6.patch
-
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
-BuildRequires:  libtool
-BuildRequires:  openssl-devel
-BuildRequires:  python3-devel >= 3.4
-BuildRequires:  cmake
-BuildRequires:  SDL2-devel
-BuildRequires:  expat-devel
-BuildRequires:  pcre-devel
-BuildRequires:  libxml2-devel
+# Development stuff
+BuildRequires:	boost-devel
+BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
+BuildRequires:	expat-devel
+BuildRequires:	gettext
+BuildRequires:	jemalloc-devel
+BuildRequires:	libtool
+BuildRequires:	libspnav-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	openssl-devel
+BuildRequires:	pcre-devel
 BuildRequires:	pugixml-devel
-BuildRequires:  boost-devel
-BuildRequires:  jemalloc-devel
+BuildRequires:	python3-devel >= 3.5
+BuildRequires:	python3-numpy
+BuildRequires:	python3-requests
+BuildRequires:	subversion-devel
 
 # Compression stuff
-BuildRequires:  xz-devel
-BuildRequires:  zlib-devel
+BuildRequires:	xz-devel
+BuildRequires:	zlib-devel
 
-BuildRequires:  libXi-devel
-BuildRequires:  xorg-x11-proto-devel
-BuildRequires:  libGL-devel
-BuildRequires:  libGLU-devel
-BuildRequires:  freetype-devel
-BuildRequires:  OpenEXR-devel
-BuildRequires:  glew-devel
-BuildRequires:  freeglut-devel
+# 3D modeling stuff
+BuildRequires:	fftw-devel
+BuildRequires:	ftgl-devel
+BuildRequires:	glew-devel
+BuildRequires:	freeglut-devel
+BuildRequires:	libGL-devel
+BuildRequires:	libGLU-devel
+BuildRequires:	libXi-devel
+BuildRequires:	openCOLLADA-devel >= svn825
+BuildRequires:	ode-devel
+BuildRequires:	SDL2-devel
+BuildRequires:	xorg-x11-proto-devel
 
-BuildRequires:  fftw-devel
-BuildRequires:  ftgl-devel
-BuildRequires:  ode-devel
-BuildRequires:  openjpeg-devel
-BuildRequires:  qhull-devel
-
-# Picture/Vidoe stuff
-BuildRequires:  libjpeg-devel
-BuildRequires:  openjpeg-devel
-BuildRequires:  libjpeg-turbo-devel
-BuildRequires:  libogg-devel
-BuildRequires:  libtheora-devel
-BuildRequires:  libvorbis-devel
-BuildRequires:  libpng-devel
-BuildRequires:  libtiff-devel
-BuildRequires:  OpenImageIO-devel
-BuildRequires:  OpenColorIO-devel
+# Picture/Video stuff
+BuildRequires:	libjpeg-turbo-devel
+BuildRequires:	libpng-devel
+BuildRequires:	libtheora-devel
+BuildRequires:	libtiff-devel
+BuildRequires:	OpenColorIO-devel
+BuildRequires:	OpenEXR-devel
+BuildRequires:	OpenImageIO-devel
+BuildRequires:	openjpeg-devel
 
 # Audio stuff
-BuildRequires:  libsamplerate-devel
-BuildRequires:  libao-devel
-BuildRequires:  libsndfile-devel
-BuildRequires:  freealut-devel
-BuildRequires:  jack-audio-connection-kit-devel
+BuildRequires:	freealut-devel
+BuildRequires:	jack-audio-connection-kit-devel
+BuildRequires:	libao-devel
+BuildRequires:	libogg-devel
+BuildRequires:	libsamplerate-devel
+BuildRequires:	libsndfile-devel
+BuildRequires:	libvorbis-devel
 
-BuildRequires:  openCOLLADA-devel >= svn825
+# Typography stuff
+BuildRequires:	fontpackages-devel
+BuildRequires:	freetype-devel
 
-BuildRequires:  subversion-devel
+# Appstream stuff
+BuildRequires:	libappstream-glib
 
-BuildRequires:  libspnav-devel
-
-BuildRequires:  fontpackages-devel
-
-BuildRequires:  python3-numpy
-BuildRequires:  python3-requests
-
-Requires:         google-droid-sans-fonts
-Requires:         fonts-blender = %{?epoch:%{epoch}:}%{version}-%{release}
-
-
-Requires:         python3-numpy
-Requires:         python3-requests
-
-Provides:         blender(ABI) = %{blender_api}
+Requires:	google-droid-sans-fonts
+Requires:	%{fontname} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	fontpackages-filesystem
+Requires:	python3-numpy
+Requires:	python3-requests
+Provides:	blender(ABI) = %{blender_api}
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -121,10 +112,8 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %package -n blenderplayer
-Summary:       Standalone blender player
-Group:         Applications/Multimedia
-
-Provides:      blender(ABI) = %{blender_api}
+Summary:	Standalone blender player
+Provides:	blender(ABI) = %{blender_api}
 
 %description -n blenderplayer
 This package contains a stand alone release of the blender player.
@@ -132,88 +121,94 @@ You will need this package to play games which are based on the
 Blender Game Engine.
 
 %package rpm-macros
-Summary:       RPM macros to build third-party blender addons packages
-Group:         Development/Tools
-BuildArch:     noarch
+Summary:	RPM macros to build third-party blender addons packages
+BuildArch:	noarch
 
 %description rpm-macros
 This package provides rpm macros to support the creation of third-party
 addon packages to extend blender.
 
-%package -n fonts-blender
-Summary:       International blender mono space font
-Group:         User Interface/X
-License:       ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
-BuildArch:     noarch
+%package -n %{fontname}
+Summary:	International blender mono space font
+License:	ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
+BuildArch:	noarch
 
-Provides:      blender-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:     blender-fonts <= 2.48a-9
+Provides:	%{fontname} = %{?epoch:%{epoch}:}%{version}-%{release}
+Obsoletes:	fonts-%{name} <= 2.78-2
 
-%description -n fonts-blender
+%description -n %{fontname}
 This package contains an international blender mono space font which is
 a composition of several mono space fonts to cover several character
 sets.
 
 %prep
-%autosetup
-#%%patch0 -p1 -b .droid
-#%%patch1 -p1 -b .gcc6
+%autosetup 
+#Fix path for international fonts. thanks ignatenkobrain
+sed -e 's|BKE_appdir_folder_id(BLENDER_DATAFILES, "fonts")|"/usr/share/fonts"|g' \
+	source/%{name}/blenfont/intern/blf_font_i18n.c
+#sed -e 's|DESTINATION ${TARGETDIR_VER}/datafiles|DESTINATION ${CMAKE_INSTALL_PREFIX}/share/locale|g' \
+#	source/creator/CMakeLists.txt
+#sed -e 's|${TARGETDIR_VER}/datafiles/locale)|${CMAKE_INSTALL_PREFIX}/share/locale)|g' \
+#	source/creator/CMakeLists.txt
+sed -e 's|BLI_get_folder(BLENDER_DATAFILES, "locale")|"/usr/share/locale"|g' \
+	source/%{name}/blentranslation/intern/blt_lang.c
 
-find -name '.svn' -print | xargs rm -rf
+mkdir cmake-make
 
 %build
-mkdir cmake-make
-cd cmake-make
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing"
+pushd cmake-make
+export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing -std=c++11"
 export CXXFLAGS="$CFLAGS"
 cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
   -DWITH_RAYOPTIMIZATION=OFF \
 %endif
- -DCMAKE_SKIP_RPATH=ON \
  -DBUILD_SHARED_LIBS=OFF \
- -DWITH_FFTW3:BOOL=ON \
- -DWITH_JACK:BOOL=ON \
- -DWITH_CODEC_SNDFILE:BOOL=ON \
- -DWITH_IMAGE_OPENJPEG:BOOL=ON \
- -DWITH_OPENCOLLADA:BOOL=ON \
- -DWITH_CYCLES:BOOL=%{cyclesflag} \
- -DWITH_FFTW3:BOOL=ON \
- -DWITH_MOD_OCEANSIM:BOOL=ON \
+ -DWITH_BUILDINFO=OFF \
+ -DWITH_FFTW3=ON \
+ -DWITH_JACK=ON \
+ -DWITH_CODEC_SNDFILE=ON \
+ -DWITH_IMAGE_OPENJPEG=ON \
+ -DWITH_OPENCOLLADA=ON \
+ -DWITH_OPENCOLORIO=ON \
+ -DWITH_CODEC_SNDFILE=ON \
+ -DWITH_CYCLES=%{cyclesflag} \
+ -DWITH_MOD_OCEANSIM=ON \
  -DOPENCOLLADA=%{_includedir} \
- -DWITH_PYTHON:BOOL=ON \
- -DPYTHON_VERSION:STRING=%{pyver} \
- -DWITH_PYTHON_INSTALL:BOOL=OFF \
- -DWITH_CODEC_FFMPEG:BOOL=OFF \
- -DWITH_GAMEENGINE:BOOL=ON \
- -DWITH_CXX_GUARDEDALLOC:BOOL=OFF \
- -DWITH_BUILTIN_GLEW=OFF \
+ -DWITH_PYTHON=ON \
+ -DPYTHON_VERSION=%{pyver} \
+ -DWITH_PYTHON_INSTALL=OFF \
+ -DWITH_PYTHON_INSTALL_REQUESTS=OFF \
+ -DWITH_CODEC_FFMPEG=OFF \
+ -DWITH_GAMEENGINE=ON \
+ -DWITH_CXX_GUARDEDALLOC=OFF \
+ -DWITH_BUILTIN_GLEW=ON \
  -DWITH_INSTALL_PORTABLE=OFF \
  -DWITH_PYTHON_SAFETY=ON \
  -DWITH_PLAYER=ON \
  -DWITH_MEM_JEMALLOC=ON \
  -DBOOST_ROOT=%{_prefix} \
  -DWITH_INPUT_NDOF=ON \
- -DWITH_SDL:BOOL=ON
+ -DWITH_SDL=ON \
+ -DWITH_SYSTEM_OPENJPEG=ON \
 
-
-make VERBOSE=1 # %{?_smp_mflags}
+	
+#make VERBOSE=1 # %%{?_smp_mflags}
+%make_build
+popd
 
 %install
-cd cmake-make
+pushd cmake-make
 %make_install
-cd ..
+popd
 
 #
 # Create empty %%{_libdir}/blender/scripts to claim ownership
 #
 
-mkdir -p %{buildroot}%{blenderarch}/{scripts,plugins/sequence,plugins/texture}
-
+mkdir -p %{buildroot}%{blenderarch}/{scripts,plugins/sequence,plugins/texture,datafiles}
 find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
-
 cp -R -a -p release/scripts/* %{buildroot}%{blenderlib}/scripts
-
 find %{buildroot}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Install hicolor icons.
@@ -227,41 +222,37 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
     %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
-install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/blender.xml
+# Mime support
+install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/%{name}.xml
 
-desktop-file-validate %{buildroot}%{_datadir}/applications/blender.desktop
+# Desktop icon
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # Plugins are not support now
 rm -rf %{buildroot}%{blenderarch}/plugins/*
 
-#
 # man page
-#
-
 mkdir -p %{buildroot}/%{_mandir}/man1
-%__python doc/manpage/blender.1.py $RPM_BUILD_ROOT%{_bindir}/blender %{buildroot}%{_mandir}/man1/blender.1
+%__python doc/manpage/%{name}.1.py %{buildroot}%{_bindir}/%{name} %{buildroot}%{_mandir}/man1/blender.1
 install -p -D -m 644 %{SOURCE1} %{buildroot}%{_mandir}/man1/
-
-rm -rf %{buildroot}%{_bindir}/blender-thumbnailer.py
-
-rm -rf %{buildroot}%{_docdir}/blender/*
-
+rm -rf %{buildroot}%{_bindir}/%{name}-thumbnailer.py
+rm -rf %{buildroot}%{_docdir}/%{name}/*
 cp -aR release/datafiles/locale %{buildroot}/%{blenderlib}/datafiles/
+rm -rf %{buildroot}/%{blenderlib}/datafiles/fonts/*
 
-rm -rf %{buildroot}/%{blenderlib}/datafiles/fonts
-
-#
 # rpm macros
-#
-
 mkdir -p %{buildroot}%{macrosdir}
-
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
-     >%{buildroot}%{macrosdir}/macros.blender
+     >%{buildroot}%{macrosdir}/macros.%{name}
 
-mkdir -p %{buildroot}/%{blender_fontdir}/
-cp -p release/datafiles/fonts/*.ttf.gz \
+# Fonts
+mkdir -p %{buildroot}%{blender_fontdir}
+install -m 0644 -p release/datafiles/fonts/* \
     %{buildroot}%{blender_fontdir}/
+cp -p  %{buildroot}%{blender_fontdir}/* \
+	%{buildroot}%{blenderlib}/datafiles/fonts
+install -Dm 0644 -p %{SOURCE2} \
+		%{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
 
 # Register as an application to be visible in the software center
 #
@@ -270,8 +261,8 @@ cp -p release/datafiles/fonts/*.ttf.gz \
 #
 # See http://www.freedesktop.org/software/appstream/docs/ for more details.
 #
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-cat > $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml <<EOF
+mkdir -p %{buildroot}%{_datadir}/appdata
+cat > %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
 <!--
@@ -316,6 +307,14 @@ SentUpstream: 2014-09-23
 </application>
 EOF
 
+# Localization
+%find_lang %{name}
+rm -fr %{buildroot}%{_datadir}/locale/languages
+
+%check
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
+
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
 /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
@@ -334,30 +333,36 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 
-%files
-%{_bindir}/blender
+%files -f %{name}.lang
+%{_bindir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
-%{_datadir}/applications/blender.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
-%{_libdir}/blender/
-%{_datadir}/blender/
-%{_datadir}/mime/packages/blender.xml
-%{_mandir}/man1/blender.*
+%{_libdir}/%{name}/
+%{_datadir}/%{name}/
+%{_datadir}/mime/packages/%{name}.xml
+%{_mandir}/man1/%{name}.*
 %license COPYING doc/license/*-license.txt
 
-%files -n blenderplayer
-%{_bindir}/blenderplayer
-%{_mandir}/man1/blenderplayer.*
+%files -n %{name}player
+%{_bindir}/%{name}player
+%{_mandir}/man1/%{name}player.*
 %license COPYING doc/license/*-license.txt
 
 %files rpm-macros
-%{macrosdir}/macros.blender
+%{macrosdir}/macros.%{name}
 
-%files -n fonts-blender
+%files -n %{fontname}
 %{blender_fontdir}/
+%{_datadir}/metainfo/%{fontname}.metainfo.xml
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Oct 20 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78-3
+- Added appdata for blender fonts
+- Fixed path for international fonts issue rhbz#1382428
+- Cleaned up and reworked spec file
+
 * Mon Oct 03 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.78-2
 - Rebuild for new OpenImageIO release.
 
