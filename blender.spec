@@ -21,8 +21,8 @@
 
 Name:		blender
 Epoch:		1
-Version:	%{blender_api}
-Release:	3%{?dist}
+Version:	%{blender_api}a
+Release:	1%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -358,6 +358,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Thu Oct 27 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-1
+- New upstream release with several bug fixes
+
 * Thu Oct 20 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78-3
 - Added appdata for blender fonts
 - Fixed path for international fonts issue rhbz#1382428
