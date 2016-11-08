@@ -22,7 +22,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	1%{?dist}
+Release:	2%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -134,7 +134,7 @@ License:	ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
 BuildArch:	noarch
 
 Provides:	%{fontname} = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	fonts-%{name} <= 2.78-2
+Obsoletes:	fonts-%{name} < 1:2.78-3
 
 %description -n %{fontname}
 This package contains an international blender mono space font which is
@@ -358,12 +358,15 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Nov 08 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-2
+- Corrected versioning of obsoleted fonts-blender (rhbz#1393006)
+
 * Thu Oct 27 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-1
 - New upstream release with several bug fixes
 
 * Thu Oct 20 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78-3
 - Added appdata for blender fonts
-- Fixed path for international fonts issue rhbz#1382428
+- Fixed path for international fonts issue (rhbz#1382428)
 - Cleaned up and reworked spec file
 
 * Mon Oct 03 2016 Richard Shaw <hobbes1069@gmail.com> - 1:2.78-2
