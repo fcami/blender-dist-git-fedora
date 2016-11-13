@@ -22,7 +22,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	2%{?dist}
+Release:	3%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -35,6 +35,9 @@ Source2:	%{fontname}.metainfo.xml
 Source5:	%{name}.xml
 Source10:	macros.%{name}
 #Patch0:		blender-2.78-locales-directory.patch
+# For ppc64le build, currently being discussed on
+# https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
+Patch1:		blender-2.78a-linux-definition-ppc64.patch
 
 # Development stuff
 BuildRequires:	boost-devel
@@ -142,7 +145,7 @@ a composition of several mono space fonts to cover several character
 sets.
 
 %prep
-%autosetup 
+%autosetup -p1
 #Fix path for international fonts. thanks ignatenkobrain
 sed -e 's|BKE_appdir_folder_id(BLENDER_DATAFILES, "fonts")|"/usr/share/fonts"|g' \
 	source/%{name}/blenfont/intern/blf_font_i18n.c
@@ -159,6 +162,13 @@ mkdir cmake-make
 pushd cmake-make
 export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing -std=c++11"
 export CXXFLAGS="$CFLAGS"
+
+%ifarch ppc64le
+# Disable altivec for now, bug 1393157
+# https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
+export CXXFLAGS="$CXXFLAGS -mno-altivec"
+%endif
+
 cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %ifnarch %{ix86} x86_64
   -DWITH_RAYOPTIMIZATION=OFF \
@@ -358,6 +368,11 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sat Nov 12 2016 Mamoru TASAKA <mtasaka@fedoraproject.org> - 1:2.78a-3
+- Disable altivec support on ppc64le for now to avoid "bool" being converted
+  (bug 1393157)
+- Use __linux__ , gcc does not define __linux on ppc (gcc bug 28314)
+
 * Tue Nov 08 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-2
 - Corrected versioning of obsoleted fonts-blender (rhbz#1393006)
 
