@@ -22,7 +22,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	3%{?dist}
+Release:	4%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -60,6 +60,7 @@ BuildRequires:	subversion-devel
 # Compression stuff
 BuildRequires:	xz-devel
 BuildRequires:	zlib-devel
+BuildRequires:	minizip-devel
 
 # 3D modeling stuff
 BuildRequires:	fftw-devel
@@ -368,6 +369,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Sat Dec 17 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-4
+- Add minizip dependency (rhbz#1398451)
+
 * Sat Nov 12 2016 Mamoru TASAKA <mtasaka@fedoraproject.org> - 1:2.78a-3
 - Disable altivec support on ppc64le for now to avoid "bool" being converted
   (bug 1393157)
