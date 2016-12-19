@@ -22,7 +22,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	4%{?dist}
+Release:	5%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -369,6 +369,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 1:2.78a-5
+- Rebuild for Python 3.6
+
 * Sat Dec 17 2016 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78a-4
 - Add minizip dependency (rhbz#1398451)
 
