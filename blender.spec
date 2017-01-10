@@ -22,7 +22,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	5%{?dist}
+Release:	6%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -369,6 +369,9 @@ fi
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
 
 %changelog
+* Tue Jan 10 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78a-6
+- rebuilt
+
 * Mon Dec 19 2016 Miro Hrončok <mhroncok@redhat.com> - 1:2.78a-5
 - Rebuild for Python 3.6
 
