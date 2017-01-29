@@ -11,103 +11,102 @@
 %global cyclesflag OFF
 %endif
 
-Name:		blender
-Epoch:		1
-Version:	%{blender_api}a
-Release:	8%{?dist}
+Name:       blender
+Epoch:      1
+Version:    %{blender_api}a
+Release:    8%{?dist}
 
-Summary:	3D modeling, animation, rendering and post-production
-License:	GPLv2
-URL:		http://www.blender.org
+Summary:    3D modeling, animation, rendering and post-production
+License:    GPLv2
+URL:        http://www.blender.org
 
+Source0:    http://download.%{name}.org/source/%{name}-%{version}.tar.gz
+Source1:    %{name}player.1
+Source2:    %{name}-fonts.metainfo.xml
+Source5:    %{name}.xml
+Source6:    %{name}.appdata.xml
+Source10:   macros.%{name}
 
-Source0:	http://download.%{name}.org/source/%{name}-%{version}.tar.gz
-Source1:	%{name}player.1
-Source2:	%{name}-fonts.metainfo.xml
-Source5:	%{name}.xml
-Source6:	%{name}.appdata.xml
-Source10:	macros.%{name}
-
-Patch0:         %{name}-2.76-droid.patch
-Patch1:         %{name}-2.78a-thumbnailer.patch
-Patch2:         %{name}-2.78a-scripts.patch
-Patch3:         %{name}-2.78a-locale.patch
-Patch4:         %{name}-2.78a-manpages.patch
-Patch5:         %{name}-2.78a-unversioned-system-path.patch
+Patch0:     %{name}-2.76-droid.patch
+Patch1:     %{name}-2.78a-thumbnailer.patch
+Patch2:     %{name}-2.78a-scripts.patch
+Patch3:     %{name}-2.78a-locale.patch
+Patch4:     %{name}-2.78a-manpages.patch
+Patch5:     %{name}-2.78a-unversioned-system-path.patch
 
 # For ppc64le build, currently being discussed on
 # https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
-Patch6:		%{name}-2.78a-linux-definition-ppc64.patch
+Patch6:     %{name}-2.78a-linux-definition-ppc64.patch
 
 # Development stuff
-BuildRequires:	boost-devel
-BuildRequires:	cmake
-BuildRequires:	desktop-file-utils
-BuildRequires:	expat-devel
-BuildRequires:	gettext
-BuildRequires:	git
-BuildRequires:	jemalloc-devel
-BuildRequires:	libtool
-BuildRequires:	libspnav-devel
-BuildRequires:	libxml2-devel
-BuildRequires:	openssl-devel
-BuildRequires:	pcre-devel
-BuildRequires:	pugixml-devel
-BuildRequires:	python3-devel >= 3.5
-BuildRequires:	python3-numpy
-BuildRequires:	python3-requests
-BuildRequires:	subversion-devel
+BuildRequires:  boost-devel
+BuildRequires:  cmake
+BuildRequires:  desktop-file-utils
+BuildRequires:  expat-devel
+BuildRequires:  gettext
+BuildRequires:  git
+BuildRequires:  jemalloc-devel
+BuildRequires:  libtool
+BuildRequires:  libspnav-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  openssl-devel
+BuildRequires:  pcre-devel
+BuildRequires:  pugixml-devel
+BuildRequires:  python3-devel >= 3.5
+BuildRequires:  python3-numpy
+BuildRequires:  python3-requests
+BuildRequires:  subversion-devel
 
 # Compression stuff
-BuildRequires:	xz-devel
-BuildRequires:	zlib-devel
-BuildRequires:	minizip-devel
+BuildRequires:  xz-devel
+BuildRequires:  zlib-devel
+BuildRequires:  minizip-devel
 
 # 3D modeling stuff
-BuildRequires:	fftw-devel
-BuildRequires:	ftgl-devel
-BuildRequires:	glew-devel
-BuildRequires:	freeglut-devel
-BuildRequires:	libGL-devel
-BuildRequires:	libGLU-devel
-BuildRequires:	libXi-devel
-BuildRequires:	openCOLLADA-devel >= svn825
-BuildRequires:	ode-devel
-BuildRequires:	SDL2-devel
-BuildRequires:	xorg-x11-proto-devel
+BuildRequires:  fftw-devel
+BuildRequires:  ftgl-devel
+BuildRequires:  glew-devel
+BuildRequires:  freeglut-devel
+BuildRequires:  libGL-devel
+BuildRequires:  libGLU-devel
+BuildRequires:  libXi-devel
+BuildRequires:  openCOLLADA-devel >= svn825
+BuildRequires:  ode-devel
+BuildRequires:  SDL2-devel
+BuildRequires:  xorg-x11-proto-devel
 
 # Picture/Video stuff
-BuildRequires:	libjpeg-turbo-devel
-BuildRequires:	libpng-devel
-BuildRequires:	libtheora-devel
-BuildRequires:	libtiff-devel
-BuildRequires:	OpenColorIO-devel
-BuildRequires:	OpenEXR-devel
-BuildRequires:	OpenImageIO-devel
-BuildRequires:	openjpeg-devel
+BuildRequires:  libjpeg-turbo-devel
+BuildRequires:  libpng-devel
+BuildRequires:  libtheora-devel
+BuildRequires:  libtiff-devel
+BuildRequires:  OpenColorIO-devel
+BuildRequires:  OpenEXR-devel
+BuildRequires:  OpenImageIO-devel
+BuildRequires:  openjpeg-devel
 
 # Audio stuff
-BuildRequires:	freealut-devel
-BuildRequires:	jack-audio-connection-kit-devel
-BuildRequires:	libao-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libsamplerate-devel
-BuildRequires:	libsndfile-devel
-BuildRequires:	libvorbis-devel
+BuildRequires:  freealut-devel
+BuildRequires:  jack-audio-connection-kit-devel
+BuildRequires:  libao-devel
+BuildRequires:  libogg-devel
+BuildRequires:  libsamplerate-devel
+BuildRequires:  libsndfile-devel
+BuildRequires:  libvorbis-devel
 
 # Typography stuff
-BuildRequires:	fontpackages-devel
-BuildRequires:	freetype-devel
+BuildRequires:  fontpackages-devel
+BuildRequires:  freetype-devel
 
 # Appstream stuff
-BuildRequires:	libappstream-glib
+BuildRequires:  libappstream-glib
 
-Requires:	google-droid-sans-fonts
-Requires:	%{name}-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
-Requires:	fontpackages-filesystem
-Requires:	python3-numpy
-Requires:	python3-requests
-Provides:	blender(ABI) = %{blender_api}
+Requires:       google-droid-sans-fonts
+Requires:       %{name}-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       fontpackages-filesystem
+Requires:       python3-numpy
+Requires:       python3-requests
+Provides:       blender(ABI) = %{blender_api}
 
 %description
 Blender is the essential software solution you need for 3D, from modeling,
@@ -117,33 +116,31 @@ Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
 %package -n blenderplayer
-Summary:	Standalone blender player
-Provides:	blender(ABI) = %{blender_api}
+Summary:        Standalone Blender player
+Provides:       %{name}(ABI) = %{blender_api}
 
 %description -n blenderplayer
-This package contains a stand alone release of the blender player.
-You will need this package to play games which are based on the
-Blender Game Engine.
+This package contains a stand alone release of the Blender player. You will need
+this package to play games which are based on the Blender Game Engine.
 
 %package rpm-macros
-Summary:	RPM macros to build third-party blender addons packages
-BuildArch:	noarch
+Summary:        RPM macros to build third-party blender addons packages
+BuildArch:      noarch
 
 %description rpm-macros
-This package provides rpm macros to support the creation of third-party
-addon packages to extend blender.
+This package provides rpm macros to support the creation of third-party addon
+packages to extend Blender.
 
 %package fonts
-Summary:	International blender mono space font
-License:	ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
-BuildArch:	noarch
-Provides:	fonts-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
-Obsoletes:	fonts-%{name} < 1:2.78-3
+Summary:        International Blender mono space font
+License:        ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
+BuildArch:      noarch
+Obsoletes:      fonts-%{name} < 1:2.78-3
+Provides:       fonts-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description fonts
-This package contains an international blender mono space font which is
-a composition of several mono space fonts to cover several character
-sets.
+This package contains an international Blender mono space font which is a
+composition of several mono space fonts to cover several character sets.
 
 %prep
 %autosetup -p1
@@ -192,7 +189,7 @@ cmake .. \
     -DWITH_PYTHON_SAFETY=ON \
     -DWITH_SDL=ON \
     -DWITH_SYSTEM_OPENJPEG=ON \
-	
+    
 #make VERBOSE=1 # %%{?_smp_mflags}
 %make_build
 popd
@@ -215,8 +212,7 @@ rm -rf %{buildroot}%{_docdir}/%{name}/*
 
 # rpm macros
 mkdir -p %{buildroot}%{macrosdir}
-sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
-     >%{buildroot}%{macrosdir}/macros.%{name}
+sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} > %{buildroot}%{macrosdir}/macros.%{name}
 
 # AppData
 install -p -m 644 -D %{SOURCE6} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
@@ -273,7 +269,8 @@ fi
 
 %changelog
 * Sun Jan 29 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-8
-- Use system locale directory for translations.
+- Use system locale directory for translations. This also removes the warning
+  about duplicate translations at package assembly time.
 - Do not use the Blender API version in the installation folder.
 - Install noarch components in /usr/share/blender.
 - Install blender-thumbnailer.py in the scripts directory instead of deleting it.
