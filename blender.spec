@@ -1,10 +1,7 @@
 %global blender_api 2.78
 
-# [Fedora] Turn off the brp-python-bytecompile script 
+# Turn off the brp-python-bytecompile script
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
-
-%global blenderlib  %{_datadir}/blender/%{blender_api}
-%global blenderarch %{_libdir}/blender/%{blender_api}
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
@@ -17,7 +14,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	7%{?dist}
+Release:	8%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -30,11 +27,17 @@ Source2:	%{name}-fonts.metainfo.xml
 Source5:	%{name}.xml
 Source6:	%{name}.appdata.xml
 Source10:	macros.%{name}
+
 Patch0:         %{name}-2.76-droid.patch
+Patch1:         %{name}-2.78a-thumbnailer.patch
+Patch2:         %{name}-2.78a-scripts.patch
+Patch3:         %{name}-2.78a-locale.patch
+Patch4:         %{name}-2.78a-manpages.patch
+Patch5:         %{name}-2.78a-unversioned-system-path.patch
+
 # For ppc64le build, currently being discussed on
 # https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
-Patch1:		blender-2.78a-linux-definition-ppc64.patch
-Patch4:         %{name}-2.77a-manpages.patch
+Patch6:		%{name}-2.78a-linux-definition-ppc64.patch
 
 # Development stuff
 BuildRequires:	boost-devel
@@ -145,9 +148,6 @@ sets.
 %prep
 %autosetup -p1
 
-sed -e 's|BLI_get_folder(BLENDER_DATAFILES, "locale")|"/usr/share/locale"|g' \
-	source/%{name}/blentranslation/intern/blt_lang.c
-
 mkdir cmake-make
 
 %build
@@ -202,13 +202,7 @@ pushd cmake-make
 %make_install
 popd
 
-#
-# Create empty %%{_libdir}/blender/scripts to claim ownership
-#
-
-mkdir -p %{buildroot}%{blenderarch}/{scripts,plugins/sequence,plugins/texture,datafiles}
-cp -R -a -p release/scripts/* %{buildroot}%{blenderlib}/scripts
-find %{buildroot}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
+find %{buildroot}%{_datadir}/%{name}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
 
 # Mime support
 install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/%{name}.xml
@@ -216,12 +210,8 @@ install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/%{name}.xm
 # Desktop icon
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
-# Plugins are not support now
-rm -rf %{buildroot}%{blenderarch}/plugins/*
-
-rm -rf %{buildroot}%{_bindir}/%{name}-thumbnailer.py
+# Deal with docs in the files section
 rm -rf %{buildroot}%{_docdir}/%{name}/*
-cp -aR release/datafiles/locale %{buildroot}/%{blenderlib}/datafiles/
 
 # rpm macros
 mkdir -p %{buildroot}%{macrosdir}
@@ -263,7 +253,6 @@ fi
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
-%{_libdir}/%{name}/
 %{_datadir}/%{name}/
 %{_datadir}/mime/packages/%{name}.xml
 %{_mandir}/man1/%{name}.*
@@ -283,6 +272,12 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sun Jan 29 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-8
+- Use system locale directory for translations.
+- Do not use the Blender API version in the installation folder.
+- Install noarch components in /usr/share/blender.
+- Install blender-thumbnailer.py in the scripts directory instead of deleting it.
+
 * Sun Jan 29 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-7
 - Split out main AppStream metadata in its own file, like the fonts subpackage.
 - Make sure rpmlint does not fail when checking the SPEC file.
