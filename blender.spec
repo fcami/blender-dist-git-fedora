@@ -1,15 +1,10 @@
 %global blender_api 2.78
-%global blender_fontdir %{_fontbasedir}/blender
 
 # [Fedora] Turn off the brp-python-bytecompile script 
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 %global blenderlib  %{_datadir}/blender/%{blender_api}
 %global blenderarch %{_libdir}/blender/%{blender_api}
-%global __python %{__python3}
-%global pyver %(%{__python} -c "import sys ; print(sys.version[:3])")
-
-%global fontname blender-fonts
 
 %global macrosdir %(d=%{_rpmconfigdir}/macros.d; [ -d $d ] || d=%{_sysconfdir}/rpm; echo $d)
 
@@ -22,7 +17,7 @@
 Name:		blender
 Epoch:		1
 Version:	%{blender_api}a
-Release:	6%{?dist}
+Release:	7%{?dist}
 
 Summary:	3D modeling, animation, rendering and post-production
 License:	GPLv2
@@ -31,13 +26,15 @@ URL:		http://www.blender.org
 
 Source0:	http://download.%{name}.org/source/%{name}-%{version}.tar.gz
 Source1:	%{name}player.1
-Source2:	%{fontname}.metainfo.xml
+Source2:	%{name}-fonts.metainfo.xml
 Source5:	%{name}.xml
+Source6:	%{name}.appdata.xml
 Source10:	macros.%{name}
-#Patch0:		blender-2.78-locales-directory.patch
+Patch0:         %{name}-2.76-droid.patch
 # For ppc64le build, currently being discussed on
 # https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
 Patch1:		blender-2.78a-linux-definition-ppc64.patch
+Patch4:         %{name}-2.77a-manpages.patch
 
 # Development stuff
 BuildRequires:	boost-devel
@@ -45,6 +42,7 @@ BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
 BuildRequires:	expat-devel
 BuildRequires:	gettext
+BuildRequires:	git
 BuildRequires:	jemalloc-devel
 BuildRequires:	libtool
 BuildRequires:	libspnav-devel
@@ -102,7 +100,7 @@ BuildRequires:	freetype-devel
 BuildRequires:	libappstream-glib
 
 Requires:	google-droid-sans-fonts
-Requires:	%{fontname} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:	%{name}-fonts = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:	fontpackages-filesystem
 Requires:	python3-numpy
 Requires:	python3-requests
@@ -132,28 +130,21 @@ BuildArch:	noarch
 This package provides rpm macros to support the creation of third-party
 addon packages to extend blender.
 
-%package -n %{fontname}
+%package fonts
 Summary:	International blender mono space font
 License:	ASL 2.0 and GPlv3 and Bitstream Vera and Public Domain
 BuildArch:	noarch
-
-Provides:	%{fontname} = %{?epoch:%{epoch}:}%{version}-%{release}
+Provides:	fonts-%{name} = %{?epoch:%{epoch}:}%{version}-%{release}
 Obsoletes:	fonts-%{name} < 1:2.78-3
 
-%description -n %{fontname}
+%description fonts
 This package contains an international blender mono space font which is
 a composition of several mono space fonts to cover several character
 sets.
 
 %prep
 %autosetup -p1
-#Fix path for international fonts. thanks ignatenkobrain
-sed -e 's|BKE_appdir_folder_id(BLENDER_DATAFILES, "fonts")|"/usr/share/fonts"|g' \
-	source/%{name}/blenfont/intern/blf_font_i18n.c
-#sed -e 's|DESTINATION ${TARGETDIR_VER}/datafiles|DESTINATION ${CMAKE_INSTALL_PREFIX}/share/locale|g' \
-#	source/creator/CMakeLists.txt
-#sed -e 's|${TARGETDIR_VER}/datafiles/locale)|${CMAKE_INSTALL_PREFIX}/share/locale)|g' \
-#	source/creator/CMakeLists.txt
+
 sed -e 's|BLI_get_folder(BLENDER_DATAFILES, "locale")|"/usr/share/locale"|g' \
 	source/%{name}/blentranslation/intern/blt_lang.c
 
@@ -161,8 +152,8 @@ mkdir cmake-make
 
 %build
 pushd cmake-make
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing -std=c++11"
-export CXXFLAGS="$CFLAGS"
+export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing"
+export CXXFLAGS="$CFLAGS -std=c++11"
 
 %ifarch ppc64le
 # Disable altivec for now, bug 1393157
@@ -170,39 +161,37 @@ export CXXFLAGS="$CFLAGS"
 export CXXFLAGS="$CXXFLAGS -mno-altivec"
 %endif
 
-cmake .. -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+cmake .. \
 %ifnarch %{ix86} x86_64
-  -DWITH_RAYOPTIMIZATION=OFF \
+    -DWITH_RAYOPTIMIZATION=OFF \
 %endif
- -DBUILD_SHARED_LIBS=OFF \
- -DWITH_BUILDINFO=OFF \
- -DWITH_FFTW3=ON \
- -DWITH_JACK=ON \
- -DWITH_CODEC_SNDFILE=ON \
- -DWITH_IMAGE_OPENJPEG=ON \
- -DWITH_OPENCOLLADA=ON \
- -DWITH_OPENCOLORIO=ON \
- -DWITH_CODEC_SNDFILE=ON \
- -DWITH_CYCLES=%{cyclesflag} \
- -DWITH_MOD_OCEANSIM=ON \
- -DOPENCOLLADA=%{_includedir} \
- -DWITH_PYTHON=ON \
- -DPYTHON_VERSION=%{pyver} \
- -DWITH_PYTHON_INSTALL=OFF \
- -DWITH_PYTHON_INSTALL_REQUESTS=OFF \
- -DWITH_CODEC_FFMPEG=OFF \
- -DWITH_GAMEENGINE=ON \
- -DWITH_CXX_GUARDEDALLOC=OFF \
- -DWITH_BUILTIN_GLEW=ON \
- -DWITH_INSTALL_PORTABLE=OFF \
- -DWITH_PYTHON_SAFETY=ON \
- -DWITH_PLAYER=ON \
- -DWITH_MEM_JEMALLOC=ON \
- -DBOOST_ROOT=%{_prefix} \
- -DWITH_INPUT_NDOF=ON \
- -DWITH_SDL=ON \
- -DWITH_SYSTEM_OPENJPEG=ON \
-
+    -DBOOST_ROOT=%{_prefix} \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
+    -DWITH_BUILDINFO=ON \
+    -DWITH_CODEC_SNDFILE=ON \
+    -DWITH_CXX_GUARDEDALLOC=OFF \
+    -DWITH_CYCLES=%{cyclesflag} \
+    -DWITH_DOC_MANPAGE=ON \
+    -DWITH_FFTW3=ON \
+    -DWITH_GAMEENGINE=ON \
+    -DWITH_IMAGE_OPENJPEG=ON \
+    -DWITH_INPUT_NDOF=ON \
+    -DWITH_INSTALL_PORTABLE=OFF \
+    -DWITH_JACK=ON \
+    -DWITH_MEM_JEMALLOC=ON \
+    -DWITH_MOD_OCEANSIM=ON \
+    -DWITH_OPENCOLLADA=ON \
+    -DWITH_OPENCOLORIO=ON \
+    -DWITH_PLAYER=ON \
+    -DWITH_PYTHON=ON \
+    -DWITH_PYTHON_INSTALL=OFF \
+    -DWITH_PYTHON_INSTALL_REQUESTS=OFF \
+    -DWITH_PYTHON_SAFETY=ON \
+    -DWITH_SDL=ON \
+    -DWITH_SYSTEM_OPENJPEG=ON \
 	
 #make VERBOSE=1 # %%{?_smp_mflags}
 %make_build
@@ -218,20 +207,8 @@ popd
 #
 
 mkdir -p %{buildroot}%{blenderarch}/{scripts,plugins/sequence,plugins/texture,datafiles}
-find release/datafiles/locale -name '.svn' -exec rm -f {} ';'
 cp -R -a -p release/scripts/* %{buildroot}%{blenderlib}/scripts
 find %{buildroot}%{blenderlib}/scripts -type f -exec sed -i -e 's/\r$//g' {} \;
-
-# Install hicolor icons.
-for i in 16x16 22x22 32x32 48x48 256x256 ; do
-  mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${i}/apps
-  install -pm 0644 release/freedesktop/icons/${i}/apps/%{name}.png \
-    %{buildroot}%{_datadir}/icons/hicolor/${i}/apps/%{name}.png
-done
-
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-install -pm 0644 release/freedesktop/icons/scalable/apps/%{name}.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 # Mime support
 install -p -D -m 644 %{SOURCE5} %{buildroot}%{_datadir}/mime/packages/%{name}.xml
@@ -242,81 +219,18 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 # Plugins are not support now
 rm -rf %{buildroot}%{blenderarch}/plugins/*
 
-# man page
-mkdir -p %{buildroot}/%{_mandir}/man1
-%__python doc/manpage/%{name}.1.py %{buildroot}%{_bindir}/%{name} %{buildroot}%{_mandir}/man1/blender.1
-install -p -D -m 644 %{SOURCE1} %{buildroot}%{_mandir}/man1/
 rm -rf %{buildroot}%{_bindir}/%{name}-thumbnailer.py
 rm -rf %{buildroot}%{_docdir}/%{name}/*
 cp -aR release/datafiles/locale %{buildroot}/%{blenderlib}/datafiles/
-rm -rf %{buildroot}/%{blenderlib}/datafiles/fonts/*
 
 # rpm macros
 mkdir -p %{buildroot}%{macrosdir}
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} \
      >%{buildroot}%{macrosdir}/macros.%{name}
 
-# Fonts
-mkdir -p %{buildroot}%{blender_fontdir}
-install -m 0644 -p release/datafiles/fonts/* \
-    %{buildroot}%{blender_fontdir}/
-cp -p  %{buildroot}%{blender_fontdir}/* \
-	%{buildroot}%{blenderlib}/datafiles/fonts
-install -Dm 0644 -p %{SOURCE2} \
-		%{buildroot}%{_datadir}/metainfo/%{fontname}.metainfo.xml
-
-# Register as an application to be visible in the software center
-#
-# NOTE: It would be *awesome* if this file was maintained by the upstream
-# project, translated and installed into the right place during `make install`.
-#
-# See http://www.freedesktop.org/software/appstream/docs/ for more details.
-#
-mkdir -p %{buildroot}%{_datadir}/appdata
-cat > %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml <<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2014 Richard Hughes <richard@hughsie.com> -->
-<!--
-BugReportURL: Long discussions with sergey on #blendercoders
-BugReportURL: http://lists.blender.org/pipermail/bf-committers/2014-September/044217.html
-SentUpstream: 2014-09-23
--->
-<application>
-  <id type="desktop">blender.desktop</id>
-  <metadata_license>CC0-1.0</metadata_license>
-  <description>
-    <p>
-      Blender provides a broad spectrum of modeling, texturing, lighting,
-      animation and video post-processing functionality in one package.
-      Through its open architecture, Blender provides cross-platform
-      interoperability, extensibility, an incredibly small footprint, and a
-      tightly integrated workflow.
-      Blender is one of the most popular Open Source 3D graphics applications in
-      the world.
-    </p>
-    <p>
-      Aimed at media professionals and artists world-wide, Blender can be used
-      to create 3D visualizations and still images, as well as broadcast- and
-      cinema-quality videos, while the incorporation of a real-time 3D engine
-      allows for the creation of 3D interactive content for stand-alone
-      playback.
-    </p>
-  </description>
-  <url type="homepage">http://www.blender.org/</url>
-  <screenshots>
-    <screenshot type="default">https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/a.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/b.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/c.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/d.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/e.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/f.png</screenshot>
-    <screenshot>https://raw.githubusercontent.com/hughsie/fedora-appstream/master/screenshots-extra/blender/g.png</screenshot>
-  </screenshots>
-  <!-- FIXME: change this to an upstream email address for spec updates
-  <updatecontact>someone_who_cares@upstream_project.org</updatecontact>
-   -->
-</application>
-EOF
+# AppData
+install -p -m 644 -D %{SOURCE6} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+install -p -m 644 -D %{SOURCE2} %{buildroot}%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
 
 # Localization
 %find_lang %{name}
@@ -324,7 +238,7 @@ rm -fr %{buildroot}%{_datadir}/locale/languages
 
 %check
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.appdata.xml
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{fontname}.metainfo.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
 
 %post
 /usr/bin/update-desktop-database &> /dev/null || :
@@ -363,12 +277,24 @@ fi
 %files rpm-macros
 %{macrosdir}/macros.%{name}
 
-%files -n %{fontname}
-%{blender_fontdir}/
-%{_datadir}/metainfo/%{fontname}.metainfo.xml
+%files fonts
 %license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
+%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
+%{_fontbasedir}/%{name}/
 
 %changelog
+* Sun Jan 29 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-7
+- Split out main AppStream metadata in its own file, like the fonts subpackage.
+- Make sure rpmlint does not fail when checking the SPEC file.
+- Simplify fonts packaging and fix font package rename upgrade.
+- Clean up build options (sorting, duplicates, obsolete options, etc.).
+- Enable buildinfo.
+- Remove manual installation of manpages and use CMake option.
+- Add blenderplayer man page.
+- Remove manual installation of icons, the install target is already installing
+  them in the same way.
+- Fix -std=c++11 warning during build.
+
 * Tue Jan 10 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78a-6
 - rebuilt
 
