@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}a
-Release:    8%{?dist}
+Release:    9%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -149,8 +149,6 @@ mkdir cmake-make
 
 %build
 pushd cmake-make
-export CFLAGS="$RPM_OPT_FLAGS -fPIC -funsigned-char -fno-strict-aliasing"
-export CXXFLAGS="$CFLAGS -std=c++11"
 
 %ifarch ppc64le
 # Disable altivec for now, bug 1393157
@@ -158,13 +156,12 @@ export CXXFLAGS="$CFLAGS -std=c++11"
 export CXXFLAGS="$CXXFLAGS -mno-altivec"
 %endif
 
-cmake .. \
+%cmake .. \
 %ifnarch %{ix86} x86_64
     -DWITH_RAYOPTIMIZATION=OFF \
 %endif
     -DBOOST_ROOT=%{_prefix} \
     -DBUILD_SHARED_LIBS=OFF \
-    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
     -DCMAKE_SKIP_RPATH=ON \
     -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
     -DWITH_BUILDINFO=ON \
@@ -227,22 +224,31 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.a
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
 
 %post
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
+%endif
 /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
 /bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
+%endif
 
 %postun
+%if 0%{?fedora} == 24 || 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-desktop-database &> /dev/null || :
+%endif
 if [ $1 -eq 0 ] ; then
-/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
-/bin/touch --no-create %{_datadir}/mime/packages &> /dev/null || :
-/usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
+    /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+%endif
 fi
 
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+%if 0%{?fedora} == 23 || 0%{?rhel} == 7
 /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
+%endif
 
 %files -f %{name}.lang
 %{_bindir}/%{name}
@@ -268,6 +274,12 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Mon Jan 30 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-9
+- Use cmake macro.
+- Remove redundant GCC options.
+- Update scriptlets as per packaging guidelines (mimeinfo only on RHEL 7 and
+  Fedora 23, desktop database only on RHEL 7, Fedora 23 and 24).
+
 * Sun Jan 29 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-8
 - Use system locale directory for translations. This also removes the warning
   about duplicate translations at package assembly time.
