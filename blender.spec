@@ -57,6 +57,7 @@ BuildRequires:  python3-requests
 BuildRequires:  subversion-devel
 
 # Compression stuff
+BuildRequires:  lzo-devel
 BuildRequires:  xz-devel
 BuildRequires:  zlib-devel
 BuildRequires:  minizip-devel
@@ -184,7 +185,8 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_PYTHON_INSTALL_REQUESTS=OFF \
     -DWITH_PYTHON_SAFETY=ON \
     -DWITH_SDL=ON \
-    -DWITH_SYSTEM_OPENJPEG=ON \
+    -DWITH_SYSTEM_LZO=ON \
+    -DWITH_SYSTEM_OPENJPEG=ON
     
 #make VERBOSE=1 # %%{?_smp_mflags}
 %make_build
@@ -280,6 +282,7 @@ fi
 %changelog
 * Wed Feb 01 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-10
 - Adjust files section.
+- Use system lzo.
 
 * Mon Jan 30 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-9
 - Use cmake macro.
