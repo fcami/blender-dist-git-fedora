@@ -14,14 +14,13 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}a
-Release:    9%{?dist}
+Release:    10%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
 URL:        http://www.blender.org
 
 Source0:    http://download.%{name}.org/source/%{name}-%{version}.tar.gz
-Source1:    %{name}player.1
 Source2:    %{name}-fonts.metainfo.xml
 Source5:    %{name}.xml
 Source6:    %{name}.appdata.xml
@@ -251,29 +250,37 @@ fi
 %endif
 
 %files -f %{name}.lang
+%license COPYING
+%license doc/license/*-license.txt
+%license release/text/copyright.txt
+%doc release/text/readme.html
 %{_bindir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.*
 %{_datadir}/%{name}/
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
 %{_datadir}/mime/packages/%{name}.xml
 %{_mandir}/man1/%{name}.*
-%license COPYING doc/license/*-license.txt
 
 %files -n %{name}player
+%license COPYING
+%license doc/license/*-license.txt
+%license release/text/copyright.txt
 %{_bindir}/%{name}player
 %{_mandir}/man1/%{name}player.*
-%license COPYING doc/license/*-license.txt
 
 %files rpm-macros
 %{macrosdir}/macros.%{name}
 
 %files fonts
-%license release/datafiles/LICENSE-bmonofont-i18n.ttf.txt
+%license release/datafiles/LICENSE-*.ttf.txt
 %{_datadir}/metainfo/%{name}-fonts.metainfo.xml
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Wed Feb 01 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-10
+- Adjust files section.
+
 * Mon Jan 30 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-9
 - Use cmake macro.
 - Remove redundant GCC options.
