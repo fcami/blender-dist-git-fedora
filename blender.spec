@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}a
-Release:    10%{?dist}
+Release:    11%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -280,6 +280,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Mon Feb 06 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-11
+- Update RPM macros.
+
 * Wed Feb 01 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-10
 - Adjust files section.
 - Use system lzo.
