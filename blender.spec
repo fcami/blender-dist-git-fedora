@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}a
-Release:    11%{?dist}
+Release:    12%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -280,6 +280,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Tue Feb 07 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78a-12
+- Add presets for RPM macros
+
 * Mon Feb 06 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78a-11
 - Update RPM macros.
 

@@ -3,3 +3,4 @@
 %blender_libdir %{_datadir}/blender
 %blender_archdir %{_libdir}/blender
 %blender_addons %{blender_libdir}/scripts/addons
+%blender_preset %{blender_libdir}/scripts/presets
