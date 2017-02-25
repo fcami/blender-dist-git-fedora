@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}b
-Release:    1%{?dist}
+Release:    2%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -36,6 +36,9 @@ Patch5:     %{name}-2.78a-unversioned-system-path.patch
 # For ppc64le build, currently being discussed on
 # https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
 Patch6:     %{name}-2.78a-linux-definition-ppc64.patch
+# GPU: Consider latest Gallium driver an official ATI/AMD
+# https://developer.blender.org/rB927a168b077fa5182168068315c4fb0ea998edb6
+Patch7:     %{name}-2.78-amd-gup-support.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -280,6 +283,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sat Feb 25 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78b-2
+- Patch for handling flickering UI on AMD GPUs (rhbz#1425146)
+
 * Thu Feb 09 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78b-1
 - New upstream release
 
