@@ -38,7 +38,7 @@ Patch5:     %{name}-2.78a-unversioned-system-path.patch
 Patch6:     %{name}-2.78a-linux-definition-ppc64.patch
 # GPU: Consider latest Gallium driver an official ATI/AMD
 # https://developer.blender.org/rB927a168b077fa5182168068315c4fb0ea998edb6
-Patch7:     %{name}-2.78-amd-gup-support.patch
+Patch7:     %{name}-2.78b-amd-gpu-support.patch
 
 # Development stuff
 BuildRequires:  boost-devel
