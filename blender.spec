@@ -13,8 +13,8 @@
 
 Name:       blender
 Epoch:      1
-Version:    %{blender_api}b
-Release:    2%{?dist}
+Version:    %{blender_api}c
+Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -283,6 +283,10 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Mon Feb 27 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78c-1
+- New upstream release
+- Add modules directory macro
+
 * Sat Feb 25 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78b-2
 - Patch for handling flickering UI on AMD GPUs (rhbz#1425146)
 
