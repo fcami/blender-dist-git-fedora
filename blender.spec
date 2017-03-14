@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
-Release:    1%{?dist}
+Release:    2%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -215,6 +215,7 @@ rm -rf %{buildroot}%{_docdir}/%{name}/*
 mkdir -p %{buildroot}%{macrosdir}
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} > %{buildroot}%{macrosdir}/macros.%{name}
 
+
 # AppData
 install -p -m 644 -D %{SOURCE6} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 install -p -m 644 -D %{SOURCE2} %{buildroot}%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
@@ -283,6 +284,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Mon Mar 06 2017 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78c-2
+- Restore broken international fonts support (rhbz#1429196)
+
 * Mon Feb 27 2017 Luya Tshimbalanga <luya_tfz@thefinalzone.net> - 1:2.78c-1
 - New upstream release
 - Add modules directory macro
