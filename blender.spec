@@ -14,7 +14,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
-Release:    2%{?dist}
+Release:    3%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -284,6 +284,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Fri Apr 21 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-3
+- Remove redundant fonts directory in blender-fonts package.
+
 * Mon Mar 06 2017 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78c-2
 - Restore broken international fonts support (rhbz#1429196)
 
