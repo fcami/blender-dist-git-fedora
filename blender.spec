@@ -11,6 +11,10 @@
 %global cyclesflag OFF
 %endif
 
+# Enable this or rebuild the package with "--with=ffmpeg" to enable FFmpeg
+# support
+#global _with_ffmpeg 1
+
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
@@ -79,6 +83,9 @@ BuildRequires:  SDL2-devel
 BuildRequires:  xorg-x11-proto-devel
 
 # Picture/Video stuff
+%{?_with_ffmpeg:
+BuildRequires:  ffmpeg-devel
+}
 BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  libpng-devel
 BuildRequires:  libtheora-devel
@@ -168,6 +175,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DCMAKE_SKIP_RPATH=ON \
     -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
     -DWITH_BUILDINFO=ON \
+    %{?_with_ffmpeg:-DWITH_CODEC_FFMPEG=ON} \
     -DWITH_CODEC_SNDFILE=ON \
     -DWITH_CXX_GUARDEDALLOC=OFF \
     -DWITH_CYCLES=%{cyclesflag} \
@@ -286,6 +294,7 @@ fi
 %changelog
 * Fri Apr 21 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-3
 - Remove redundant fonts directory in blender-fonts package.
+- Enable rebuilding of the package with FFmpeg support enabled.
 
 * Mon Mar 06 2017 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.78c-2
 - Restore broken international fonts support (rhbz#1429196)
