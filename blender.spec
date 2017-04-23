@@ -12,13 +12,17 @@
 %endif
 
 # Enable this or rebuild the package with "--with=ffmpeg" to enable FFmpeg
-# support
-#global _with_ffmpeg 1
+# support.
+# %%global _with_ffmpeg 1
+
+# Enable this or rebuild the package with "--with=openvdb" to enable OpenVDB
+# support. Does not build yet with OpenVDB 4.
+# %%global _with_openvdb 1
 
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
-Release:    3%{?dist}
+Release:    4%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -94,6 +98,10 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg-devel
+%{?_with_openvdb:
+BuildRequires:  openvdb-devel
+BuildRequires:  tbb-devel
+}
 
 # Audio stuff
 BuildRequires:  freealut-devel
@@ -190,6 +198,8 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_MOD_OCEANSIM=ON \
     -DWITH_OPENCOLLADA=ON \
     -DWITH_OPENCOLORIO=ON \
+    %{?_with_openvdb:-DWITH_OPENVDB=ON} \
+    %{?_with_openvdb:-DWITH_OPENVDB_BLOSC=ON} \
     -DWITH_PLAYER=ON \
     -DWITH_PYTHON=ON \
     -DWITH_PYTHON_INSTALL=OFF \
@@ -292,6 +302,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sun Apr 23 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
+- Enable rebuilding of the package with OpenVDB support enabled.
+
 * Fri Apr 21 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-3
 - Remove redundant fonts directory in blender-fonts package.
 - Enable rebuilding of the package with FFmpeg support enabled.
