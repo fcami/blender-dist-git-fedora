@@ -47,6 +47,7 @@ Patch6:     %{name}-2.78a-linux-definition-ppc64.patch
 # GPU: Consider latest Gallium driver an official ATI/AMD
 # https://developer.blender.org/rB927a168b077fa5182168068315c4fb0ea998edb6
 Patch7:     %{name}-2.78b-amd-gpu-support.patch
+Patch8:     %{name}-278c-openvdb3-abi.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -98,10 +99,8 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg-devel
-%{?_with_openvdb:
 BuildRequires:  openvdb-devel
 BuildRequires:  tbb-devel
-}
 
 # Audio stuff
 BuildRequires:  freealut-devel
@@ -198,8 +197,8 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_MOD_OCEANSIM=ON \
     -DWITH_OPENCOLLADA=ON \
     -DWITH_OPENCOLORIO=ON \
-    %{?_with_openvdb:-DWITH_OPENVDB=ON} \
-    %{?_with_openvdb:-DWITH_OPENVDB_BLOSC=ON} \
+    -DWITH_OPENVDB=ON \
+    -DWITH_OPENVDB_BLOSC=ON \
     -DWITH_PLAYER=ON \
     -DWITH_PYTHON=ON \
     -DWITH_PYTHON_INSTALL=OFF \
@@ -232,7 +231,6 @@ rm -rf %{buildroot}%{_docdir}/%{name}/*
 # rpm macros
 mkdir -p %{buildroot}%{macrosdir}
 sed -e 's/@VERSION@/%{blender_api}/g' %{SOURCE10} > %{buildroot}%{macrosdir}/macros.%{name}
-
 
 # AppData
 install -p -m 644 -D %{SOURCE6} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
@@ -302,8 +300,8 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
-* Sun Apr 23 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
-- Enable rebuilding of the package with OpenVDB support enabled.
+* Mon Apr 24 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
+- Enable OpenVDB support.
 
 * Fri Apr 21 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-3
 - Remove redundant fonts directory in blender-fonts package.
