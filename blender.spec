@@ -15,10 +15,6 @@
 # support.
 # %%global _with_ffmpeg 1
 
-# Enable this or rebuild the package with "--with=openvdb" to enable OpenVDB
-# support. Does not build yet with OpenVDB 4.
-# %%global _with_openvdb 1
-
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
@@ -88,6 +84,7 @@ BuildRequires:  SDL2-devel
 BuildRequires:  xorg-x11-proto-devel
 
 # Picture/Video stuff
+BuildRequires:  alembic-devel
 %{?_with_ffmpeg:
 BuildRequires:  ffmpeg-devel
 }
@@ -181,6 +178,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DBUILD_SHARED_LIBS=OFF \
     -DCMAKE_SKIP_RPATH=ON \
     -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
+    -DWITH_ALEMBIC=ON \
     -DWITH_BUILDINFO=ON \
     %{?_with_ffmpeg:-DWITH_CODEC_FFMPEG=ON} \
     -DWITH_CODEC_SNDFILE=ON \
@@ -300,8 +298,8 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
-* Mon Apr 24 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
-- Enable OpenVDB support.
+* Wed Apr 26 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
+- Enable OpenVDB and Alembic support.
 
 * Fri Apr 21 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-3
 - Remove redundant fonts directory in blender-fonts package.
