@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
-Release:    4%{?dist}
+Release:    5%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -298,6 +298,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Mon May 15 2017 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.78c-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_27_Mass_Rebuild
+
 * Wed Apr 26 2017 Simone Caronni <negativo17@gmail.com> - 1:2.78c-4
 - Enable OpenVDB and Alembic support.
 
