@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}c
-Release:    5%{?dist}
+Release:    6%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -298,6 +298,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sun Jul 23 2017 Björn Esser <besser82@fedoraproject.org> - 1:2.78c-6
+- Rebuilt for Boost 1.64
+
 * Mon May 15 2017 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.78c-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_27_Mass_Rebuild
 
