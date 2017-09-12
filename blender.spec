@@ -1,4 +1,4 @@
-%global blender_api 2.78
+%global blender_api 2.79
 
 # Turn off the brp-python-bytecompile script
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -17,8 +17,8 @@
 
 Name:       blender
 Epoch:      1
-Version:    %{blender_api}c
-Release:    8%{?dist}
+Version:    %{blender_api}
+Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -30,20 +30,13 @@ Source5:    %{name}.xml
 Source6:    %{name}.appdata.xml
 Source10:   macros.%{name}
 
-Patch0:     %{name}-2.76-droid.patch
-Patch1:     %{name}-2.78a-thumbnailer.patch
-Patch2:     %{name}-2.78a-scripts.patch
-Patch3:     %{name}-2.78a-locale.patch
-Patch4:     %{name}-2.78a-manpages.patch
-Patch5:     %{name}-2.78a-unversioned-system-path.patch
-
-# For ppc64le build, currently being discussed on
-# https://lists.blender.org/pipermail/bf-committers/2016-November/047844.html
-Patch6:     %{name}-2.78a-linux-definition-ppc64.patch
-# GPU: Consider latest Gallium driver an official ATI/AMD
-# https://developer.blender.org/rB927a168b077fa5182168068315c4fb0ea998edb6
-Patch7:     %{name}-2.78b-amd-gpu-support.patch
-Patch8:     %{name}-2.78c-openvdb3-abi.patch
+Patch0:     %{name}-2.79-droid.patch
+Patch1:     %{name}-2.79-thumbnailer.patch
+Patch2:     %{name}-2.79-scripts.patch
+Patch3:     %{name}-2.79-locale.patch
+Patch4:     %{name}-2.79-manpages.patch
+Patch5:     %{name}-2.79-unversioned-system-path.patch
+Patch6:     %{name}-2.79-openvdb3-abi.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -298,6 +291,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Tue Sep 12 2017 Simone Caronni <negativo17@gmail.com> - 1:2.79-1
+- Update to 2.79.
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1:2.78c-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
