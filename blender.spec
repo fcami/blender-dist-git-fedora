@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    1%{?dist}
+Release:    2%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -291,6 +291,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sat Oct 28 2017 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79-2
+- Rebuilt for alembic 1.7.4
+
 * Tue Sep 12 2017 Simone Caronni <negativo17@gmail.com> - 1:2.79-1
 - Update to 2.79.
 
