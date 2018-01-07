@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    4%{?dist}
+Release:    5%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -287,6 +287,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Sun Jan 07 2018 Richard Shaw <hobbes1069@gmail.com> - 1:2.79-5
+- Rebuild for OpenImageIO 1.8.7.
+
 * Sat Jan 06 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:2.79-4
 - Remove obsolete scriptlets
 
