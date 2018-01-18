@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    5%{?dist}
+Release:    6%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -37,6 +37,10 @@ Patch3:     %{name}-2.79-locale.patch
 Patch4:     %{name}-2.79-manpages.patch
 Patch5:     %{name}-2.79-unversioned-system-path.patch
 Patch6:     %{name}-2.79-openvdb3-abi.patch
+# Backported patch for openjpeg2 support from
+# https://lists.blender.org/pipermail/bf-blender-cvs/2016-July/088691.html
+# but without patch-updating the bundled openjpeg2 version
+Patch7:     blender-2.79-openjpeg2.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -88,7 +92,7 @@ BuildRequires:  libtiff-devel
 BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
-BuildRequires:  openjpeg-devel
+BuildRequires:  openjpeg2-devel
 BuildRequires:  openvdb-devel
 BuildRequires:  tbb-devel
 
@@ -151,6 +155,11 @@ composition of several mono space fonts to cover several character sets.
 
 %prep
 %autosetup -p1
+
+# Delete the bundled FindOpenJPEG to make find_package use the system version
+# instead (the local version hardcodes the openjpeg version so it is not update
+# proof)
+rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
 
 mkdir cmake-make
 
@@ -287,6 +296,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Wed Jan 17 2018 Sandro Mani <manisandro@gmail.com> - 1:2.79-6
+- Switch to openjpeg2
+
 * Sun Jan 07 2018 Richard Shaw <hobbes1069@gmail.com> - 1:2.79-5
 - Rebuild for OpenImageIO 1.8.7.
 
