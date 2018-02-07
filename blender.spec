@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    6%{?dist}
+Release:    7%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -296,6 +296,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:2.79-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Wed Jan 17 2018 Sandro Mani <manisandro@gmail.com> - 1:2.79-6
 - Switch to openjpeg2
 
