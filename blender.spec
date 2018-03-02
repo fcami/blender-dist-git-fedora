@@ -17,8 +17,8 @@
 
 Name:       blender
 Epoch:      1
-Version:    %{blender_api}
-Release:    8%{?dist}
+Version:    %{blender_api}a
+Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -296,6 +296,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Wed Feb 28 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-1
+- Update to 2.79a
+
 * Mon Feb 26 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79-8
 - Rebuild for boost 1.66
 
