@@ -1,4 +1,4 @@
-%global blender_api 2.79
+%global blender_api 2.79a
 
 # Turn off the brp-python-bytecompile script
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -17,7 +17,7 @@
 
 Name:       blender
 Epoch:      1
-Version:    %{blender_api}a
+Version:    %{blender_api}
 Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
@@ -41,12 +41,15 @@ Patch6:     %{name}-2.79-openvdb3-abi.patch
 # https://lists.blender.org/pipermail/bf-blender-cvs/2016-July/088691.html
 # but without patch-updating the bundled openjpeg2 version
 Patch7:     blender-2.79-openjpeg2.patch
+Patch8:     util_sseb.patch
+Patch9:	    tree_hpp.patch
 
 # Development stuff
 BuildRequires:  boost-devel
 BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
 BuildRequires:  expat-devel
+BuildRequires:	gcc-c++
 BuildRequires:  gettext
 BuildRequires:  git
 BuildRequires:  jemalloc-devel
@@ -93,7 +96,7 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg2-devel
-BuildRequires:  openvdb-devel
+#BuildRequires:  openvdb-devel
 BuildRequires:  tbb-devel
 
 # Audio stuff
@@ -197,8 +200,8 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_MOD_OCEANSIM=ON \
     -DWITH_OPENCOLLADA=ON \
     -DWITH_OPENCOLORIO=ON \
-    -DWITH_OPENVDB=ON \
-    -DWITH_OPENVDB_BLOSC=ON \
+    -DWITH_OPENVDB=OFF \
+    -DWITH_OPENVDB_BLOSC=OFF \
     -DWITH_PLAYER=ON \
     -DWITH_PYTHON=ON \
     -DWITH_PYTHON_INSTALL=OFF \
@@ -298,6 +301,9 @@ fi
 %changelog
 * Wed Feb 28 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-1
 - Update to 2.79a
+- Add gcc-c++
+- Temporarily disable openvdb due failure to build
+- Upstream patch for compile fix with GCC 8.0
 
 * Mon Feb 26 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79-8
 - Rebuild for boost 1.66

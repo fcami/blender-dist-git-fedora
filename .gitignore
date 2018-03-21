@@ -45,3 +45,5 @@
 /blender-2.78c.tar.gz
 /blender-2.79.tar.gz
 /blender-2.79a.tar.gz
+/util_sseb.patch
+/tree_hpp.patch
