@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    1%{?dist}
+Release:    2%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -96,7 +96,7 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg2-devel
-#BuildRequires:  openvdb-devel
+BuildRequires:  openvdb-devel
 BuildRequires:  tbb-devel
 
 # Audio stuff
@@ -200,8 +200,8 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_MOD_OCEANSIM=ON \
     -DWITH_OPENCOLLADA=ON \
     -DWITH_OPENCOLORIO=ON \
-    -DWITH_OPENVDB=OFF \
-    -DWITH_OPENVDB_BLOSC=OFF \
+    -DWITH_OPENVDB=ON \
+    -DWITH_OPENVDB_BLOSC=ON \
     -DWITH_PLAYER=ON \
     -DWITH_PYTHON=ON \
     -DWITH_PYTHON_INSTALL=OFF \
@@ -299,6 +299,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Thu Mar 22 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-2
+- Reenable openvdb
+
 * Wed Feb 28 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-1
 - Update to 2.79a
 - Add gcc-c++
