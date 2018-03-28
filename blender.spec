@@ -1,4 +1,4 @@
-%global blender_api 2.79a
+%global blender_api 2.79b
 
 # Turn off the brp-python-bytecompile script
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    2%{?dist}
+Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -299,7 +299,8 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
-* Thu Mar 22 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-2
+* Thu Mar 22 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79b-1
+- Update to 2.79b
 - Reenable openvdb
 
 * Wed Feb 28 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79a-1
