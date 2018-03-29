@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    1%{?dist}
+Release:    2%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -36,7 +36,7 @@ Patch2:     %{name}-2.79-scripts.patch
 Patch3:     %{name}-2.79-locale.patch
 Patch4:     %{name}-2.79-manpages.patch
 Patch5:     %{name}-2.79-unversioned-system-path.patch
-Patch6:     %{name}-2.79-openvdb3-abi.patch
+#Patch6:     %%{name}-2.79-openvdb3-abi.patch
 # Backported patch for openjpeg2 support from
 # https://lists.blender.org/pipermail/bf-blender-cvs/2016-July/088691.html
 # but without patch-updating the bundled openjpeg2 version
@@ -96,7 +96,7 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg2-devel
-BuildRequires:  openvdb-devel
+#BuildRequires:  openvdb-devel
 BuildRequires:  tbb-devel
 
 # Audio stuff
@@ -299,6 +299,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Thu Mar 29 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79b-2
+- Rebuild with applied upstream patches
+
 * Thu Mar 22 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79b-1
 - Update to 2.79b
 - Reenable openvdb
