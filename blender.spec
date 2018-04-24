@@ -18,7 +18,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    2%{?dist}
+Release:    3%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -299,6 +299,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Tue Apr 24 2018 Richard Shaw <hobbes1069@gmail.com> - 1:2.79b-3
+- Rebuild for openCOLLADA 1.6.62.
+
 * Thu Mar 29 2018 Luya Tshimbalanga <luya@fedoraproject.org> - 1:2.79b-2
 - Rebuild with applied upstream patches
 
