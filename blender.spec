@@ -15,10 +15,14 @@
 # support.
 # %%global _with_ffmpeg 1
 
+# Enable this or rebuild the package with "--with=openvdb" to enable OpenVDB
+# support.
+# %%global _with_openvdb 1
+
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    5%{?dist}
+Release:    6%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -36,20 +40,20 @@ Patch2:     %{name}-2.79-scripts.patch
 Patch3:     %{name}-2.79-locale.patch
 Patch4:     %{name}-2.79-manpages.patch
 Patch5:     %{name}-2.79-unversioned-system-path.patch
-#Patch6:     %%{name}-2.79-openvdb3-abi.patch
+Patch6:     %{name}-2.79-openvdb3-abi.patch
 # Backported patch for openjpeg2 support from
 # https://lists.blender.org/pipermail/bf-blender-cvs/2016-July/088691.html
 # but without patch-updating the bundled openjpeg2 version
 Patch7:     blender-2.79-openjpeg2.patch
 Patch8:     util_sseb.patch
-Patch9:	    tree_hpp.patch
+Patch9:     tree_hpp.patch
 
 # Development stuff
 BuildRequires:  boost-devel
 BuildRequires:  cmake
 BuildRequires:  desktop-file-utils
 BuildRequires:  expat-devel
-BuildRequires:	gcc-c++
+BuildRequires:  gcc-c++
 BuildRequires:  gettext
 BuildRequires:  git
 BuildRequires:  jemalloc-devel
@@ -96,7 +100,9 @@ BuildRequires:  OpenColorIO-devel
 BuildRequires:  OpenEXR-devel
 BuildRequires:  OpenImageIO-devel
 BuildRequires:  openjpeg2-devel
-#BuildRequires:  openvdb-devel
+%{?_with_openvdb:
+BuildRequires:  openvdb-devel
+}
 BuildRequires:  tbb-devel
 
 # Audio stuff
@@ -200,8 +206,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_MOD_OCEANSIM=ON \
     -DWITH_OPENCOLLADA=ON \
     -DWITH_OPENCOLORIO=ON \
-    -DWITH_OPENVDB=ON \
-    -DWITH_OPENVDB_BLOSC=ON \
+    %{?_with_openvdb:-DWITH_OPENVDB=ON -DWITH_OPENVDB_BLOSC=ON} \
     -DWITH_PLAYER=ON \
     -DWITH_PYTHON=ON \
     -DWITH_PYTHON_INSTALL=OFF \
@@ -210,7 +215,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_SDL=ON \
     -DWITH_SYSTEM_LZO=ON \
     -DWITH_SYSTEM_OPENJPEG=ON
-    
+
 #make VERBOSE=1 # %%{?_smp_mflags}
 %make_build
 popd
@@ -299,6 +304,10 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Tue Jul 17 2018 Simone Caronni <negativo17@gmail.com> - 1:2.79b-6
+- Allow rebuilding with OpenVDB support.
+- Be consistent with spaces/tabs (rpmlint).
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:2.79b-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
