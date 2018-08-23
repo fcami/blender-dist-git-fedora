@@ -22,7 +22,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    6%{?dist}
+Release:    7%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -304,6 +304,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Thu Aug 23 2018 Nicolas Chauvet <kwizart@gmail.com> - 1:2.79b-7
+- Rebuilt for glew-2.1.0
+
 * Tue Jul 17 2018 Simone Caronni <negativo17@gmail.com> - 1:2.79b-6
 - Allow rebuilding with OpenVDB support.
 - Be consistent with spaces/tabs (rpmlint).
