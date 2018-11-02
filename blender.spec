@@ -22,7 +22,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    8%{?dist}
+Release:    9%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -47,6 +47,8 @@ Patch6:     %{name}-2.79-openvdb3-abi.patch
 Patch7:     blender-2.79-openjpeg2.patch
 Patch8:     util_sseb.patch
 Patch9:     tree_hpp.patch
+# Backported from https://developer.blender.org/rB1db47a2ccd1e68994bf8140eba6cc2a26a2bc91f
+Patch10:     %{name}-2.79-python37.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -304,6 +306,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Fri Nov 02 2018 Petr Viktorin <pviktori@redhat.com> - 1:2.79b-9
+- Apply workaround for "no text in GUI" bug (#1631922)
+
 * Tue Aug 28 2018 Patrik Novotný <panovotn@redhat.com> - 1:2.79b-8
 - change requires to minizip-compat(-devel), rhbz#1609830, rhbz#1615381
 
