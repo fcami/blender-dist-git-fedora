@@ -22,7 +22,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    8%{?dist}
+Release:    9%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -74,7 +74,7 @@ BuildRequires:  subversion-devel
 BuildRequires:  lzo-devel
 BuildRequires:  xz-devel
 BuildRequires:  zlib-devel
-BuildRequires:  minizip-devel
+BuildRequires:  minizip-compat-devel
 
 # 3D modeling stuff
 BuildRequires:  fftw-devel
@@ -306,8 +306,11 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
-* Fri Nov 02 2018 Petr Viktorin <pviktori@redhat.com> - 1:2.79b-8
+* Fri Nov 02 2018 Petr Viktorin <pviktori@redhat.com> - 1:2.79b-9
 - Apply workaround for "no text in GUI" bug (#1631922)
+
+* Tue Aug 28 2018 Patrik Novotný <panovotn@redhat.com> - 1:2.79b-8
+- change requires to minizip-compat(-devel), rhbz#1609830, rhbz#1615381
 
 * Thu Aug 23 2018 Nicolas Chauvet <kwizart@gmail.com> - 1:2.79b-7
 - Rebuilt for glew-2.1.0
