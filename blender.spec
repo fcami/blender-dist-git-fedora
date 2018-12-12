@@ -22,7 +22,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    9%{?dist}
+Release:    10%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -49,6 +49,10 @@ Patch8:     util_sseb.patch
 Patch9:     tree_hpp.patch
 # Backported from https://developer.blender.org/rB1db47a2ccd1e68994bf8140eba6cc2a26a2bc91f
 Patch10:     %{name}-2.79-python37.patch
+# Patch mostly from upstream, for more details see:
+# https://developer.blender.org/rB66d8bfb85c61aafe3bad2edf0e7b4d9d694ee2e7
+# https://github.com/OpenImageIO/oiio/wiki/OIIO-2.0-Porting-Guide
+Patch11:     blender-oiio2.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -191,6 +195,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DBUILD_SHARED_LIBS=OFF \
     -DCMAKE_SKIP_RPATH=ON \
     -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
+    -DOpenGL_GL_PREFERENCE=LEGACY \
     -DWITH_ALEMBIC=ON \
     -DWITH_BUILDINFO=ON \
     %{?_with_ffmpeg:-DWITH_CODEC_FFMPEG=ON} \
@@ -306,6 +311,9 @@ fi
 %{_fontbasedir}/%{name}/
 
 %changelog
+* Wed Dec 12 2018 Richard Shaw <hobbes1069@gmail.com> - 1:2.79b-10
+- Add patch for OpenImageIO 2.0 API changes.
+
 * Fri Nov 02 2018 Petr Viktorin <pviktori@redhat.com> - 1:2.79b-9
 - Apply workaround for "no text in GUI" bug (#1631922)
 
