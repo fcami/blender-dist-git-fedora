@@ -1,8 +1,6 @@
-diff --git a/intern/cycles/blender/blender_python.cpp b/intern/cycles/blender/blender_python.cpp
-index 54973fd..bee6dd1 100644
 --- a/intern/cycles/blender/blender_python.cpp
 +++ b/intern/cycles/blender/blender_python.cpp
-@@ -493,7 +493,7 @@ static PyObject *osl_update_node_func(PyObject * /*self*/, PyObject *args)
+@@ -493,7 +493,7 @@ static PyObject *osl_update_node_func(Py
  				socket_type = "NodeSocketString";
  				data_type = BL::NodeSocket::type_STRING;
  				if(param->validdefault)
@@ -11,11 +9,9 @@ index 54973fd..bee6dd1 100644
  			}
  			else
  				continue;
-diff --git a/intern/cycles/graph/node_xml.cpp b/intern/cycles/graph/node_xml.cpp
-index d26b3b2..2a24104 100644
 --- a/intern/cycles/graph/node_xml.cpp
 +++ b/intern/cycles/graph/node_xml.cpp
-@@ -250,7 +250,7 @@ void xml_read_node(XMLReader& reader, Node *node, xml_node xml_node)
+@@ -250,7 +250,7 @@ void xml_read_node(XMLReader& reader, No
  		}
  	}
  
@@ -24,8 +20,6 @@ index d26b3b2..2a24104 100644
  		reader.node_map[node->name] = node;
  }
  
-diff --git a/intern/cycles/render/buffers.cpp b/intern/cycles/render/buffers.cpp
-index cf402c3..6df6325 100644
 --- a/intern/cycles/render/buffers.cpp
 +++ b/intern/cycles/render/buffers.cpp
 @@ -27,6 +27,7 @@
@@ -36,7 +30,7 @@ index cf402c3..6df6325 100644
  
  CCL_NAMESPACE_BEGIN
  
-@@ -453,7 +454,7 @@ void DisplayBuffer::write(Device *device, const string& filename)
+@@ -453,7 +454,7 @@ void DisplayBuffer::write(Device *device
  	device->pixels_copy_from(rgba, 0, w, h);
  
  	/* write image */
@@ -45,7 +39,7 @@ index cf402c3..6df6325 100644
  	ImageSpec spec(w, h, 4, TypeDesc::UINT8);
  	int scanlinesize = w*4*sizeof(uchar);
  
-@@ -467,8 +468,6 @@ void DisplayBuffer::write(Device *device, const string& filename)
+@@ -467,8 +468,6 @@ void DisplayBuffer::write(Device *device
  		AutoStride);
  
  	out->close();
@@ -54,8 +48,6 @@ index cf402c3..6df6325 100644
  }
  
  device_memory& DisplayBuffer::rgba_data()
-diff --git a/intern/cycles/render/image.cpp b/intern/cycles/render/image.cpp
-index 595eb46..e8b679d 100644
 --- a/intern/cycles/render/image.cpp
 +++ b/intern/cycles/render/image.cpp
 @@ -23,6 +23,7 @@
@@ -66,7 +58,7 @@ index 595eb46..e8b679d 100644
  
  #ifdef WITH_OSL
  #include <OSL/oslexec.h>
-@@ -148,7 +149,7 @@ ImageDataType ImageManager::get_image_metadata(const string& filename,
+@@ -148,7 +149,7 @@ ImageDataType ImageManager::get_image_me
  		return IMAGE_DATA_TYPE_BYTE4;
  	}
  
@@ -75,7 +67,7 @@ index 595eb46..e8b679d 100644
  
  	if(in) {
  		ImageSpec spec;
-@@ -193,8 +194,6 @@ ImageDataType ImageManager::get_image_metadata(const string& filename,
+@@ -193,8 +194,6 @@ ImageDataType ImageManager::get_image_me
  
  			in->close();
  		}
@@ -84,7 +76,7 @@ index 595eb46..e8b679d 100644
  	}
  
  	if(is_half) {
-@@ -449,7 +448,7 @@ void ImageManager::tag_reload_image(const string& filename,
+@@ -449,7 +448,7 @@ void ImageManager::tag_reload_image(cons
  }
  
  bool ImageManager::file_load_image_generic(Image *img,
@@ -93,7 +85,7 @@ index 595eb46..e8b679d 100644
                                             int &width,
                                             int &height,
                                             int &depth,
-@@ -465,7 +464,7 @@ bool ImageManager::file_load_image_generic(Image *img,
+@@ -465,7 +464,7 @@ bool ImageManager::file_load_image_gener
  		}
  
  		/* load image from file through OIIO */
@@ -102,7 +94,7 @@ index 595eb46..e8b679d 100644
  
  		if(!*in)
  			return false;
-@@ -477,8 +476,6 @@ bool ImageManager::file_load_image_generic(Image *img,
+@@ -477,8 +476,6 @@ bool ImageManager::file_load_image_gener
  			config.attribute("oiio:UnassociatedAlpha", 1);
  
  		if(!(*in)->open(img->filename, spec, config)) {
@@ -111,7 +103,7 @@ index 595eb46..e8b679d 100644
  			return false;
  		}
  
-@@ -500,10 +497,7 @@ bool ImageManager::file_load_image_generic(Image *img,
+@@ -500,10 +497,7 @@ bool ImageManager::file_load_image_gener
  	if(!(components >= 1 && components <= 4)) {
  		if(*in) {
  			(*in)->close();
@@ -122,7 +114,7 @@ index 595eb46..e8b679d 100644
  		return false;
  	}
  
-@@ -519,7 +513,7 @@ bool ImageManager::file_load_image(Image *img,
+@@ -519,7 +513,7 @@ bool ImageManager::file_load_image(Image
                                     device_vector<DeviceType>& tex_img)
  {
  	const StorageType alpha_one = (FileFormat == TypeDesc::UINT8)? 255 : 1;
@@ -131,7 +123,7 @@ index 595eb46..e8b679d 100644
  	int width, height, depth, components;
  	if(!file_load_image_generic(img, &in, width, height, depth, components)) {
  		return false;
-@@ -575,7 +569,6 @@ bool ImageManager::file_load_image(Image *img,
+@@ -575,7 +569,6 @@ bool ImageManager::file_load_image(Image
  		}
  		cmyk = strcmp(in->format_name(), "jpeg") == 0 && components == 4;
  		in->close();
@@ -139,8 +131,6 @@ index 595eb46..e8b679d 100644
  	}
  	else {
  		if(FileFormat == TypeDesc::FLOAT) {
-diff --git a/intern/cycles/render/image.h b/intern/cycles/render/image.h
-index db7e28a..f4a14f4 100644
 --- a/intern/cycles/render/image.h
 +++ b/intern/cycles/render/image.h
 @@ -23,6 +23,7 @@
@@ -160,9 +150,6 @@ index db7e28a..f4a14f4 100644
  	                             int &width,
  	                             int &height,
  	                             int &depth,
-diff --git a/intern/cycles/util/util_unique_ptr.h b/intern/cycles/util/util_unique_ptr.h
-new file mode 100644
-index 0000000..1ceae73
 --- /dev/null
 +++ b/intern/cycles/util/util_unique_ptr.h
 @@ -0,0 +1,28 @@
@@ -194,8 +181,6 @@ index 0000000..1ceae73
 +CCL_NAMESPACE_END
 +
 +#endif  /* __UTIL_UNIQUE_PTR_H__ */
-diff --git a/source/blender/imbuf/intern/oiio/openimageio_api.cpp b/source/blender/imbuf/intern/oiio/openimageio_api.cpp
-index b123d50..7f2fac9 100644
 --- a/source/blender/imbuf/intern/oiio/openimageio_api.cpp
 +++ b/source/blender/imbuf/intern/oiio/openimageio_api.cpp
 @@ -35,6 +35,11 @@
@@ -224,7 +209,7 @@ index b123d50..7f2fac9 100644
  
  typedef unsigned char uchar;
  
-@@ -197,7 +200,6 @@ int imb_save_photoshop(struct ImBuf *ibuf, const char * /*name*/, int flags)
+@@ -197,7 +200,6 @@ int imb_save_photoshop(struct ImBuf *ibu
  
  struct ImBuf *imb_load_photoshop(const char *filename, int flags, char colorspace[IM_MAX_SPACE])
  {
@@ -232,7 +217,7 @@ index b123d50..7f2fac9 100644
  	struct ImBuf *ibuf = NULL;
  	int width, height, components;
  	bool is_float, is_alpha;
-@@ -210,7 +212,7 @@ struct ImBuf *imb_load_photoshop(const char *filename, int flags, char colorspac
+@@ -210,7 +212,7 @@ struct ImBuf *imb_load_photoshop(const c
  
  	colorspace_set_default_role(colorspace, IM_MAX_SPACE, COLOR_ROLE_DEFAULT_BYTE);
  
@@ -241,7 +226,7 @@ index b123d50..7f2fac9 100644
  	if (!in) {
  		std::cerr << __func__ << ": ImageInput::create() failed:" << std::endl
  		          << OIIO_NAMESPACE::geterror() << std::endl;
-@@ -223,7 +225,6 @@ struct ImBuf *imb_load_photoshop(const char *filename, int flags, char colorspac
+@@ -223,7 +225,6 @@ struct ImBuf *imb_load_photoshop(const c
  	if (!in->open(filename, spec, config)) {
  		std::cerr << __func__ << ": ImageInput::open() failed:" << std::endl
  		          << in->geterror() << std::endl;
@@ -249,7 +234,7 @@ index b123d50..7f2fac9 100644
  		return NULL;
  	}
  
-@@ -249,19 +250,17 @@ struct ImBuf *imb_load_photoshop(const char *filename, int flags, char colorspac
+@@ -249,19 +250,17 @@ struct ImBuf *imb_load_photoshop(const c
  	if (!(components >= 1 && components <= 4)) {
  		if (in) {
  			in->close();
