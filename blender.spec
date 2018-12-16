@@ -53,6 +53,9 @@ Patch10:     %{name}-2.79-python37.patch
 # https://developer.blender.org/rB66d8bfb85c61aafe3bad2edf0e7b4d9d694ee2e7
 # https://github.com/OpenImageIO/oiio/wiki/OIIO-2.0-Porting-Guide
 Patch11:     blender-oiio2.patch
+# Commit to make OpenGL_GL_PREFERENCES=GLVND work
+# https://developer.blender.org/rB0658d047a94a86060f039790898a80a7adb0dcd9
+Patch12:     blender-cmake_opengl.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -195,7 +198,7 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DBUILD_SHARED_LIBS=OFF \
     -DCMAKE_SKIP_RPATH=ON \
     -DPYTHON_VERSION=$(%{__python3} -c "import sys ; print(sys.version[:3])") \
-    -DOpenGL_GL_PREFERENCE=LEGACY \
+    -DOpenGL_GL_PREFERENCE=GLVND \
     -DWITH_ALEMBIC=ON \
     -DWITH_BUILDINFO=ON \
     %{?_with_ffmpeg:-DWITH_CODEC_FFMPEG=ON} \
