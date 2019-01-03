@@ -1,4 +1,4 @@
-%global blender_api 2.79b
+%global blender_api 2.80
 
 # Turn off the brp-python-bytecompile script
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
@@ -22,7 +22,7 @@
 Name:       blender
 Epoch:      1
 Version:    %{blender_api}
-Release:    9%{?dist}
+Release:    1%{?dist}
 
 Summary:    3D modeling, animation, rendering and post-production
 License:    GPLv2
@@ -34,21 +34,10 @@ Source5:    %{name}.xml
 Source6:    %{name}.appdata.xml
 Source10:   macros.%{name}
 
-Patch0:     %{name}-2.79-droid.patch
+Patch0:     %{name}-2.79-unversioned-system-path.patch
 Patch1:     %{name}-2.79-thumbnailer.patch
-Patch2:     %{name}-2.79-scripts.patch
-Patch3:     %{name}-2.79-locale.patch
-Patch4:     %{name}-2.79-manpages.patch
-Patch5:     %{name}-2.79-unversioned-system-path.patch
-Patch6:     %{name}-2.79-openvdb3-abi.patch
-# Backported patch for openjpeg2 support from
-# https://lists.blender.org/pipermail/bf-blender-cvs/2016-July/088691.html
-# but without patch-updating the bundled openjpeg2 version
-Patch7:     blender-2.79-openjpeg2.patch
-Patch8:     util_sseb.patch
-Patch9:     tree_hpp.patch
-# Backported from https://developer.blender.org/rB1db47a2ccd1e68994bf8140eba6cc2a26a2bc91f
-Patch10:     %{name}-2.79-python37.patch
+#Patch2:     %{name}-2.79-openvdb3-abi.patch
+#Patch3:     tree_hpp.patch
 
 # Development stuff
 BuildRequires:  boost-devel
@@ -137,14 +126,6 @@ animation, rendering and post-production to interactive creation and playback.
 Professionals and novices can easily and inexpensively publish stand-alone,
 secure, multi-platform content to the web, CD-ROMs, and other media.
 
-%package -n blenderplayer
-Summary:        Standalone Blender player
-Provides:       %{name}(ABI) = %{blender_api}
-
-%description -n blenderplayer
-This package contains a stand alone release of the Blender player. You will need
-this package to play games which are based on the Blender Game Engine.
-
 %package rpm-macros
 Summary:        RPM macros to build third-party blender addons packages
 BuildArch:      noarch
@@ -199,7 +180,6 @@ export CXXFLAGS="$CXXFLAGS -mno-altivec"
     -DWITH_CYCLES=%{cyclesflag} \
     -DWITH_DOC_MANPAGE=ON \
     -DWITH_FFTW3=ON \
-    -DWITH_GAMEENGINE=ON \
     -DWITH_IMAGE_OPENJPEG=ON \
     -DWITH_INPUT_NDOF=ON \
     -DWITH_INSTALL_PORTABLE=OFF \
@@ -247,8 +227,8 @@ install -p -m 644 -D %{SOURCE6} %{buildroot}%{_datadir}/appdata/%{name}.appdata.
 install -p -m 644 -D %{SOURCE2} %{buildroot}%{_datadir}/metainfo/%{name}-fonts.metainfo.xml
 
 # Localization
-%find_lang %{name}
-rm -fr %{buildroot}%{_datadir}/locale/languages
+#%find_lang %{name}
+#rm -fr %{buildroot}%{_datadir}/locale/languages
 
 %check
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/%{name}.appdata.xml
@@ -277,7 +257,8 @@ fi
 /usr/bin/update-mime-database %{?fedora:-n} %{_datadir}/mime &> /dev/null || :
 %endif
 
-%files -f %{name}.lang
+#%files -f %{name}.lang
+%files
 %license COPYING
 %license doc/license/*-license.txt
 %license release/text/copyright.txt
@@ -290,22 +271,19 @@ fi
 %{_datadir}/mime/packages/%{name}.xml
 %{_mandir}/man1/%{name}.*
 
-%files -n %{name}player
-%license COPYING
-%license doc/license/*-license.txt
-%license release/text/copyright.txt
-%{_bindir}/%{name}player
-%{_mandir}/man1/%{name}player.*
-
 %files rpm-macros
 %{macrosdir}/macros.%{name}
 
 %files fonts
 %license release/datafiles/LICENSE-*.ttf.txt
 %{_datadir}/metainfo/%{name}-fonts.metainfo.xml
-%{_fontbasedir}/%{name}/
+#%{_fontbasedir}/%{name}/
 
 %changelog
+* Thu Jan 03 2019 François Cami <fcami@redhat.com> - 1:2.80-1
+- Update specfile for Blender 2.80 Beta
+- Disable openvdb due to failure to build
+
 * Fri Nov 02 2018 Petr Viktorin <pviktori@redhat.com> - 1:2.79b-9
 - Apply workaround for "no text in GUI" bug (#1631922)
 
